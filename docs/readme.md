@@ -2,7 +2,7 @@
 
 ברוכים הבאים ל"דרך הכלב" - חלל המציע גישה חדשנית ומגוונת לכלבנות טיפולית ולימודית.
 
-![סדנה טיפולית](images/brand/logo.webp?raw=true "SportTech")
+![סדנה טיפולית](images/brand/logo_2.webp?raw=true "SportTech")
 
 ## שירותינו
 
