@@ -87,23 +87,37 @@
         .slider {
             position: relative;
             width: 300%;
-            animation: slide-animation 10s infinite;
         }
         
         .slide {
             float: right;
             width: 33.3333%;
             display: none;
+            max-width: 100%;
+            height: auto;
         }
         
-        @keyframes slide-animation {
-            0% { margin-left: 0%; }
-            20% { margin-left: 0%; }
-            33% { margin-left: -100%; }
-            53% { margin-left: -100%; }
-            66% { margin-left: -200%; }
-            86% { margin-left: -200%; }
-            100% { margin-left: 0%; }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+        
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
         }
     </style>
 </head>
@@ -116,17 +130,21 @@
     </div>
     <div class="image-slider centered animate__animated animate__fadeIn">
         <div class="slider">
-            <img src="logo_2.webp" alt="" class="slide" style="display: block;">
-            <img src="logo_1.webp" alt="" class="slide">
+            <img src="logo_2.webp" alt="Image 1" class="slide">
+            <img src="logo_1.webp" alt="Image 2" class="slide">
+            <img src="image3.jpg" alt="Image 3" class="slide">
         </div>
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
     </div>
     <div class="centered">
         <h2 class="animate__animated animate__bounceIn">שירותינו 🌟</h2>
         <p>ב"דרך הכלב", אנו מאמינים בכוח של החיבור בין אדם לכלב ובפוטנציאל שלו לשינוי ולטיפול. אנו מציעים מגוון שירותים ומוצרים:</p>
         <ul>
             <li><strong>כלבנות טיפולית</strong>: הפעלת כלבים מאומנים במטרה לסייע לאנשים מכל הגילאים ורקעים.</li>
-            <li><strong>תכניות מותאמות אישית</strong>: פיתוח תוכניות טיפוליות מותאמות לצרכים ספציפיים של קבוצות או פרטים.</li>
             <li><strong>קלפי משחק חינוכיים וטיפוליים</strong>: ערכות קלפים מיוחדות המשלבות תרגול כישורים חברתיים, רגשיים וקוגניטיביים דרך משחק.</li>
+          <li><strong>שירותי ייעוץ ותמיכה</strong>: העברת טיפולים פרטניים וקבוצתיים למגוון אוכלוסיות.</li>
+            <li><strong>תכניות מותאמות אישית</strong>: פיתוח תוכניות טיפוליות מותאמות לצרכים ספציפיים של קבוצות או פרטים.</li>
         </ul>
 
         <a href="קישור-לחנות" class="button animate__animated animate__heartBeat animate__delay-2s">לחצו כאן לצפייה ורכישה 💼</a>
@@ -155,20 +173,40 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         let slides = document.querySelectorAll('.slide');
-        let index = 0;
-
-        function showSlide(i) {
+        let currentIndex = 0;
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+    
+        function showSlide(index) {
             slides.forEach((slide, idx) => {
-                slide.style.display = idx === i ? "block" : "none";
+                slide.style.display = idx === index ? "block" : "none";
             });
         }
-
+    
         function nextSlide() {
-            index = (index + 1) % slides.length;
-            showSlide(index);
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
         }
-
-        setInterval(nextSlide, 3000); // Change image every 3 seconds
+    
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(currentIndex);
+        }
+    
+        showSlide(currentIndex); // Show first slide initially
+        let slideInterval = setInterval(nextSlide, 5000); // Change image every 5 seconds
+    
+        prevButton.addEventListener('click', function() {
+            prevSlide();
+            clearInterval(slideInterval); // Reset interval on manual use
+            slideInterval = setInterval(nextSlide, 5000);
+        });
+    
+        nextButton.addEventListener('click', function() {
+            nextSlide();
+            clearInterval(slideInterval); // Reset interval on manual use
+            slideInterval = setInterval(nextSlide, 5000);
+        });
     });
 </script>
 </body>
