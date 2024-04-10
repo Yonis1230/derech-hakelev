@@ -12,32 +12,47 @@
             background: url('new_background_image_url.jpg') no-repeat center center fixed; 
             background-size: cover;
             color: #333;
+ 
         }
+        
         .container {
-/*             width: 80%;
+            width: 80%;
             margin: 0 auto;
             padding: 20px;
             background-color: rgba(255,255,255,0.9);
             border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.2); */
-
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
             display: flex;
             flex-direction: column;
-            align-items: center; /* Centers the content horizontally */
-            width: 90%;
-            max-width: 1200px; /* Max width for larger screens */
-            margin: 20px auto;
-            padding: 40px;
-            background-color: rgba(255,255,255,0.95);
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            align-items: center; 
+            max-width: 1200px; 
         }
+        
         .centered {
-/*             text-align: center; */
-            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Vertically center content */
+            align-items: center; /* Horizontally center content */
             text-align: center;
-            margin: 20px 0;
+            padding: 40px; /* Adjust padding */
+            margin: 5px auto; /* Consistent margin for separation */
+            border-radius: 20px; /* Softened corners for a modern look */
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+            width: 90%; /* Responsive width */
+            max-width: 1200px; /* Maximum width */
+            gap: 20px; /* Spacing between elements inside the container */
         }
+        
+        .centered h1, .centered h2, .centered h3 {
+            margin-top: 0; /* Minimal top margin for titles */
+        }
+
+        .multilinks{
+ 
+            display: inline-block;
+        }
+        
         h1, h2, h3 {
             color: #005f73;
         }
@@ -50,20 +65,12 @@
             display: inline-block;
             margin: 5px;
             transition: background-color 0.3s ease;
+            
         }
         a:hover, .button:hover {
             background-color: #fcbf49;
         }
 
-        .button {
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        
-        .button:hover {
-            background-color: #ff9933; /* A lighter orange */
-            transform: translateY(-2px); /* Slight lift */
-        }
-        
         .emoji {
             font-size: 1.5em;
         }
@@ -71,17 +78,16 @@
         .centered ul {
             list-style-type: none; /* Removes the bullets */
             padding: 0;
+            margin: 0;
+
         }
 
         .centered li {
-            padding: 8px 0; /* Adds vertical padding for spacing */
+            padding: 4px 0; /* Adds vertical padding for spacing */
         }
         
         .follow-us {
-            padding: 20px;
             background-color: #f0f0f0;
-            border-radius: 10px;
-            margin-top: 20px;
         }
         
         .social-icons {
@@ -153,10 +159,6 @@
             background-color: rgba(0,0,0,0.8); /* Darker shade on hover for feedback */
         }
         @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-
             .image-slider {
                 max-width: 100%; /* Allows the slider to fit small screens */
             }
@@ -169,7 +171,6 @@
             /* Adjust button positioning for mobile if needed */
             .prev { left: -10px; } /* Closer to the edge on small screens */
             .next { right: -10px; } /* Closer to the edge on small screens */
-            
         }
     </style>
 </head>
@@ -202,7 +203,7 @@
         <a href="קישור-לחנות" class="button animate__animated animate__heartBeat animate__delay-2s">לחצו כאן לצפייה ורכישה 💼</a>
     </div>
 
-    <div class="centered">
+    <div class="centered multilinks">
         <h3>צרו קשר 052-4013354 📞</h3>
         <p>לקבלת פרטים נוספים על השירותים והמוצרים שלנו, ניתן ליצור קשר באחת הדרכים הבאות:</p>
         <a href="whatsapp://send?phone=0524013354" class="button">שלחו לנו הודעה 📲</a>
