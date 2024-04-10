@@ -78,6 +78,33 @@
         .social-icon:hover i {
             transform: rotate(360deg);
         }
+        .image-slider {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .slider {
+            position: relative;
+            width: 300%;
+            animation: slide-animation 10s infinite;
+        }
+        
+        .slide {
+            float: right;
+            width: 33.3333%;
+            display: none;
+        }
+        
+        @keyframes slide-animation {
+            0% { margin-left: 0%; }
+            20% { margin-left: 0%; }
+            33% { margin-left: -100%; }
+            53% { margin-left: -100%; }
+            66% { margin-left: -200%; }
+            86% { margin-left: -200%; }
+            100% { margin-left: 0%; }
+        }
     </style>
 </head>
 <body>
@@ -88,7 +115,12 @@
         <p>ברוכים הבאים ל"דרך הכלב" - חלל המציע גישה חדשנית ומגוונת לכלבנות טיפולית </p>
     </div>
     <img src="logo_2.webp" alt="סדנה טיפולית" title="SportTech" style="max-width: 100%; height: auto; display: block; margin: auto;">
-
+    <div class="image-slider centered animate__animated animate__fadeIn">
+        <div class="slider">
+            <img src="logo_2.webp" alt="" class="slide" style="display: block;">
+            <img src="logo_.webp" alt="" class="slide">
+        </div>
+    </div>
     <div class="centered">
         <h2 class="animate__animated animate__bounceIn">שירותינו 🌟</h2>
         <p>ב"דרך הכלב", אנו מאמינים בכוח של החיבור בין אדם לכלב ובפוטנציאל שלו לשינוי ולטיפול. אנו מציעים מגוון שירותים ומוצרים:</p>
@@ -103,7 +135,7 @@
     </div>
 
     <div class="centered">
-        <h3>צרו קשר 052-4013354📞</h3>
+        <h3>צרו קשר 052-4013354 📞</h3>
         <p>לקבלת פרטים נוספים על השירותים והמוצרים שלנו, ניתן ליצור קשר באחת הדרכים הבאות:</p>
         <a href="whatsapp://send?phone=0524013354" class="button">שלחו לנו הודעה 📲</a>
         <a href="mailto:yonis1230@gmail.com" class="button">דברו איתנו 📧</a>
@@ -122,6 +154,24 @@
         <p>זכויות יוצרים © דרך הכלב 2024. כל הזכויות שמורות.</p>
     </footer>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let slides = document.querySelectorAll('.slide');
+        let index = 0;
 
+        function showSlide(i) {
+            slides.forEach((slide, idx) => {
+                slide.style.display = idx === i ? "block" : "none";
+            });
+        }
+
+        function nextSlide() {
+            index = (index + 1) % slides.length;
+            showSlide(index);
+        }
+
+        setInterval(nextSlide, 3000); // Change image every 3 seconds
+    });
+</script>
 </body>
 </html>
