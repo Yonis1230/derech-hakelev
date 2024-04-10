@@ -82,19 +82,15 @@
             width: 100%;
             overflow: hidden;
             position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Add shadow to the slider for depth */
+            border-radius: 10px; /* Round corners */
+            margin: 20px 0; /* Add some spacing */
         }
         
-        .slider {
-            position: relative;
-            width: 300%;
-        }
-        
-        .slide {
-            float: right;
-            width: 33.3333%;
+        .slider .slide {
+            width: 100%;
             display: none;
-            max-width: 100%;
-            height: auto;
+            object-fit: cover; /* Ensure images cover the area well */
         }
         
         .prev, .next {
@@ -102,22 +98,22 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            padding: 16px;
-            color: white;
+            padding: 12px; /* Adjust size */
+            color: #f77f00; /* Use theme color */
             font-weight: bold;
-            font-size: 18px;
-            border-radius: 0 3px 3px 0;
+            font-size: 24px; /* Make arrows larger */
+            border-radius: 50%; /* Circular buttons */
             user-select: none;
-            background-color: rgba(0,0,0,0.5);
+            background-color: white; /* Change to fit theme */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Add shadow for depth */
         }
         
-        .next {
-            right: 0;
-            border-radius: 3px 0 0 3px;
-        }
+        .prev { left: 10px; }
+        .next { right: 10px; }
         
         .prev:hover, .next:hover {
-            background-color: rgba(0,0,0,0.8);
+            background-color: #fcbf49; /* Lighter shade on hover */
+            color: white;
         }
     </style>
 </head>
@@ -132,7 +128,8 @@
         <div class="slider">
             <img src="logo_2.webp" alt="Image 1" class="slide">
             <img src="logo_1.webp" alt="Image 2" class="slide">
-            <img src="image3.jpg" alt="Image 3" class="slide">
+            <img src="logo_2.webp" alt="Image 3" class="slide">
+            <img src="logo_1.webp" alt="Image 1" class="slide">
         </div>
         <button class="prev">&#10094;</button>
         <button class="next">&#10095;</button>
