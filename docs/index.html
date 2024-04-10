@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background: url('background_image_url.jpg') no-repeat center center fixed; 
+            background: url('new_background_image_url.jpg') no-repeat center center fixed; 
             background-size: cover;
             color: #333;
         }
@@ -16,16 +16,27 @@
             width: 80%;
             margin: 0 auto;
             padding: 20px;
-            background-color: rgba(255,255,255,0.8);
+            background-color: rgba(255,255,255,0.9);
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+        .centered {
+            text-align: center;
         }
         h1, h2, h3 {
-            color: #006d77;
+            color: #005f73;
         }
-        a {
-            color: #d62828;
-            text-decoration: none;
+        a, .button {
+            color: #ffffff;
+            background-color: #f77f00;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+        }
+        a:hover, .button:hover {
+            background-color: #fcbf49;
         }
         .emoji {
             font-size: 1.5em;
@@ -35,34 +46,33 @@
 <body>
 
 <div class="container animate__animated animate__fadeIn">
-    <h1>דרך הכלב 🐾</h1>
-    <p>ברוכים הבאים ל"דרך הכלב" - חלל המציע גישה חדשנית ומגוונת לכלבנות טיפולית ולימודית.</p>
-    <img src="logo_2.webp" alt="סדנה טיפולית" title="SportTech" style="max-width: 100%; height: auto;">
+    <div class="centered">
+        <h1>דרך הכלב 🐕</h1>
+        <p>ברוכים הבאים ל"דרך הכלב" - חלל המציע גישה חדשנית ומגוונת לכלבנות טיפולית ולימודית.</p>
+    </div>
+    <img src="logo_2.webp" alt="סדנה טיפולית" title="SportTech" style="max-width: 100%; height: auto; display: block; margin: auto;">
 
-    <h2>שירותינו</h2>
-    <p>ב"דרך הכלב", אנו מאמינים בכוח של החיבור בין אדם לכלב ובפוטנציאל שלו לשינוי ולטיפול. אנו מציעים מגוון שירותים ומוצרים:</p>
-    <ul>
-        <li><strong>כלבנות טיפולית</strong>: הפעלת כלבים מאומנים במטרה לסייע לאנשים מכל הגילאים ורקעים.</li>
-        <li><strong>קלפי משחק חינוכיים וטיפוליים</strong>: ערכות קלפים מיוחדות המשלבות תרגול כישורים חברתיים, רגשיים וקוגניטיביים דרך משחק.</li>
-        <!-- Add more services as needed -->
-    </ul>
+    <div class="centered">
+        <h2 class="animate__animated animate__bounceIn">שירותינו 🌟</h2>
+        <p>ב"דרך הכלב", אנו מאמינים בכוח של החיבור בין אדם לכלב ובפוטנציאל שלו לשינוי ולטיפול. אנו מציעים מגוון שירותים ומוצרים:</p>
+        <ul>
+            <li><strong>כלבנות טיפולית</strong>: הפעלת כלבים מאומנים במטרה לסייע לאנשים מכל הגילאים ורקעים.</li>
+            <li><strong>קלפי משחק חינוכיים וטיפוליים</strong>: ערכות קלפים מיוחדות המשלבות תרגול כישורים חברתיים, רגשיים וקוגניטיביים דרך משחק.</li>
+          <li><strong>שירותי ייעוץ ותמיכה</strong>: מתן ייעוץ מקצועי למשפחות וארגונים המעוניינים להשתמש בכלבים לצורכי טיפול ותמיכה.</li>
+            <li><strong>תכניות מותאמות אישית</strong>: פיתוח תוכניות טיפוליות מותאמות לצרכים ספציפיים של קבוצות או פרטים.</li>
+        </ul>
 
-    <h3>הזמנת מוצרים ושירותים</h3>
-    <p>גלו ורכשו את המוצרים והשירותים שלנו דרך האתר: <a href="קישור-לחנות">לחצו כאן לצפייה ורכישה</a></p>
+        <a href="קישור-לחנות" class="button animate__animated animate__heartBeat animate__delay-2s">לחצו כאן לצפייה ורכישה 💼</a>
+    </div>
 
-    <h3>צרו קשר</h3>
-    <p>לקבלת פרטים נוספים על השירותים והמוצרים שלנו, ניתן ליצור קשר באחת הדרכים הבאות:</p>
-    <p>וואטסאפ: <a href="whatsapp://send?phone=מספר-הטלפון-שלך">שלחו לנו הודעה</a></p>
-    <p>אימייל: <a href="mailto:האימייל-שלך">דברו איתנו</a></p>
+    <div class="centered">
+        <h3>צרו קשר 📞</h3>
+        <p>לקבלת פרטים נוספים על השירותים והמוצרים שלנו, ניתן ליצור קשר באחת הדרכים הבאות:</p>
+        <a href="whatsapp://send?phone=מספר-הטלפון-שלך" class="button">שלחו לנו הודעה 📲</a>
+        <a href="mailto:האימייל-שלך" class="button">דברו איתנו 📧</a>
+    </div>
 
-    <!-- Add more contact options as needed -->
-
-    <h3>עקבו אחרינו</h3>
-    <p>הצטרפו לקהילתנו ועקבו אחר העדכונים האחרונים:</p>
-    <p>פייסבוק: <a href="קישור-לפייסבוק">Facebook</a></p>
-    <p>אינסטגרם: <a href="קישור-לאינסטגרם">Instagram</a></p>
-
-    <footer>
+    <footer class="centered">
         <p>זכויות יוצרים © דרך הכלב 2024. כל הזכויות שמורות.</p>
     </footer>
 </div>
