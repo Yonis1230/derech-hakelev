@@ -128,14 +128,14 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
             width: calc(90% + 20px);
             max-width: 600px; /* Maximum width */
-            max-height: 600px;
-            width: 600px;;
-            height: 600px;
             border-radius: 20px;
             margin: 5px auto; 
             display: flex;
             justify-content: center;
             align-items: center;
+            max-height: 600px;
+            width: 600px;;
+            height: 600px;
         }
         
         .slider .slide {
@@ -181,9 +181,9 @@
             .prev { left: -10px; } /* Closer to the edge on small screens */
             .next { right: -10px; } /* Closer to the edge on small screens */
         }
-        @media (max-height: 768px) {
+        @media (max-height: 800px) {
             .image-slider {
-                max-height: 150px; /* Allows the slider to fit small screens */
+                max-height: 300px; /* Allows the slider to fit small screens */
             }
     </style>
 </head>
