@@ -169,7 +169,11 @@
         }
         @media (max-width: 768px) {
             .image-slider {
-                max-width: 100%; /* Allows the slider to fit small screens */
+/*                 max-width: 100%; */
+                width: 90vw; /* Adjust width to scale with the viewport width */
+                height: auto; /* Maintain aspect ratio */
+                max-height: 300px; /* Maximum height limitation */
+                margin: 5px auto; /* Center the slider */
             }
         
             .prev, .next {
@@ -181,10 +185,6 @@
             .prev { left: -10px; } /* Closer to the edge on small screens */
             .next { right: -10px; } /* Closer to the edge on small screens */
         }
-        @media (max-height: 800px) {
-            .image-slider {
-                max-height: 300px; /* Allows the slider to fit small screens */
-            }
     </style>
 </head>
 <body>
