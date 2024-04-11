@@ -126,13 +126,13 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             background-color: rgba(255, 255, 255, 0.9);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-            width: calc(90% + 20px);
+/*             width: calc(90% + 20px); */
             max-width: 600px; /* Maximum width */
             border-radius: 20px;
             margin: 5px auto; 
-            display: flex;
-            justify-content: center;
-/*             align-items: center; */
+/*             display: flex; */
+/*             justify-content: center; */
+            align-items: center;
             height: 600px;
             width: 600px;;
             max-height: 600px;
@@ -168,7 +168,13 @@
             background-color: rgba(0,0,0,0.8); /* Darker shade on hover for feedback */
         }
         @media (max-width: 768px) {
-        
+            .image-slider {
+              max-width: 100%;
+              width: 90vw; /* Adjust width to scale with the viewport width */
+              height: 90h; /* Maintain aspect ratio */
+              max-height: 300px; /* Maximum height limitation */
+            }
+
             .prev, .next {
                 font-size: -40px; /* Larger on mobile for easier clicking */
                 padding: -30px; /* Larger touch area for thumbs */
