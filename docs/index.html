@@ -133,8 +133,9 @@
             height: 600px;
             border-radius: 20px;
             margin: 5px auto; 
-            justify-content: center; /* Vertically center content */
-            align-items: center; /* Horizontally center content */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         .slider .slide {
@@ -182,7 +183,7 @@
         }
         @media (max-height: 768px) {
             .image-slider {
-                max-height: 300px; /* Allows the slider to fit small screens */
+                max-height: 150px; /* Allows the slider to fit small screens */
             }
     </style>
 </head>
