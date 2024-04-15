@@ -160,24 +160,25 @@
             background-color: rgba(0,0,0,0.8);
         }
 
-        @media (max-width: 768px) {
-            .image-slider {
-                max-width: 100%;
-                width: 90vw;
-                height: 90vh;
-                max-height: 300px;
-            }
+       @media (max-width: 768px) {
+    .image-slider {
+        max-width: 100%;
+        width: 90vw;
+        height: auto; /* מתאים את הגובה לתמונה */
+        max-height: 300px; /* מגביל את הגובה המרבי */
+    }
 
-            .prev, .next {
-                font-size: 20px; /* Adjusted size */
-                padding: 10px; /* Adjusted padding */
-                width: 30px;
-                height: 30px;
-                margin-top: -15px;
-            }
-            
-            .prev { left: 10px; }
-            .next { right: 10px; }
+    .prev, .next {
+        font-size: 20px; /* מקטין את גודל הכפתורים */
+        padding: 10px; /* מקטין את הפאדינג של הכפתורים */
+        width: 30px; /* מגדיר רוחב קבוע לכפתורים */
+        height: 30px; /* מגדיר גובה קבוע לכפתורים */
+        top: calc(50% - 15px); /* ממקם את הכפתורים במרכז התמונה */
+    }
+    
+    .prev { right: 10px; } /* מתקן את מיקום הכפתור ליד השוליים */
+    .next { left: 10px; } /* מתקן את מיקום הכפתור ליד השוליים */
+
         }
     </style>
 </head>
