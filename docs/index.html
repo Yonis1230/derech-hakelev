@@ -160,25 +160,23 @@
             background-color: rgba(0,0,0,0.8);
         }
 
-       @media (max-width: 768px) {
-    .image-slider {
-        max-width: 100%;
-        width: 90vw;
-        height: auto; /* מתאים את הגובה לתמונה */
-        max-height: 300px; /* מגביל את הגובה המרבי */
-    }
-
+     @media (max-width: 768px) {
     .prev, .next {
-        font-size: 20px; /* מקטין את גודל הכפתורים */
-        padding: 10px; /* מקטין את הפאדינג של הכפתורים */
-        width: 30px; /* מגדיר רוחב קבוע לכפתורים */
-        height: 30px; /* מגדיר גובה קבוע לכפתורים */
-        top: calc(50% - 15px); /* ממקם את הכפתורים במרכז התמונה */
+        font-size: 18px; /* גודל כותרת מותאם */
+        width: 25px; /* רוחב כפתור מותאם */
+        height: 25px; /* גובה כפתור מותאם */
+        margin-top: -12.5px; /* מרכז את הכפתור ביחס לגובה שלו */
+        padding: 8px; /* פאדינג פנימי מותאם */
     }
     
-    .next { left: 10px; } /* מתקן את מיקום הכפתור ליד השוליים */
-    .prev { right: 10px; } /* מתקן את מיקום הכפתור ליד השוליים */
-
+    .prev { 
+        left: 10px; /* מיקום משופר לכפתור קדימה */
+        transform: translateY(-50%) rotate(180deg); /* סובב את החץ קדימה */
+    }
+    .next { 
+        right: 10px; /* מיקום משופר לכפתור אחורה */
+        transform: translateY(-50%);
+    
         }
     </style>
 </head>
