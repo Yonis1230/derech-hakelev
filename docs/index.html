@@ -160,30 +160,31 @@
             background-color: rgba(0,0,0,0.8);
         }
 
-     @media (max-width: 768px) {
+    @media (max-width: 768px) {
     .image-slider {
-        max-width: 90%;
-        margin: auto;
+        max-width: 100%;
+        height: auto;
+        margin: 0;
         position: relative;
-        height: auto; /* מתאים את הגובה לגודל התמונה */
     }
 
     .slider .slide {
         width: 100%;
-        display: block; /* מציג תמונה אחת בכל פעם */
+        display: block;
     }
 
     .prev, .next {
-        font-size: 24px; /* עדיף לא לקטון מדי את גודל החצים כדי שיהיה נוח ללחוץ */
-        width: auto;
-        height: auto;
-        padding: 10px; /* מספיק פאדינג לאזור לחיצה נוח */
-        top: 50%;
-        transform: translate(0, -50%);
+        font-size: 18px; /* קטן יותר מ-24px אך עדיין נראה */
+        padding: 10px;
+        margin: -20px; /* ממרכז את החצים יותר */
     }
     
-    .next { left: 5%; }
-    .prev { right: 5%; }
+    .next {
+        left: 10px; /* שים לב, זהו כעת מצד שמאל */
+    }
+
+    .prev {
+        right: 10px; /* וזהו מצד ימין */
 }
 
         }
