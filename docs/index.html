@@ -160,32 +160,41 @@
             background-color: rgba(0,0,0,0.8);
         }
 
-    @media (max-width: 768px) {
+ @media (max-width: 768px) {
     .image-slider {
         max-width: 100%;
-        height: auto;
-        margin: 0;
+        margin: auto;
         position: relative;
+        height: auto; /* Adjusts to image size */
     }
 
     .slider .slide {
         width: 100%;
-        display: block;
+        display: block; /* Shows one image at a time */
     }
 
     .prev, .next {
-        font-size: 18px; /* קטן יותר מ-24px אך עדיין נראה */
-        padding: 10px;
-        margin: -20px; /* ממרכז את החצים יותר */
+        font-size: 18px; /* Smaller arrow size but still clickable */
+        padding: 10px; /* Sufficient padding for clickable area */
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0,0,0,0.5); /* Semi-transparent background for visibility */
+        border-radius: 3px; /* Rounded corners for the arrows */
     }
     
-    .next {
-        left: 10px; /* שים לב, זהו כעת מצד שמאל */
+    .prev {
+        left: 10px;
+        border-radius: 3px 0 0 3px;
     }
 
-    .prev {
-        right: 10px; /* וזהו מצד ימין */
-}
+    .next {
+        right: 10px;
+        border-radius: 0 3px 3px 0;
+    }
+
+    .prev:hover, .next:hover {
+        background-color: rgba(0,0,0,0.8); /* Darkens on hover */
+    }
 
         }
     </style>
