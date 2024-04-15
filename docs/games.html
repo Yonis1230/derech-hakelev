@@ -8,7 +8,16 @@
 <body>
 <div class="products">
   <div class="product-item">
-    <img src="pic65.jpg" alt="לכל בעיה פתרון">
+    <div class="image-slider">
+      <div class="slides-container">
+        <img class="slide" src="pic65.jpg" alt="לכל בעיה פתרון">
+        <img class="slide" src="pic64.jpg" alt="לכל בעיה פתרון 2">
+        <img class="slide" src="pic63.jpg" alt="לכל בעיה פתרון 3">
+        <!-- הוסף עוד תמונות לפי הצורך -->
+      </div>
+      <a class="prev" onclick="plusSlides(-1, this.parentElement)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1, this.parentElement)">&#10095;</a>
+    </div>
     <h3>לכל בעיה פתרון</h3>
     <p>משחק חינוכי המפתח את היכולות לפתרון בעיות, שיתוף פעולה, תקשורת ועוד</p>
     <p>מחיר: ₪150</p>
@@ -16,5 +25,24 @@
   </div>
   <!-- חזור על הבלוק לכל משחק -->
 </div>
+
+<script>
+function plusSlides(n, slider) {
+    let slides = slider.getElementsByClassName("slide");
+    let currentIndex = Array.from(slides).findIndex(slide => slide.style.display === "block");
+    currentIndex += n;
+    if (currentIndex >= slides.length) currentIndex = 0;
+    if (currentIndex < 0) currentIndex = slides.length - 1;
+    Array.from(slides).forEach(slide => slide.style.display = "none");
+    slides[currentIndex].style.display = "block";
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.image-slider').forEach(slider => {
+        let slides = slider.getElementsByClassName('slide');
+        if (slides.length > 0) slides[0].style.display = "block";
+    });
+});
+</script>
 </body>
 </html>
