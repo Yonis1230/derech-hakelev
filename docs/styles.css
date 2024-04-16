@@ -125,8 +125,15 @@ a:hover,
 
 .slider .slide {
   width: 100%;
-  display: none;
+  display: block;
   object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: -9999px; /* Move off-screen when not active */
+}
+
+.slider .slide.active {
+  left: 0; /* Move into view when active */
 }
 
 .prev,
