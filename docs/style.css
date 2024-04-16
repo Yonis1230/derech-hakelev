@@ -44,7 +44,7 @@ h3 {
   color: #005f73;
 }
 
-a,
+.astyle,
 .button {
   color: #ffffff;
   background-color: #f77f00;
@@ -55,7 +55,7 @@ a,
   transition: background-color 0.3s ease;
 }
 
-a:hover,
+.astyle:hover,
 .button:hover {
   background-color: #fcbf49;
 }
