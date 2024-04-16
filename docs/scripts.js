@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
     clearInterval(slideInterval);
     slideInterval = setInterval(function () {
       changeSlide(1);
-    }, 5000);
+    }, 10000);
   }
 
   prevButton.addEventListener("click", function () {
