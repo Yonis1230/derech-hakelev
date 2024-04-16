@@ -116,7 +116,8 @@ a:hover,
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   max-width: 600px;
   border-radius: 20px;
-  margin: 5px auto;
+  /* margin: 5px auto; */
+  /* display: flex; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -137,7 +138,7 @@ a:hover,
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  padding: 16px;
+  /* padding: 16px; */
   color: white;
   font-weight: bold;
   font-size: 24px;
@@ -162,31 +163,19 @@ a:hover,
 
 @media (max-width: 768px) {
   .image-slider {
-    max-height: 300px; /* Allows the slider to fit small screens */
-    max-height: 150px; /* Allows the slider to fit small screens */
-  }
-
-  .slider .slide {
-    width: 100%;
-    display: block; /* Shows one image at a time */
+    max-width: 300px;
+    width: 90vw; /* Adjust width to scale with the viewport width */
+    height: 90h; /* Maintain aspect ratio */
+    max-height: 300px; /* Maximum height limitation */
   }
 
   .prev,
   .next {
-    font-size: 18px; /* Smaller arrow size but still clickable */
-    padding: 10px; /* Sufficient padding for clickable area */
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(
-      0,
-      0,
-      0,
-      0.5
-    ); /* Semi-transparent background for visibility */
-    border-radius: 3px; /* Rounded corners for the arrows */
+    font-size: -40px; /* Larger on mobile for easier clicking */
+    padding: -30px; /* Larger touch area for thumbs */
   }
 
-  .next {
+  /* .next {
     left: 0px;
     border-radius: 3px 0 0 3px;
   }
@@ -194,7 +183,7 @@ a:hover,
   .prev {
     right: 0px;
     border-radius: 0 3px 3px 0;
-  }
+  } */
 
   .prev:hover,
   .next:hover {
