@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var nextButton = document.querySelector(".next");
   var slideInterval = setInterval(function () {
     changeSlide(1);
-  }, 5000);
+  }, 10000);
 
   function preloadImage(slideIndex) {
     var index = (slideIndex + slides.length) % slides.length; // Wrap-around
@@ -33,15 +33,17 @@ document.addEventListener("DOMContentLoaded", function () {
     clearInterval(slideInterval);
     slideInterval = setInterval(function () {
       changeSlide(1);
-    }, 10000); // Adjusted to 10 seconds for demonstration
+    }, 10000);
   }
 
   prevButton.addEventListener("click", function () {
     changeSlide(-1);
+    resetInterval(); // Resets the timer when the user navigates manually
   });
 
   nextButton.addEventListener("click", function () {
     changeSlide(1);
+    resetInterval(); // Resets the timer when the user navigates manually
   });
 
   // Initial setup to preload images on first load
