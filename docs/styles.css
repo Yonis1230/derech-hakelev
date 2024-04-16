@@ -60,6 +60,15 @@ a:hover,
   background-color: #fcbf49;
 }
 
+header a {
+  background-color: transparent; /* Explicitly removing any background */
+  display: inline-block; /* Ensures proper spacing and layout */
+}
+
+header a:hover {
+  background-color: transparent; /* Ensures no change on hover */
+}
+
 .emoji {
   font-size: 1.5em;
 }
@@ -125,7 +134,7 @@ a:hover,
 
 .slider .slide {
   width: 100%;
-  /* display: none; */
+  display: none;
   object-fit: cover;
 }
 
