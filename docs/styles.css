@@ -63,6 +63,7 @@ a:hover,
 header a {
   background-color: transparent; /* Explicitly removing any background */
   display: inline-block; /* Ensures proper spacing and layout */
+  padding: 0; /* Removes any padding */
 }
 
 header a:hover {
@@ -169,14 +170,17 @@ header a:hover {
 
 .main {
   text-align: center;
+  padding: 0;
 }
 
 .header {
   text-align: center;
+  padding: 0;
 }
 
 .footer {
   text-align: center;
+  padding: 0;
 }
 
 @media (max-width: 768px) {
