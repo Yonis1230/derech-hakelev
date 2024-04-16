@@ -1,6 +1,6 @@
 body {
   font-family: "Arial", sans-serif;
-  background: url("new_background_image_url.jpg") no-repeat center center fixed;
+  /* background: no-repeat center fixed; */
   background-size: cover;
   color: #333;
 }
@@ -116,9 +116,6 @@ a:hover,
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   max-width: 600px;
   border-radius: 20px;
-  /* margin: 5px auto; */
-  /* display: flex; */
-  display: block;
   justify-content: center;
   align-items: center;
   height: 400px;
@@ -128,7 +125,7 @@ a:hover,
 
 .slider .slide {
   width: 100%;
-  display: none;
+  /* display: none; */
   object-fit: cover;
 }
 
@@ -138,7 +135,7 @@ a:hover,
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  /* padding: 16px; */
+  padding: 16px;
   color: white;
   font-weight: bold;
   font-size: 24px;
@@ -163,26 +160,10 @@ a:hover,
 
 @media (max-width: 768px) {
   .image-slider {
-    max-width: 100%;
+    max-width: 300px;
     width: 90vw; /* Adjust width to scale with the viewport width */
     height: 90h; /* Maintain aspect ratio */
     max-height: 300px; /* Maximum height limitation */
-  }
-
-  .prev,
-  .next {
-    font-size: -40px; /* Larger on mobile for easier clicking */
-    padding: -30px; /* Larger touch area for thumbs */
-  }
-
-  .next {
-    left: 0px;
-    border-radius: 3px 0 0 3px;
-  }
-
-  .prev {
-    right: 0px;
-    border-radius: 0 3px 3px 0;
   }
 
   .prev:hover,
