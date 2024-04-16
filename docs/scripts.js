@@ -5,19 +5,24 @@ document.addEventListener("DOMContentLoaded", function () {
   var nextButton = document.querySelector(".next");
   var slideInterval = setInterval(function () {
     changeSlide(1);
-  }, 10000);
+  }, 10000); // Interval set for 10 seconds
 
   function preloadImage(slideIndex) {
-    var index = (slideIndex + slides.length) % slides.length; // Wrap-around
-    slides[index].src = slides[index].dataset.src; // Preload the image
-    slides[index].classList.add("preloaded"); // Optional: add a class if needed
+    var index = (slideIndex + slides.length) % slides.length;
+    var slide = slides[index];
+    if (!slide.src || slide.src !== slide.dataset.src) { // Check if not already loaded
+      slide.src = slide.dataset.src;
+    }
   }
 
   function showSlide(index) {
     slides.forEach(function (slide, idx) {
       slide.style.display = idx === index ? "block" : "none";
-      slide.src = slide.dataset.src; // Ensure the current slide is loaded
     });
+    // Ensure the current slide is loaded
+    if (slides[index].src !== slides[index].dataset.src) {
+      slides[index].src = slides[index].dataset.src;
+    }
     // Preload the next two images
     preloadImage(index + 1);
     preloadImage(index + 2);
@@ -47,5 +52,5 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Initial setup to preload images on first load
-  showSlide(0); // Show the first slide and preload next two
+  showSlide(0); // Show the first slide and preload the next two
 });
