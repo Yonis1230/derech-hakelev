@@ -118,7 +118,6 @@ a:hover,
   border-radius: 20px;
   /* margin: 5px auto; */
   /* display: flex; */
-  display: flex;
   justify-content: center;
   align-items: center;
   height: 400px;
@@ -138,7 +137,7 @@ a:hover,
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  /* padding: 16px; */
+  padding: 16px;
   color: white;
   font-weight: bold;
   font-size: 24px;
@@ -171,8 +170,8 @@ a:hover,
 
   .prev,
   .next {
-    font-size: -40px; /* Larger on mobile for easier clicking */
-    padding: -30px; /* Larger touch area for thumbs */
+    /* font-size: -40px; */
+    /* padding: -30px;  */
   }
 
   /* .next {
