@@ -167,6 +167,18 @@ header a:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
+.main {
+  text-align: center;
+}
+
+.header {
+  text-align: center;
+}
+
+.footer {
+  text-align: center;
+}
+
 @media (max-width: 768px) {
   .image-slider {
     max-width: 300px;
