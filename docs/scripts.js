@@ -10,20 +10,20 @@ document.addEventListener("DOMContentLoaded", function () {
   function preloadImage(slideIndex) {
     var index = (slideIndex + slides.length) % slides.length;
     var slide = slides[index];
-    if (!slide.src || slide.src !== slide.dataset.src) { // Check if not already loaded
+    if (!slide.src || slide.src !== slide.dataset.src) {
+      // Check if not already loaded
       slide.src = slide.dataset.src;
     }
   }
 
   function showSlide(index) {
     slides.forEach(function (slide, idx) {
-      slide.style.display = idx === index ? "block" : "none";
+      slide.classList.remove("active");
+      if (idx === index) {
+        slide.classList.add("active");
+        slide.src = slide.dataset.src; // Load current image
+      }
     });
-    // Ensure the current slide is loaded
-    if (slides[index].src !== slides[index].dataset.src) {
-      slides[index].src = slides[index].dataset.src;
-    }
-    // Preload the next two images
     preloadImage(index + 1);
     preloadImage(index + 2);
   }
