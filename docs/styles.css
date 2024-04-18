@@ -218,6 +218,25 @@ header a:hover {
   list-style-type: disc;
   margin-left: 20px;
 }
+.whatsapp-button {
+  color: #ffffff;
+  background-color: #25D366; /* ירוק וואטסאפ */
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.whatsapp-button i {
+  margin-right: 5px;
+}
+
+.whatsapp-button:hover {
+  background-color: #128C7E; /* ירוק כהה יותר */
+}
 
 
 
