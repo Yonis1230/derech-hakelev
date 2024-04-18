@@ -196,3 +196,40 @@ header a:hover {
     background-color: rgba(0, 0, 0, 0.8); /* Darkens on hover */
   }
 }
+.custom-create-game-section {
+  background-color: #f8f9fa; /* או צבע אחר שמתאים לעיצוב האתר */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-top: 20px;
+}
+
+.custom-create-game-section h2 {
+  color: #0056b3; /* או צבע אחר לבחירתך */
+  margin-bottom: 15px;
+}
+
+.custom-create-game-section p {
+  color: #333;
+  line-height: 1.6;
+}
+
+.custom-create-game-section ul {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.create-game-button {
+  background-color: #28a745; /* צבע כפתור וואטסאפ */
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+
+.create-game-button:hover {
+  background-color: #218838; /* צבע כפתור וואטסאפ בעת העברת העכבר */
+}
+
