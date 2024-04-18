@@ -219,17 +219,5 @@ header a:hover {
   margin-left: 20px;
 }
 
-.create-game-button {
-  background-color: #28a745; /* צבע כפתור וואטסאפ */
-  color: white;
-  padding: 10px 20px;
-  text-decoration: none;
-  display: inline-block;
-  border-radius: 5px;
-  margin-top: 15px;
-}
 
-.create-game-button:hover {
-  background-color: #218838; /* צבע כפתור וואטסאפ בעת העברת העכבר */
-}
 
