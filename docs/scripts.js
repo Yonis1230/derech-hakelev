@@ -57,34 +57,41 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initial setup to preload images on first load
   showSlide(0); // Show the first slide and preload the next two
 });
-const gameBoard = document.getElementById('gameBoard');
-const images = ['pic2.webp', 'pic5.webp', 'pic59.webp', 'pic2.webp', 'pic5.webp', 'pic59.webp'];
-images.sort(() => Math.random() - 0.5); // לערבב את התמונות
+document.addEventListener('DOMContentLoaded', function() {
+    const gameBoard = document.getElementById('gameBoard');
+    const images = [
+      'pic2.webp', 'pic2.webp',
+      'pic3.webp', 'pic3.webp',
+      'pic4.webp', 'pic4.webp',
+      'pic5.webp', 'pic5.webp',
+      'pic6.webp', 'pic6.webp',
+      'pic7.webp', 'pic7.webp',
+      'pic8.webp', 'pic8.webp'
+    ];
+    images.sort(() => Math.random() - 0.5); // לערבב את התמונות
 
-function createCard(image) {
-  const card = document.createElement('div');
-  card.classList.add('card');
-  card.style.backgroundImage = `url(${image})`;
-  card.onclick = function() {
-    card.classList.toggle('flipped');
-    checkForMatch();
-  };
-  return card;
-}
+    images.forEach(image => {
+      const card = document.createElement('div');
+      card.classList.add('card');
+      card.style.backgroundImage = `url('${image}')`;
+      card.addEventListener('click', () => {
+        card.classList.toggle('flipped');
+        checkForMatch();
+      });
+      gameBoard.appendChild(card);
+    });
 
-function checkForMatch() {
-  const flippedCards = document.querySelectorAll('.flipped');
-  if (flippedCards.length === 2) {
-    const firstImage = flippedCards[0].style.backgroundImage;
-    const secondImage = flippedCards[1].style.backgroundImage;
-    if (firstImage === secondImage) {
-      flippedCards.forEach(card => card.classList.add('matched'));
+    function checkForMatch() {
+      const flippedCards = document.querySelectorAll('.flipped');
+      if (flippedCards.length === 2) {
+        const firstImage = flippedCards[0].style.backgroundImage;
+        const secondImage = flippedCards[1].style.backgroundImage;
+        if (firstImage === secondImage) {
+          flippedCards.forEach(card => card.classList.add('matched'));
+        }
+        setTimeout(() => {
+          flippedCards.forEach(card => card.classList.remove('flipped'));
+        }, 1000);
+      }
     }
-    flippedCards.forEach(card => card.classList.remove('flipped'));
-  }
-}
-
-images.forEach(image => {
-  const card = createCard(image);
-  gameBoard.appendChild(card);
 });
