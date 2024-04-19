@@ -241,11 +241,20 @@ header a:hover {
   width: 100px;
   height: 100px;
   background-color: #fff;
+  background-size: cover;
   display: inline-block;
   margin: 5px;
   cursor: pointer;
-  background-size: cover;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
 }
 
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card.matched {
+  visibility: hidden;
+}
 
 
