@@ -237,6 +237,15 @@ header a:hover {
 .whatsapp-button:hover {
   background-color: #128C7E; /* ירוק כהה יותר */
 }
+.card {
+  width: 100px;
+  height: 100px;
+  background-color: #fff;
+  display: inline-block;
+  margin: 5px;
+  cursor: pointer;
+  background-size: cover;
+}
 
 
 
