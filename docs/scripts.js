@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
   showSlide(0); // Show the first slide and preload the next two
 });
 const gameBoard = document.getElementById('gameBoard');
-const images = ['dog1.png', 'dog2.png', 'dog3.png', 'dog1.png', 'dog2.png', 'dog3.png'];
+const images = ['pic2.webp', 'pic5.webp', 'pic59.webp', 'pic2.webp', 'pic5.webp', 'pic59.webp'];
 images.sort(() => Math.random() - 0.5); // לערבב את התמונות
 
 function createCard(image) {
