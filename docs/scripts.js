@@ -54,9 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
     resetInterval(); // Resets the timer when the user navigates manually
   });
 
-  // Initial setup to preload images on first load
-  showSlide(0); // Show the first slide and preload the next two
-});
 document.addEventListener('DOMContentLoaded', function() {
     const gameBoard = document.getElementById('gameBoard');
     const images = [
@@ -75,9 +72,11 @@ document.addEventListener('DOMContentLoaded', function() {
       card.classList.add('card');
       card.addEventListener('click', function() {
         if (!card.classList.contains('flipped') && !card.classList.contains('matched')) {
-            card.style.backgroundImage = `url('${image}')`; // הוסף את התמונה כאשר הקלף מתהפך
-            card.classList.add('flipped');
-            checkForMatch(); // בדוק התאמה רק אם הקלף נלחץ ומתהפך
+            if (document.querySelectorAll('.flipped:not(.matched)').length < 2) {
+                card.classList.add('flipped');
+                card.style.backgroundImage = `url('${image}')`; // הוסף את התמונה כאשר הקלף מתהפך
+                checkForMatch();
+            }
         }
       });
       gameBoard.appendChild(card);
@@ -91,15 +90,16 @@ document.addEventListener('DOMContentLoaded', function() {
           const secondImage = flippedCards[1].style.backgroundImage;
           if (firstImage === secondImage) {
             flippedCards.forEach(card => {
-              card.classList.add('matched'); // קלפים שמצאו זוג יקבלו מחלקה של 'matched'
+              card.classList.add('matched'); // הוסף מחלקת 'matched'
             });
           } else {
             flippedCards.forEach(card => {
               card.classList.remove('flipped');
-              setTimeout(() => card.style.backgroundImage = 'none', 600); // הסר את התמונה לאחר ההמתנה
+              card.style.backgroundImage = 'none'; // הסר את התמונה
             });
           }
         }, 1000);
       }
     }
 });
+
