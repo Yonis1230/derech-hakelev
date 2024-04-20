@@ -54,6 +54,9 @@ document.addEventListener("DOMContentLoaded", function () {
     resetInterval(); // Resets the timer when the user navigates manually
   });
 
+  // Initial setup to preload images on first load
+  showSlide(0); // Show the first slide and preload the next two
+});
 document.addEventListener('DOMContentLoaded', function() {
     const gameBoard = document.getElementById('gameBoard');
     const images = [
@@ -102,4 +105,3 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 });
-
