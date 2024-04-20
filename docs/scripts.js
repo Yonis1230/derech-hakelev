@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 function celebrateWin() {
     const celebration = document.createElement('div');
-    celebration.innerHTML = '<h1 class="animate__animated animate__heartBeat">ניצחתם! יופי!</h1>';
+    celebration.innerHTML = '<h1 class="animate__animated animate__heartBeat">אם מתמאצים, לכל בעיה פתרון מוצאים, כל הכבוד!!</h1>';
     document.body.appendChild(celebration);
 
     // אפשרות להסיר את ההודעה לאחר כמה שניות
