@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         card.style.backgroundImage = 'none'; // הסרת התמונה בסגירת הקלף
                     });
                 }
-            }, 2000);
+            }, 1500);
         }
     }
 });
