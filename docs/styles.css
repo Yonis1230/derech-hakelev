@@ -241,20 +241,20 @@ header a:hover {
   width: 100px;
   height: 100px;
   background-color: #000; /* רקע שחור */
-  background-size: cover;
   display: inline-block;
   margin: 5px;
   cursor: pointer;
-  transition: background 0.6s, transform 0.6s;
+  transition: transform 0.6s;
   transform-style: preserve-3d;
   transform: rotateY(180deg); /* כל הקלפים מתחילים כשהם פונים הצידה האחורי */
+  background-image: none; /* התמונה מוסתרת בהתחלה */
 }
 
 .card.flipped {
   transform: rotateY(0deg); /* כשקלף מתהפך הוא חוזר למצב רגיל והתמונה מוצגת */
-  background-image: url('path/to/your/image.png'); /* הוסף את התמונה כאן */
 }
 
 .card.matched {
   visibility: hidden;
 }
+
