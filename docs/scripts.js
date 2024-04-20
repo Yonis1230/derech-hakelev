@@ -72,18 +72,18 @@ document.addEventListener('DOMContentLoaded', function() {
         { id: 5, src: 's5.webp' },
     ];
 
-    images.sort(() => Math.random() - 0.5);
+    images.sort(() => Math.random() - 0.5); // לערבב את התמונות
 
     images.forEach(image => {
         const card = document.createElement('div');
         card.classList.add('card');
-        card.dataset.id = image.id;
-        card.style.backgroundImage = 'none';
+        card.dataset.id = image.id; // הוספת מזהה לכל קלף
+        card.style.backgroundImage = 'none'; // התמונה מוסתרת בהתחלה
         card.addEventListener('click', function() {
             if (!card.classList.contains('flipped') && !card.classList.contains('matched')) {
                 if (document.querySelectorAll('.flipped:not(.matched)').length < 2) {
                     card.classList.add('flipped');
-                    card.style.backgroundImage = `url('${image.src}')`;
+                    card.style.backgroundImage = `url('${image.src}')`; // הצגת התמונה בזמן היפוך
                     checkForMatch();
                 }
             }
@@ -91,38 +91,21 @@ document.addEventListener('DOMContentLoaded', function() {
         gameBoard.appendChild(card);
     });
 
-   function checkForMatch() {
-    const flippedCards = document.querySelectorAll('.flipped:not(.matched)');
-    console.log("Checking for match...");  // הדפסה לקונסול לבדיקה
-    if (flippedCards.length === 2) {
-        setTimeout(() => {
-            const firstId = flippedCards[0].dataset.id;
-            const secondId = flippedCards[1].dataset.id;
-            if (firstId === secondId) {
-                flippedCards.forEach(card => card.classList.add('matched'));
-                console.log("Pair matched!");  // הדפסה לקונסול כשזוג נמצא
-                if (document.querySelectorAll('.card:not(.matched)').length === 0) {
-                    console.log("All pairs matched, celebrating!");  // הדפסה לקונסול כשכל הזוגות נמצאו
-                    celebrateWin();
+    function checkForMatch() {
+        const flippedCards = document.querySelectorAll('.flipped:not(.matched)');
+        if (flippedCards.length === 2) {
+            setTimeout(() => {
+                const firstId = flippedCards[0].dataset.id;
+                const secondId = flippedCards[1].dataset.id;
+                if (firstId === secondId) {
+                    flippedCards.forEach(card => card.classList.add('matched'));
+                } else {
+                    flippedCards.forEach(card => {
+                        card.classList.remove('flipped');
+                        card.style.backgroundImage = 'none'; // הסרת התמונה בסגירת הקלף
+                    });
                 }
-            } else {
-                flippedCards.forEach(card => {
-                    card.classList.remove('flipped');
-                    card.style.backgroundImage = 'none';  // הסרת התמונה בסגירת הקלף
-                });
-            }
-        }, 2000);
+            }, 2000);
+        }
     }
-}
-
-
-   function celebrateWin() {
-    const celebration = document.createElement('div');
-    celebration.className = 'celebration animate__animated animate__heartBeat';
-    celebration.innerHTML = '<h1>אם מתאמצים מספיק אפשר למצוא לכל בעיה פתרון, כל הכבוד!</h1>';
-    document.body.appendChild(celebration);
-
-    setTimeout(() => {
-        document.body.removeChild(celebration);
-    }, 5000); // הסר את ההודעה לאחר 5 שניות
-}
+});
