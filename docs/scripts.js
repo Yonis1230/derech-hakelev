@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener('DOMContentLoaded', function() {
     const gameBoard = document.getElementById('gameBoard');
     const images = [
-      'pic2.webp', 'pic2.webp',
+     'pic2.webp', 'pic2.webp',
       'pic3.webp', 'pic3.webp',
       'pic4.webp', 'pic4.webp',
       'pic5.webp', 'pic5.webp',
@@ -73,9 +73,13 @@ document.addEventListener('DOMContentLoaded', function() {
     images.forEach(image => {
       const card = document.createElement('div');
       card.classList.add('card');
-      card.style.backgroundImage = `url('${image}')`;
-      card.addEventListener('click', () => {
+      card.addEventListener('click', function() {
         card.classList.toggle('flipped');
+        if (card.classList.contains('flipped')) {
+            card.style.backgroundImage = `url('${image}')`;
+        } else {
+            card.style.backgroundImage = 'none';
+        }
         checkForMatch();
       });
       gameBoard.appendChild(card);
@@ -84,13 +88,17 @@ document.addEventListener('DOMContentLoaded', function() {
     function checkForMatch() {
       const flippedCards = document.querySelectorAll('.flipped');
       if (flippedCards.length === 2) {
-        const firstImage = flippedCards[0].style.backgroundImage;
-        const secondImage = flippedCards[1].style.backgroundImage;
-        if (firstImage === secondImage) {
-          flippedCards.forEach(card => card.classList.add('matched'));
-        }
         setTimeout(() => {
-          flippedCards.forEach(card => card.classList.remove('flipped'));
+          const firstImage = flippedCards[0].style.backgroundImage;
+          const secondImage = flippedCards[1].style.backgroundImage;
+          if (firstImage === secondImage) {
+            flippedCards.forEach(card => card.classList.add('matched'));
+          } else {
+            flippedCards.forEach(card => {
+              card.classList.remove('flipped');
+              card.style.backgroundImage = 'none'; // הסר את התמונה אם הקלפים לא מתאימים
+            });
+          }
         }, 1000);
       }
     }
