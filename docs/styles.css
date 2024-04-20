@@ -256,15 +256,3 @@ header a:hover {
   transform: rotateY(0deg);
   background-image: inherit; /* הוראה להציג את התמונה כשהקלף מתהפך */
 }
-.celebration {
-    position: fixed;  /* נראה בכל מקום במסך */
-    top: 50%;         /* מרכז רוחבית */
-    left: 50%;        /* מרכז אורכית */
-    transform: translate(-50%, -50%); /* הזזה למרכז מדויק */
-    font-size: 2em;   /* גודל גופן בולט */
-    color: white;     /* צבע טקסט */
-    z-index: 1000;    /* מבטיח שהטקסט יופיע מעל כל האלמנטים */
-    background: rgba(0, 0, 0, 0.7); /* רקע חלקית שקוף */
-    padding: 20px;    /* רווח פנימי */
-    border-radius: 10px; /* קצוות מעוגלים */
-}
