@@ -238,23 +238,23 @@ header a:hover {
   background-color: #128C7E; /* ירוק כהה יותר */
 }
 .card {
-  width: 100px;
-  height: 100px;
+  width: 100px; /* או גודל אחר לפי הצורך */
+  height: 100px; /* או גודל אחר לפי הצורך */
   background-color: #000; /* רקע שחור */
   display: inline-block;
   margin: 5px;
   cursor: pointer;
-  transition: transform 0.6s;
+  transition: transform 0.6s, background-image 0.6s ease-in-out;
   transform-style: preserve-3d;
-  transform: rotateY(180deg); /* כל הקלפים מתחילים כשהם פונים הצידה האחורי */
-  background-image: none; /* התמונה מוסתרת בהתחלה */
+  transform: rotateY(180deg); /* פתיחה עם צד הרקע */
+  background-size: cover; /* מילוי הקלף עם התמונה */
+  background-position: center; /* ממקום את התמונה במרכז */
 }
 
 .card.flipped {
-  transform: rotateY(0deg); /* כשקלף מתהפך הוא חוזר למצב רגיל והתמונה מוצגת */
+  transform: rotateY(0deg);
 }
 
 .card.matched {
   visibility: hidden;
 }
-
