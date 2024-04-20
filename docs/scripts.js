@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
   var slides = document.querySelectorAll(".slide");
   var currentIndex = 0;
@@ -71,7 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
   { id: 4, src: 's4.webp' },
   { id: 5, src: 'p5.webp' },
   { id: 5, src: 's5.webp' },
-  // המשך לפי הזוגות שברצונך ליצור
 ];
 
 images.sort(() => Math.random() - 0.5); // לערבב את התמונות
@@ -108,6 +106,6 @@ function checkForMatch() {
           card.style.backgroundImage = 'none';
         });
       }
-    }, 3000);
+    }, 2000);
   }
 }
