@@ -72,18 +72,18 @@ document.addEventListener('DOMContentLoaded', function() {
         { id: 5, src: 's5.webp' },
     ];
 
-    images.sort(() => Math.random() - 0.5); // לערבב את התמונות
+    images.sort(() => Math.random() - 0.5);
 
     images.forEach(image => {
         const card = document.createElement('div');
         card.classList.add('card');
-        card.dataset.id = image.id; // הוספת מזהה לכל קלף
-        card.style.backgroundImage = 'none'; // התמונה מוסתרת בהתחלה
+        card.dataset.id = image.id;
+        card.style.backgroundImage = 'none';
         card.addEventListener('click', function() {
             if (!card.classList.contains('flipped') && !card.classList.contains('matched')) {
                 if (document.querySelectorAll('.flipped:not(.matched)').length < 2) {
                     card.classList.add('flipped');
-                    card.style.backgroundImage = `url('${image.src}')`; // הצגת התמונה בזמן היפוך
+                    card.style.backgroundImage = `url('${image.src}')`;
                     checkForMatch();
                 }
             }
@@ -99,13 +99,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 const secondId = flippedCards[1].dataset.id;
                 if (firstId === secondId) {
                     flippedCards.forEach(card => card.classList.add('matched'));
+                    if (document.querySelectorAll('.card:not(.matched)').length === 0) {
+                        celebrateWin();
+                    }
                 } else {
                     flippedCards.forEach(card => {
                         card.classList.remove('flipped');
-                        card.style.backgroundImage = 'none'; // הסרת התמונה בסגירת הקלף
+                        card.style.backgroundImage = 'none';
                     });
                 }
             }, 2000);
         }
+    }
+
+    // כאן יש לשים את הקוד הראשון שמתחיל ב-function celebrateWin() {
+    function celebrateWin() {
+        const celebration = document.createElement('div');
+        celebration.innerHTML = '<h1 class="animate__animated animate__heartBeat">ניצחתם! יופי!</h1>';
+        document.body.appendChild(celebration);
+
+        setTimeout(() => {
+            document.body.removeChild(celebration);
+        }, 4000);
     }
 });
