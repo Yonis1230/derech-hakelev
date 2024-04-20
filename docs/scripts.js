@@ -57,6 +57,17 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initial setup to preload images on first load
   showSlide(0); // Show the first slide and preload the next two
 });
+function celebrateWin() {
+    const celebration = document.createElement('div');
+    celebration.innerHTML = '<h1 class="animate__animated animate__heartBeat">ניצחתם! יופי!</h1>';
+    document.body.appendChild(celebration);
+
+    // אפשרות להסיר את ההודעה לאחר כמה שניות
+    setTimeout(() => {
+        document.body.removeChild(celebration);
+    }, 4000); // הסר את ההודעה לאחר 4 שניות
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const gameBoard = document.getElementById('gameBoard');
     const images = [
@@ -91,21 +102,24 @@ document.addEventListener('DOMContentLoaded', function() {
         gameBoard.appendChild(card);
     });
 
-    function checkForMatch() {
-        const flippedCards = document.querySelectorAll('.flipped:not(.matched)');
-        if (flippedCards.length === 2) {
-            setTimeout(() => {
-                const firstId = flippedCards[0].dataset.id;
-                const secondId = flippedCards[1].dataset.id;
-                if (firstId === secondId) {
-                    flippedCards.forEach(card => card.classList.add('matched'));
-                } else {
-                    flippedCards.forEach(card => {
-                        card.classList.remove('flipped');
-                        card.style.backgroundImage = 'none'; // הסרת התמונה בסגירת הקלף
-                    });
+   function checkForMatch() {
+    const flippedCards = document.querySelectorAll('.flipped:not(.matched)');
+    if (flippedCards.length === 2) {
+        setTimeout(() => {
+            const firstId = flippedCards[0].dataset.id;
+            const secondId = flippedCards[1].dataset.id;
+            if (firstId === secondId) {
+                flippedCards.forEach(card => card.classList.add('matched'));
+                // בדיקה אם כל הקלפים מתואמים
+                if (document.querySelectorAll('.card:not(.matched)').length === 0) {
+                    celebrateWin(); // קריאה לפונקציה כאשר כל הקלפים נמצאו
                 }
-            }, 2000);
-        }
+            } else {
+                flippedCards.forEach(card => {
+                    card.classList.remove('flipped');
+                    card.style.backgroundImage = 'none';
+                });
+            }
+        }, 2000);
     }
-});
+}
