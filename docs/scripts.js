@@ -78,11 +78,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const card = document.createElement('div');
         card.classList.add('card');
         card.dataset.id = image.id; // הוספת מזהה לכל קלף
-        card.style.backgroundImage = `url('${image.src}')`;
+        card.style.backgroundImage = 'none'; // התמונה מוסתרת בהתחלה
         card.addEventListener('click', function() {
             if (!card.classList.contains('flipped') && !card.classList.contains('matched')) {
                 if (document.querySelectorAll('.flipped:not(.matched)').length < 2) {
                     card.classList.add('flipped');
+                    card.style.backgroundImage = `url('${image.src}')`; // הצגת התמונה בזמן היפוך
                     checkForMatch();
                 }
             }
@@ -97,13 +98,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 const firstId = flippedCards[0].dataset.id;
                 const secondId = flippedCards[1].dataset.id;
                 if (firstId === secondId) {
-                    flippedCards.forEach(card => {
-                        card.classList.add('matched');
-                    });
+                    flippedCards.forEach(card => card.classList.add('matched'));
                 } else {
                     flippedCards.forEach(card => {
                         card.classList.remove('flipped');
-                        card.style.backgroundImage = 'none';
+                        card.style.backgroundImage = 'none'; // הסרת התמונה בסגירת הקלף
                     });
                 }
             }, 2000);
