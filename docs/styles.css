@@ -240,7 +240,7 @@ header a:hover {
 .card {
   width: 100px; /* קבע ערכים כרצונך */
   height: 100px; /* קבע ערכים כרצונך */
-  background-color: #000; /* רקע שחור */
+  background-color: #000; /* רקע שחור לסימול גב הקלף */
   display: inline-block;
   margin: 5px;
   cursor: pointer;
@@ -249,8 +249,10 @@ header a:hover {
   transform: rotateY(180deg); /* פתיחה עם צד הרקע */
   background-size: cover; /* מילוי הקלף עם התמונה */
   background-position: center; /* ממקום את התמונה במרכז */
+  background-image: none; /* הוסף שורה זו */
 }
 
 .card.flipped {
   transform: rotateY(0deg);
+  background-image: inherit; /* הוראה להציג את התמונה כשהקלף מתהפך */
 }
