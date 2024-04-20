@@ -238,8 +238,8 @@ header a:hover {
   background-color: #128C7E; /* ירוק כהה יותר */
 }
 .card {
-  width: 100px; /* או גודל אחר לפי הצורך */
-  height: 100px; /* או גודל אחר לפי הצורך */
+  width: 100px; /* קבע ערכים כרצונך */
+  height: 100px; /* קבע ערכים כרצונך */
   background-color: #000; /* רקע שחור */
   display: inline-block;
   margin: 5px;
@@ -253,8 +253,4 @@ header a:hover {
 
 .card.flipped {
   transform: rotateY(0deg);
-}
-
-.card.matched {
-  visibility: hidden;
 }
