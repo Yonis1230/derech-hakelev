@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener('DOMContentLoaded', function() {
     const gameBoard = document.getElementById('gameBoard');
     const images = [
-     'pic2.webp', 'pic2.webp',
+      'pic2.webp', 'pic2.webp',
       'pic3.webp', 'pic3.webp',
       'pic4.webp', 'pic4.webp',
       'pic5.webp', 'pic5.webp',
@@ -74,11 +74,12 @@ document.addEventListener('DOMContentLoaded', function() {
       const card = document.createElement('div');
       card.classList.add('card');
       card.addEventListener('click', function() {
-        card.classList.toggle('flipped');
-        if (card.classList.contains('flipped')) {
-            card.style.backgroundImage = `url('${image}')`;
+        if (!card.classList.contains('flipped')) {
+            card.style.backgroundImage = `url('${image}')`; // הוסף את התמונה כאשר הקלף מתהפך
+            card.classList.add('flipped');
         } else {
-            card.style.backgroundImage = 'none';
+            card.classList.remove('flipped');
+            setTimeout(() => card.style.backgroundImage = 'none', 600); // הסר את התמונה עם האנימציה
         }
         checkForMatch();
       });
