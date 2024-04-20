@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
               card.style.backgroundImage = 'none'; // הסר את התמונה
             });
           }
-        }, 1500);
+        }, 2000);
       }
     }
 });
