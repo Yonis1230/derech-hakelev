@@ -74,30 +74,29 @@ document.addEventListener('DOMContentLoaded', function() {
       const card = document.createElement('div');
       card.classList.add('card');
       card.addEventListener('click', function() {
-        if (!card.classList.contains('flipped')) {
+        if (!card.classList.contains('flipped') && !card.classList.contains('matched')) {
             card.style.backgroundImage = `url('${image}')`; // הוסף את התמונה כאשר הקלף מתהפך
             card.classList.add('flipped');
-        } else {
-            card.classList.remove('flipped');
-            setTimeout(() => card.style.backgroundImage = 'none', 600); // הסר את התמונה עם האנימציה
+            checkForMatch(); // בדוק התאמה רק אם הקלף נלחץ ומתהפך
         }
-        checkForMatch();
       });
       gameBoard.appendChild(card);
     });
 
     function checkForMatch() {
-      const flippedCards = document.querySelectorAll('.flipped');
+      const flippedCards = document.querySelectorAll('.flipped:not(.matched)');
       if (flippedCards.length === 2) {
         setTimeout(() => {
           const firstImage = flippedCards[0].style.backgroundImage;
           const secondImage = flippedCards[1].style.backgroundImage;
           if (firstImage === secondImage) {
-            flippedCards.forEach(card => card.classList.add('matched'));
+            flippedCards.forEach(card => {
+              card.classList.add('matched'); // קלפים שמצאו זוג יקבלו מחלקה של 'matched'
+            });
           } else {
             flippedCards.forEach(card => {
               card.classList.remove('flipped');
-              card.style.backgroundImage = 'none'; // הסר את התמונה אם הקלפים לא מתאימים
+              setTimeout(() => card.style.backgroundImage = 'none', 600); // הסר את התמונה לאחר ההמתנה
             });
           }
         }, 1000);
