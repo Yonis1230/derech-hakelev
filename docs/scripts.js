@@ -59,15 +59,18 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 document.addEventListener('DOMContentLoaded', function() {
     const gameBoard = document.getElementById('gameBoard');
-    const images = [
-      'pic2.webp', 'pic2.webp',
-      'pic3.webp', 'pic3.webp',
-      'pic4.webp', 'pic4.webp',
-      'pic5.webp', 'pic5.webp',
-      'pic6.webp', 'pic6.webp',
-      'pic7.webp', 'pic7.webp',
-      'pic8.webp', 'pic8.webp'
-    ];
+     const images = [
+  { id: 1, src: 'p1.webp' },
+  { id: 1, src: 's1.webp' },
+  { id: 2, src: 'p2.webp' },
+  { id: 2, src: 's2.webp' },
+  { id: 3, src: 'p3.webp' },
+  { id: 3, src: 's3.webp' },
+  { id: 4, src: 'p4.webp' },
+  { id: 4, src: 's4.webp' },
+  { id: 5, src: 'p5.webp' },
+  { id: 5, src: 's5.webp' },
+];
     images.sort(() => Math.random() - 0.5); // לערבב את התמונות
 
     images.forEach(image => {
