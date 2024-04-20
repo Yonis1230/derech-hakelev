@@ -116,14 +116,13 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 
-    // כאן יש לשים את הקוד הראשון שמתחיל ב-function celebrateWin() {
-    function celebrateWin() {
-        const celebration = document.createElement('div');
-        celebration.innerHTML = '<h1 class="animate__animated animate__heartBeat">ניצחתם! יופי!</h1>';
-        document.body.appendChild(celebration);
+   function celebrateWin() {
+    const celebration = document.createElement('div');
+    celebration.className = 'celebration animate__animated animate__heartBeat';
+    celebration.innerHTML = '<h1>אם מתאמצים מספיק אפשר למצוא לכל בעיה פתרון, כל הכבוד!</h1>';
+    document.body.appendChild(celebration);
 
-        setTimeout(() => {
-            document.body.removeChild(celebration);
-        }, 4000);
-    }
-});
+    setTimeout(() => {
+        document.body.removeChild(celebration);
+    }, 5000); // הסר את ההודעה לאחר 5 שניות
+}
