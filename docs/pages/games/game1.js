@@ -57,4 +57,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }, 2000);
     }
-  });
+  }
+
+  function celebrateWin() {
+    const celebration = document.createElement("div");
+    celebration.innerHTML =
+      '<h1 class="animate__animated animate__heartBeat">ניצחתם! יופי!</h1>';
+    document.body.appendChild(celebration);
+
+    setTimeout(() => {
+      document.body.removeChild(celebration);
+    }, 4000);
+  }
+});
