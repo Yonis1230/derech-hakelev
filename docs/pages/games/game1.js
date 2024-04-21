@@ -60,16 +60,13 @@ document.addEventListener("DOMContentLoaded", function () {
 } // סוגריים סוגרת חסרה כאן
 
 function celebrateWin() {
-    const canvas = document.getElementById("my-canvas");
-    canvas.style.pointerEvents = 'auto'; // זיקוקים יכולים להתקבל
-
     const confettiSettings = { target: 'my-canvas' };
     const confetti = new ConfettiGenerator(confettiSettings);
     confetti.render();
 
     setTimeout(() => {
-        confetti.clear();  // עצירת הזיקוקים
-        canvas.style.pointerEvents = 'none'; // שחזור היכולת ללחוץ מתחת לקנבס
+        confetti.clear();
+        canvas.style.pointerEvents = 'none';
     }, 4000);
-}
- });
+  }
+}); // סוגריים זו מסיימת את ה-'DOMContentLoaded' אירוע
