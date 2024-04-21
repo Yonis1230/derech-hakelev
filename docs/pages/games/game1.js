@@ -59,14 +59,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function celebrateWin() {
-    const celebration = document.createElement("div");
-    celebration.innerHTML =
-      '<h1 class="animate__animated animate__heartBeat">ניצחתם! יופי!</h1>';
-    document.body.appendChild(celebration);
+ function celebrateWin() {
+    const canvas = document.getElementById("my-canvas");
+    canvas.style.pointerEvents = 'auto'; // Enable interaction with the canvas for the duration of the celebration
+
+    const confettiSettings = { target: 'my-canvas' };
+    const confetti = new ConfettiGenerator(confettiSettings);
+    confetti.render();
 
     setTimeout(() => {
-      document.body.removeChild(celebration);
-    }, 4000);
-  }
-});
+        confetti.clear(); // Stop the confetti effect
+        canvas.style.pointerEvents = 'none'; // Re-disable interaction to allow clicks to pass through
+    }, 5000);
+}
