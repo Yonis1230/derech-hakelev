@@ -59,21 +59,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
- function celebrateWin() {
-    console.log("Celebration function called.");
-    const celebration = document.createElement("div");
-    celebration.className = 'celebrate';
-    celebration.innerHTML = '<h1 class="animate__animated animate__heartBeat">כשמתאמצים, אפשר למצוא לכל בעיה פתרון! כל הכבוד!</h1>';
-    document.body.appendChild(celebration);
+function celebrateWin() {
+    const canvas = document.getElementById("my-canvas");
+    canvas.style.pointerEvents = 'auto'; // זיקוקים יכולים להתקבל
 
     const confettiSettings = { target: 'my-canvas' };
     const confetti = new ConfettiGenerator(confettiSettings);
     confetti.render();
 
     setTimeout(() => {
-        document.body.removeChild(celebration);
-        confetti.clear();  // עצירת הזיקוקים לאחר 4 שניות
-        console.log("Celebration ended.");
+        confetti.clear();  // עצירת הזיקוקים
+        canvas.style.pointerEvents = 'none'; // שחזור היכולת ללחוץ מתחת לקנבס
     }, 4000);
 }
  });
