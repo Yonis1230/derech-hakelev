@@ -59,17 +59,80 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-function celebrateWin() {
-    const canvas = document.getElementById("my-canvas");
-    canvas.style.pointerEvents = 'auto'; // זיקוקים יכולים להתקבל
+document.addEventListener("DOMContentLoaded", function() {
+    const gameBoard = document.getElementById("gameBoard");
+    const images = [
+        { id: 1, src: 'p1.webp' },
+        { id: 1, src: 's1.webp' },
+        // המשך רשימת התמונות...
+    ];
 
-    const confettiSettings = { target: 'my-canvas' };
-    const confetti = new ConfettiGenerator(confettiSettings);
-    confetti.render();
+    images.sort(() => Math.random() - 0.5);
 
-    setTimeout(() => {
-        confetti.clear();  // עצירת הזיקוקים
-        canvas.style.pointerEvents = 'none'; // שחזור היכולת ללחוץ מתחת לקנבס
-    }, 5000);
-}
+    images.forEach(image => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.dataset.id = image.id;
+        card.style.backgroundImage = "none"; // התמונה מוסתרת בהתחלה
+        card.addEventListener("click", function() {
+            if (!card.classList.contains("flipped") && !card.classList.contains("matched")) {
+                if (document.querySelectorAll(".flipped:not(.matched)").length < 2) {
+                    card.classList.add("flipped");
+                    card.style.backgroundImage = `url('${image.src}')`;
+                    checkForMatch();
+                }
+            }
+        });
+        gameBoard.appendChild(card);
+    });
+
+    function checkForMatch() {
+        const flippedCards = document.querySelectorAll(".flipped:not(.matched)");
+        if (flippedCards.length === 2) {
+            setTimeout(() => {
+                const firstId = flippedCards[0].dataset.id;
+                const secondId = flippedCards[1].dataset.id;
+                if (firstId === secondId) {
+                    flippedCards.forEach(card => card.classList.add("matched"));
+                    if (document.querySelectorAll(".card:not(.matched)").length === 0) {
+                        celebrateWin();
+                    }
+                } else {
+                    flippedCards.forEach(card => {
+                        card.classList.remove("flipped");
+                        card.style.backgroundImage = "none"; // הסרת התמונה בסגירת הקלף
+                    });
+                }
+            }, 2000);
+        }
+    }
+
+    function celebrateWin() {
+        const canvas = document.getElementById("my-canvas");
+        canvas.style.pointerEvents = 'auto'; // זיקוקים יכולים להתקבל
+
+        const confettiSettings = { target: 'my-canvas' };
+        const confetti = new ConfettiGenerator(confettiSettings);
+        confetti.render();
+
+        setTimeout(() => {
+            confetti.clear();  // עצירת הזיקוקים
+            canvas.style.pointerEvents = 'none'; // שחזור היכולת ללחוץ מתחת לקנבס
+        }, 5000);
+    }
+
+    adjustCardSize();
+    window.addEventListener('resize', adjustCardSize); // Listen to resizing of the window
+
+    function adjustCardSize() {
+        const screenWidth = window.innerWidth;
+        const cards = document.querySelectorAll(".card");
+        cards.forEach(card => {
+            if (screenWidth < 600) { // Example breakpoint for mobile devices
+                card.style.width = '80px'; // Smaller size for mobile
+                card.style.height = '80px';
+            } else {
+                card.style.width = '100px'; // Default size
+                card.style.height = '100px';
+            }
  });
