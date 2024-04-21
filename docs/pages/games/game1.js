@@ -61,15 +61,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function celebrateWin() {
     const canvas = document.getElementById("my-canvas");
-    canvas.style.pointerEvents = 'auto'; // זיקוקים יכולים להתקבל
+    canvas.style.pointerEvents = 'auto'; // Enable interaction with the canvas for the celebration
 
     const confettiSettings = { target: 'my-canvas' };
     const confetti = new ConfettiGenerator(confettiSettings);
     confetti.render();
 
+    // Create a celebration message
+    const celebration = document.createElement("div");
+    celebration.style.position = 'fixed';
+    celebration.style.top = '50%';
+    celebration.style.left = '50%';
+    celebration.style.transform = 'translate(-50%, -50%)';
+    celebration.style.zIndex = '99999';
+    celebration.style.color = 'white'; // White color for visibility
+    celebration.style.textAlign = 'center';
+    celebration.style.fontSize = '2rem'; // Large font size for visibility
+    celebration.style.padding = '20px';
+    celebration.style.borderRadius = '10px';
+    celebration.style.backgroundColor = 'rgba(0,0,0,0.7)'; // Semi-transparent black background
+    celebration.innerHTML = '<h1 class="animate__animated animate__heartBeat">כשמתאמצים, אפשר למצוא פתרון לכל בעיה! כל הכבוד!</h1>';
+    document.body.appendChild(celebration);
+
     setTimeout(() => {
-        confetti.clear();  // עצירת הזיקוקים
-        canvas.style.pointerEvents = 'none'; // שחזור היכולת ללחוץ מתחת לקנבס
-    }, 4000);
+        confetti.clear(); // Stop the confetti effect
+        document.body.removeChild(celebration); // Remove the celebration message
+        canvas.style.pointerEvents = 'none'; // Re-disable interaction to allow clicks to pass through
+    }, 5000);
+}
+
 }
  });
