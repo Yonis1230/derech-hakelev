@@ -57,16 +57,4 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }, 2000);
     }
-} // סוגריים סוגרת חסרה כאן
-
-function celebrateWin() {
-    const confettiSettings = { target: 'my-canvas' };
-    const confetti = new ConfettiGenerator(confettiSettings);
-    confetti.render();
-
-    setTimeout(() => {
-        confetti.clear();
-        canvas.style.pointerEvents = 'none';
-    }, 4000);
-  }
-}); // סוגריים זו מסיימת את ה-'DOMContentLoaded' אירוע
+}); 
