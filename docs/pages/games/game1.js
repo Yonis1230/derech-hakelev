@@ -57,6 +57,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }, 2000);
     }
+} // סוגריים סוגרת חסרה כאן
+
 function celebrateWin() {
     const canvas = document.getElementById("my-canvas");
     canvas.style.pointerEvents = 'auto'; // זיקוקים יכולים להתקבל
@@ -70,4 +72,3 @@ function celebrateWin() {
         canvas.style.pointerEvents = 'none'; // שחזור היכולת ללחוץ מתחת לקנבס
     }, 4000);
 }
- });
