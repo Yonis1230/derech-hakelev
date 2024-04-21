@@ -72,3 +72,4 @@ function celebrateWin() {
         canvas.style.pointerEvents = 'none'; // שחזור היכולת ללחוץ מתחת לקנבס
     }, 4000);
 }
+ });
