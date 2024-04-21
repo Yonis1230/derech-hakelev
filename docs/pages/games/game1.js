@@ -59,14 +59,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function celebrateWin() {
+ function celebrateWin() {
+    console.log("Celebration function called.");
     const celebration = document.createElement("div");
-    celebration.innerHTML =
-      '<h1 class="animate__animated animate__heartBeat">ניצחתם! יופי!</h1>';
+    celebration.className = 'celebrate';
+    celebration.innerHTML = '<h1 class="animate__animated animate__heartBeat">כשמתאמצים, אפשר למצוא לכל בעיה פתרון! כל הכבוד!</h1>';
     document.body.appendChild(celebration);
 
+    const confettiSettings = { target: 'my-canvas' };
+    const confetti = new ConfettiGenerator(confettiSettings);
+    confetti.render();
+
     setTimeout(() => {
-      document.body.removeChild(celebration);
+        document.body.removeChild(celebration);
+        confetti.clear();  // עצירת הזיקוקים לאחר 4 שניות
+        console.log("Celebration ended.");
     }, 4000);
-  }
-});
+}
+ });
