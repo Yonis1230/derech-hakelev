@@ -1,59 +1,58 @@
 document.addEventListener("DOMContentLoaded", function () {
-  var slides = document.querySelectorAll(".slide");
-  var currentIndex = 0;
-  var prevButton = document.querySelector(".prev");
-  var nextButton = document.querySelector(".next");
-  var slideInterval = setInterval(function () {
-    changeSlide(1);
-  }, 10000); // Interval set for 10 seconds
-
-  function preloadImage(slideIndex) {
-    var index = (slideIndex + slides.length) % slides.length;
-    var slide = slides[index];
-    if (!slide.src || slide.src !== slide.dataset.src) {
-      // Check if not already loaded
-    }
-    slide.src = slide.dataset.src;
-  }
-
-  function showSlide(index) {
-    slides.forEach(function (slide, idx) {
-      slide.style.display = idx === index ? "block" : "none";
-    });
-    // Ensure the current slide is loaded
-    if (slides[index].src !== slides[index].dataset.src) {
-      slides[index].src = slides[index].dataset.src;
-    }
-    // Preload the next two images
-    preloadImage(index + 1);
-    preloadImage(index - 1);
-    preloadImage(index + 2);
-    preloadImage(index - 2);
-  }
-
-  function changeSlide(step) {
-    currentIndex = (currentIndex + step + slides.length) % slides.length;
-    showSlide(currentIndex);
-    resetInterval();
-  }
-
-  function resetInterval() {
-    clearInterval(slideInterval);
-    slideInterval = setInterval(function () {
+  function setupSlider(sliderClass) {
+    var slides = document.querySelectorAll(sliderClass + " .slide");
+    var currentIndex = 0;
+    var prevButton = document.querySelector(sliderClass + " .prev");
+    var nextButton = document.querySelector(sliderClass + " .next");
+    var slideInterval = setInterval(function () {
       changeSlide(1);
-    }, 10000);
+    }, 10000); // Interval set for 10 seconds
+
+    function preloadImage(slideIndex) {
+      var index = (slideIndex + slides.length) % slides.length;
+      var slide = slides[index];
+      if (!slide.src || slide.src !== slide.dataset.src) {
+        slide.src = slide.dataset.src; // Load the image if not loaded
+      }
+    }
+
+    function showSlide(index) {
+      slides.forEach(function (slide, idx) {
+        slide.style.display = idx === index ? "block" : "none";
+      });
+      preloadImage(index + 1);
+      preloadImage(index - 1);
+    }
+
+    function changeSlide(step) {
+      currentIndex = (currentIndex + step + slides.length) % slides.length;
+      showSlide(currentIndex);
+      resetInterval();
+    }
+
+    function resetInterval() {
+      clearInterval(slideInterval);
+      slideInterval = setInterval(function () {
+        changeSlide(1);
+      }, 10000);
+    }
+
+    prevButton.addEventListener("click", function () {
+      changeSlide(-1);
+      resetInterval(); // Resets the timer when the user navigates manually
+    });
+
+    nextButton.addEventListener("click", function () {
+      changeSlide(1);
+      resetInterval(); // Resets the timer when the user navigates manually
+    });
+
+    // Initialize the slider with the first slide
+    showSlide(0);
   }
 
-  prevButton.addEventListener("click", function () {
-    changeSlide(-1);
-    resetInterval(); // Resets the timer when the user navigates manually
-  });
-
-  nextButton.addEventListener("click", function () {
-    changeSlide(1);
-    resetInterval(); // Resets the timer when the user navigates manually
-  });
-
-  // Initial setup to preload images on first load
-  showSlide(0); // Show the first slide and preload the next two
+  // Setup each slider by passing the unique class name of its container
+  setupSlider(".slider1");
+  setupSlider(".slider2");
+  setupSlider(".slider3");
 });
