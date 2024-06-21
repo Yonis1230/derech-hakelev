@@ -1,9 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
   function setupSlider(sliderClass) {
     var slides = document.querySelectorAll(sliderClass + " .slide");
+    if (!slides.length) {
+        console.error("No slides found for the given slider class: " + sliderClass);
+        return;
+    }
+
     var currentIndex = 0;
     var prevButton = document.querySelector(sliderClass + " .prev");
     var nextButton = document.querySelector(sliderClass + " .next");
+
+    if (!prevButton || !nextButton) {
+        console.error("Previous or next button not found for the given slider class: " + sliderClass);
+        return;
+    }
     var slideInterval = setInterval(function () {
       changeSlide(1);
     }, 10000); // Interval set for 10 seconds
@@ -56,4 +66,5 @@ document.addEventListener("DOMContentLoaded", function () {
   setupSlider(".slider1");
   setupSlider(".slider2");
   setupSlider(".slider3");
+  setupSlider(".slider4");
 });
