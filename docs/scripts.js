@@ -46,8 +46,9 @@ document.addEventListener("DOMContentLoaded", function () {
       changeSlide(1);
       resetInterval(); // Resets the timer when the user navigates manually
     });
-
+  
     // Initialize the slider with the first slide
+    preloadImage(0);
     showSlide(0);
   }
 
