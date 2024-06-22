@@ -66,5 +66,4 @@ document.addEventListener("DOMContentLoaded", function () {
   setupSlider(".slider1");
   setupSlider(".slider2");
   setupSlider(".slider3");
-  setupSlider(".slider4");
 });
