@@ -264,10 +264,11 @@ header a:hover {
     border: none;
 }
 .chat-info ul {
-  list-style: disc; /* הצגת תבליטים */
-  padding-left: 20px; /* רווח משמאל */
+  list-style: disc !important; /* מבטיח שהנקודות יופיעו */
+  padding-left: 20px;
+  margin-top: 10px;
 }
 
 .chat-info ul li {
-  margin-bottom: 10px; /* רווח בין פריטי הרשימה */
+  margin-bottom: 10px;
 }
