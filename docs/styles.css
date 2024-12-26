@@ -263,3 +263,11 @@ header a:hover {
     max-width: 100%;
     border: none;
 }
+.chat-info ul {
+  list-style: disc; /* הצגת תבליטים */
+  padding-left: 20px; /* רווח משמאל */
+}
+
+.chat-info ul li {
+  margin-bottom: 10px; /* רווח בין פריטי הרשימה */
+}

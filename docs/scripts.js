@@ -65,6 +65,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // Setup each slider by passing the unique class name of its container
   setupSlider(".slider1");
   setupSlider(".slider2");
+  setupSlider(".slider6");
   setupSlider(".slider3");
   setupSlider(".slider4");
+  setupSlider(".slider5");
 });
