@@ -70,4 +70,6 @@ document.addEventListener("DOMContentLoaded", function () {
   setupSlider(".slider4");
   setupSlider(".slider5");
   setupSlider(".slider7");
+  setupSlider(".slider8");
+  setupSlider(".slider9");
 });
