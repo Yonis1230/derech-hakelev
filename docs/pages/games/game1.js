@@ -1,72 +1,14 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const gameBoard = document.getElementById("gameBoard");
-  const images = [
-    { id: 1, src: "../../assets/images/games/1/p1.webp" },
-    { id: 1, src: "../../assets/images/games/1/s1.webp" },
-    { id: 2, src: "../../assets/images/games/1/p2.webp" },
-    { id: 2, src: "../../assets/images/games/1/s2.webp" },
-    { id: 3, src: "../../assets/images/games/1/p3.webp" },
-    { id: 3, src: "../../assets/images/games/1/s3.webp" },
-    { id: 4, src: "../../assets/images/games/1/p4.webp" },
-    { id: 4, src: "../../assets/images/games/1/s4.webp" },
-    { id: 5, src: "../../assets/images/games/1/p5.webp" },
-    { id: 5, src: "../../assets/images/games/1/s5.webp" },
-  ];
 
-  images.sort(() => Math.random() - 0.5);
-
-  images.forEach((image) => {
-    const card = document.createElement("div");
-    card.classList.add("card");
-    card.dataset.id = image.id;
-    card.style.backgroundImage = "none";
-    card.addEventListener("click", function () {
-      if (
-        !card.classList.contains("flipped") &&
-        !card.classList.contains("matched")
-      ) {
-        if (document.querySelectorAll(".flipped:not(.matched)").length < 2) {
-          card.classList.add("flipped");
-          card.style.backgroundImage = `url('${image.src}')`;
-          checkForMatch();
-        }
-      }
-    });
-    gameBoard.appendChild(card);
-  });
-
-  function checkForMatch() {
-    const flippedCards = document.querySelectorAll(".flipped:not(.matched)");
-    console.log("Checking for match..."); // הדפסה לקונסול לבדיקה
-    if (flippedCards.length === 2) {
-      setTimeout(() => {
-        const firstId = flippedCards[0].dataset.id;
-        const secondId = flippedCards[1].dataset.id;
-        if (firstId === secondId) {
-          flippedCards.forEach((card) => card.classList.add("matched"));
-          console.log("Pair matched!"); // הדפסה לקונסול כשזוג נמצא
-          if (document.querySelectorAll(".card:not(.matched)").length === 0) {
-            console.log("All pairs matched, celebrating!"); // הדפסה לקונסול כשכל הזוגות נמצאו
-            celebrateWin();
-          }
-        } else {
-          flippedCards.forEach((card) => {
-            card.classList.remove("flipped");
-            card.style.backgroundImage = "none"; // הסרת התמונה בסגירת הקלף
-          });
-        }
-      }, 2000);
-    }
-  }
-
-  function celebrateWin() {
-    const celebration = document.createElement("div");
-    celebration.innerHTML =
-      '<h1 class="animate__animated animate__heartBeat">ניצחתם! יופי!</h1>';
-    document.body.appendChild(celebration);
-
-    setTimeout(() => {
-      document.body.removeChild(celebration);
-    }, 4000);
-  }
+document.addEventListener('DOMContentLoaded',()=>{
+ const board=document.getElementById('gameBoard'),status=document.getElementById('game-status');if(!board)return;
+ let selected=[],locked=false,timer;
+ function start(){clearTimeout(timer);selected=[];locked=false;board.replaceChildren();status.textContent='';
+  const cards=Array.from({length:5},(_,i)=>[{id:i,src:'p'+(i+1)},{id:i,src:'s'+(i+1)}]).flat();
+  for(let i=cards.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[cards[i],cards[j]]=[cards[j],cards[i]];}
+  cards.forEach((data,i)=>{const b=document.createElement('button');b.className='card';b.type='button';b.textContent='?';b.setAttribute('aria-label','הפיכת קלף '+(i+1));b.addEventListener('click',()=>{
+   if(locked||b.classList.contains('flipped')||b.classList.contains('matched'))return;
+   b.classList.add('flipped');b.textContent='';b.style.backgroundImage="url('../../assets/images/games/1/"+data.src+".webp')";b.setAttribute('aria-label',(data.src[0]==='p'?'בעיה':'פתרון')+' '+(data.id+1));selected.push({b,data});
+   if(selected.length===2){locked=true;timer=setTimeout(()=>{if(selected[0].data.id===selected[1].data.id){selected.forEach(({b})=>{b.classList.add('matched');b.disabled=true;});status.textContent='מצאתם זוג!';if(board.querySelectorAll('.matched').length===10)status.textContent='ניצחתם! מצאתם את כל הפתרונות.';}else{selected.forEach(({b})=>{b.classList.remove('flipped');b.style.backgroundImage='none';b.textContent='?';b.setAttribute('aria-label','הפיכת קלף');});}selected=[];locked=false;},1200);}
+  });board.append(b);});
+ }document.getElementById('restart-game').addEventListener('click',start);start();
 });

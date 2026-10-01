@@ -1,274 +1,180 @@
-body {
-  font-family: "Arial", sans-serif;
-  /* background: no-repeat center fixed; */
-  background-size: cover;
-  color: #333;
+:root{--cream:#faf7f0;--ink:#302f29;--muted:#6e6d63;--orange:#b95129;--line:#e3dfd4;--sage:#edf0e8;--white:#fffdf8}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Heebo,Arial,sans-serif;line-height:1.8}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+img{max-width:100%;display:block}
+h1,h2,h3,p{margin:0}
+p+p{margin-top:18px}
+h1,h2,h3{line-height:1.3;font-weight:500}
+h1{font-size:clamp(36px,4.4vw,64px);letter-spacing:-1.8px}
+h2{font-size:clamp(26px,2.5vw,36px);letter-spacing:-.7px}
+h3{font-size:24px}
+h1 span{color:var(--orange)}
+p{color:var(--muted)}
+.button{display:inline-flex;align-items:center;justify-content:center;padding:12px 25px;background:var(--orange);color:white;border:1px solid var(--orange);border-radius:99px;font-weight:600;gap:10px;transition:background .2s}
+.button:hover{background:#913d1d}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--orange);outline-offset:5px}
+.text-link{display:inline-block;border-bottom:1px solid var(--orange);padding-bottom:5px;font-weight:500}
+.eyebrow{display:block;color:var(--orange);font-size:13px;font-weight:600;letter-spacing:.4px;margin-bottom:15px}
+.site-header{border-bottom:1px solid var(--line);background:var(--cream);position:sticky;top:0;z-index:10}
+.header-inner{max-width:1440px;padding:18px 40px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:25px}
+.brand{display:flex;align-items:center;gap:13px}
+.brand img{height:58px;width:58px;border-radius:50%;object-fit:contain}
+.brand strong{font-size:25px;line-height:1.3;display:block}
+.brand small{font-size:12px;color:var(--muted)}
+nav{display:flex;gap:35px;font-size:15px}
+nav a:hover,nav a[aria-current]{color:var(--orange)}
+main,.contact-section,.site-footer{max-width:1360px;margin:auto;padding-inline:40px}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;padding-block:65px 75px}
+.hero-copy>p{max-width:490px;font-size:18px;margin-top:25px}
+.actions{display:flex;align-items:center;gap:26px;margin-top:30px}
+.hero-note{display:block;font-size:12px;color:var(--muted);margin-top:28px}
+.hero-visual{position:relative}
+.hero-visual .gallery{height:470px;border-radius:110px 24px 24px 24px}
+.hero-visual .gallery img{object-fit:contain}
+.photo-caption{position:absolute;bottom:25px;right:25px;background:var(--white);border-radius:50px;padding:10px 20px;font-size:13px}
+.section{padding-block:65px;border-top:1px solid var(--line)}
+.about{display:grid;grid-template-columns:1fr 1.4fr;gap:90px}
+.lead{margin:22px 0;font-size:18px}
+.about-copy{font-size:16px}
+.section-heading{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:30px}
+.section-heading>span{font-size:13px;color:var(--muted)}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.services-grid article{padding:30px;background:#f0eee5;border-radius:22px}
+.service-number{display:block;color:var(--orange);font-size:13px;margin-bottom:35px}
+.services-grid h3{margin-bottom:18px}
+.services-grid p{font-size:15px}
+.catalog-intro{padding-block:55px 35px;text-align:center}
+.catalog-intro p{font-size:17px;margin-top:20px}
+.offer{display:flex;align-items:center;justify-content:space-between;gap:30px;background:#f2e8db;border:1px solid #e6d5c1;border-radius:22px;padding:24px 32px;margin-bottom:45px}
+.offer .eyebrow{margin-bottom:7px}
+.offer h2{font-size:25px}
+.offer h2 span{color:#b6a38e;margin-inline:12px}
+.offer p{font-size:14px;margin-top:7px}
+.offer small{font-size:12px;color:var(--muted)}
+.catalog-section{padding-top:0;border:0}
+.games-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:25px}
+.game-card{background:var(--sage);border-radius:25px;overflow:hidden;border:1px solid #e3e6dd;align-self:start}
+.card-main{display:grid;grid-template-columns:46% 54%;min-height:360px}
+.gallery{position:relative;background:#e7e8df;overflow:hidden;min-width:0;height:100%}
+.gallery img{width:100%;height:100%;object-fit:contain;padding:12px}
+.gallery button{position:absolute;bottom:18px;border:1px solid #d4d5ce;background:rgba(255,253,248,.95);width:36px;height:36px;border-radius:50%;line-height:1;display:grid;place-items:center;color:var(--ink)}
+.gallery .prev{right:14px}
+.gallery .next{left:14px}
+.gallery-count{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);font-size:11px;background:var(--white);padding:2px 8px;border-radius:20px;direction:ltr}
+.gallery-tag{position:absolute;top:16px;right:14px;background:var(--white);border-radius:99px;padding:5px 12px;font-size:11px}
+.card-copy{padding:35px 24px 23px;display:flex;flex-direction:column;align-items:start}
+.card-copy h3{font-size:25px;margin-bottom:17px}
+.card-copy p{font-size:14px;line-height:1.9;margin-bottom:24px}
+.card-bottom{margin-top:auto;width:100%;border-top:1px solid #d7dbd0;padding-top:15px}
+.price{font-size:20px;font-weight:500}
+.stock{font-size:13px;color:#9e4528}
+.detail-toggle,.card-link{background:transparent;border:0;border-bottom:1px solid #b4bcae;border-radius:0;color:var(--ink);padding:8px 0;margin-top:7px;font-size:13px;display:flex;justify-content:space-between;width:100%;font-weight:500}
+.game-details{padding:28px;border-top:1px solid #d7dbd0;background:var(--white);font-size:15px}
+.game-details[hidden]{display:none}
+.game-details p{margin-bottom:16px}
+.game-details ul{padding-right:22px}
+.game-details a{color:var(--orange);text-decoration:underline}
+.game-details .whatsapp-button{display:inline-flex;background:var(--orange);color:white;padding:10px 20px;border-radius:50px;text-decoration:none}
+.game-details iframe{display:block;width:min(100%,315px);height:560px;max-width:100%;border:0;border-radius:15px;margin:24px auto}
+.digital-art{display:flex;flex-direction:column;align-items:center;justify-content:center;background:#eae3d5;padding:20px;text-align:center;gap:16px}
+.digital-art span{font-size:55px;color:var(--orange)}
+.digital-art small{font-size:13px}
+.activity-video{display:grid;grid-template-columns:1fr 1.3fr;gap:40px;align-items:center}
+.activity-video iframe{width:100%;max-width:560px;aspect-ratio:560/314;height:auto;border:0;border-radius:22px}
+.online-activities h3{font-size:30px;margin-bottom:20px}
+.online-activities .play-button{display:inline-block;padding:12px 22px;background:var(--sage);border-radius:15px;margin:8px;border:1px solid var(--line)}
+.sample-game{background:#f1eee5;padding:35px;border-radius:25px;margin-bottom:55px}
+.sample-game p{margin-block:15px}
+#gameBoard{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;max-width:700px;margin-block:24px}
+.card{border:1px solid #bfc6b9;border-radius:12px;background:#dce2d4;aspect-ratio:1;background-size:contain;background-repeat:no-repeat;background-position:center;color:#65705a;font-size:28px}
+.card.flipped,.card.matched{background-color:white}
+.card.matched{outline:2px solid #849277}
+.contact-section{background:#e9ecdf;border-radius:25px;display:flex;align-items:center;justify-content:space-between;gap:30px;padding-block:45px}
+.contact-section h2{max-width:620px}
+.contact-section p{margin-top:15px}
+.contact-actions{display:flex;flex-direction:column;align-items:start;gap:10px}
+.contact-actions>a:not(.button){font-size:14px}
+.site-footer{display:flex;justify-content:space-between;padding-block:30px;font-size:12px;color:var(--muted)}
+.site-footer div{display:flex;gap:20px}
+.skip-link{position:fixed;top:-100px;z-index:20;background:white;padding:15px}
+.skip-link:focus{top:0}
+
+@media(min-width:1500px){.card-main{min-height:390px}
 }
 
-.container {
-  width: 95%;
-  margin: 0 auto;
-  /* padding: 40px; */
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-  max-width: 1200px;
+@media(max-width:1050px){.header-inner{padding-inline:25px}
+main,.contact-section,.site-footer{padding-inline:25px}
+.hero{gap:35px}
+.hero-visual .gallery{height:390px}
+.card-main{grid-template-columns:43% 57%;min-height:350px}
+.card-copy{padding:27px 18px}
+.card-copy h3{font-size:22px}
+.offer h2{font-size:21px}
+.about{gap:40px}
 }
 
-.centered {
-  display: flex;
-  flex-direction: column;
-  /* justify-content: center; */
-  align-items: center;
-  margin: 8px auto auto auto;
-  border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  width: 95%;
-  max-width: 1200px;
-  gap: 0px;
+@media(max-width:760px){html{scroll-padding-top:145px}
+.header-inner{padding:12px 18px;flex-wrap:wrap;gap:12px}
+.brand img{width:43px;height:43px}
+.brand strong{font-size:22px}
+.header-contact{font-size:12px;padding:9px 14px}
+nav{order:3;width:100%;justify-content:center;gap:35px;border-top:1px solid var(--line);padding-top:10px;font-size:14px}
+main,.site-footer{padding-inline:18px}
+.hero{grid-template-columns:1fr;gap:30px;padding-block:35px 45px}
+.hero h1{font-size:44px}
+.hero-copy>p{font-size:16px}
+.hero-visual .gallery{height:340px;border-radius:60px 20px 20px 20px}
+.hero-note{font-size:11px}
+.section{padding-block:40px}
+.about{grid-template-columns:1fr;gap:25px}
+.services-grid{grid-template-columns:1fr}
+.service-number{margin-bottom:20px}
+.games-grid{grid-template-columns:1fr;gap:20px}
+.card-main{grid-template-columns:1fr;min-height:0}
+.game-card .gallery{height:320px}
+.card-copy{padding:25px}
+.card-copy h3{font-size:26px}
+.card-copy p{font-size:15px;margin-bottom:22px}
+.card-bottom{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.detail-toggle,.card-link{width:auto;gap:15px;margin:0}
+.section-heading{align-items:start;flex-direction:column;gap:15px}
+.catalog-intro{padding-block:35px 25px}
+.catalog-intro h1{font-size:39px}
+.catalog-intro p{font-size:15px}
+.offer{padding:22px;flex-direction:column;align-items:start;gap:18px;margin-bottom:30px}
+.offer h2{font-size:22px}
+.offer h2 span{margin-inline:3px}
+.game-details{padding:22px}
+.digital-art{min-height:230px}
+.activity-video{grid-template-columns:1fr;gap:25px}
+.contact-section{margin-inline:18px;padding:28px;flex-direction:column;align-items:start}
+.site-footer{flex-direction:column;gap:15px}
+.sample-game{padding:20px}
+#gameBoard{grid-template-columns:repeat(3,1fr)}
+.online-activities .play-button{margin:5px 0;display:block}
 }
 
-.centered img.logo {
-  width: 200px; /* Customize the logo size */
-  height: auto;
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}
+*{transition:none!important}
 }
 
-h2,
-h3 {
-  color: #005f73;
-}
+.hero .hero-quote{font-size:clamp(32px,3.3vw,48px);line-height:1.45;letter-spacing:-1px}
+.quote-source{display:block;margin-top:12px;color:var(--muted);font-size:14px}
+.card-video{background:#eae3d5;display:flex;align-items:center;justify-content:center;min-width:0;padding:12px}
+.card-video iframe{display:block;width:100%;height:auto;aspect-ratio:9/16;border:0;border-radius:15px}
+.offer-bundle{align-items:center;gap:35px}
+.bundle-image{width:230px;height:270px;object-fit:contain;flex-shrink:0;border-radius:16px}
+.bundle-copy{flex:1;min-width:0}
+.offer-bundle h2{font-size:30px;line-height:1.45}
+.offer h2 .bundle-price{color:var(--orange);margin:0;font-weight:700}
+.bundle-copy>.button{margin-top:20px}
+.bundle-secondary{border-top:1px solid #dccbb8;margin-top:24px;padding-top:17px;font-size:14px}
+.bundle-secondary p{margin-top:5px}
+@media(max-width:760px){.hero .hero-quote{font-size:34px}.offer-bundle{gap:22px}.bundle-image{width:100%;height:230px}.offer-bundle h2{font-size:25px}.bundle-secondary{font-size:13px}}
 
-a,
-.button {
-  color: #ffffff;
-  background-color: #f77f00;
-  padding: 10px 20px;
-  border-radius: 5px;
-  display: inline-block;
-  margin: 5px;
-  transition: background-color 0.3s ease;
-}
-
-a:hover,
-.button:hover {
-  background-color: #fcbf49;
-}
-
-header a {
-  background-color: transparent; /* Explicitly removing any background */
-  display: inline-block; /* Ensures proper spacing and layout */
-  padding: 0; /* Removes any padding */
-}
-
-header a:hover {
-  background-color: transparent; /* Ensures no change on hover */
-}
-
-.emoji {
-  font-size: 1.5em;
-}
-
-.centered ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.centered li {
-  padding: 4px 0;
-}
-
-.follow-us {
-  background-color: white;
-}
-
-.social-icons {
-  margin: 20px 0;
-}
-
-.social-icon {
-  display: inline-block;
-  margin: 0 10px;
-  color: #333;
-  background-color: #f0f0f0;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  text-align: center;
-  line-height: 40px;
-  transition: transform 0.3s ease, color 0.3s ease;
-}
-
-.social-icon:hover {
-  transform: scale(1.1);
-  color: #007bff;
-}
-
-.social-icon i {
-  transition: transform 0.3s ease;
-}
-
-.social-icon:hover i {
-  transform: rotate(360deg);
-}
-
-.image-slider {
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  border-radius: 20px;
-  justify-content: center;
-  align-items: center;
-  height: 400px;
-  width: 600px;
-  max-height: 600px;
-}
-
-.slider .slide {
-  width: 100%;
-  display: none;
-  object-fit: cover;
-}
-
-.prev,
-.next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 16px;
-  color: white;
-  font-weight: bold;
-  font-size: 24px;
-  border-radius: 50%;
-  user-select: none;
-  background-color: rgba(0, 0, 0, 0.6);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
-  z-index: 2;
-}
-
-.next {
-  left: -20px;
-}
-.prev {
-  right: -20px;
-}
-
-.prev:hover,
-.next:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-.horizontal-layout {
-  flex-direction: row; /* Align children horizontally */
-  flex-wrap: wrap; /* Wrap items if not enough space */
-  justify-content: space-around; /* Distribute space around items for better spacing */
-}
-
-.main {
-  /* text-align: center; */
-  padding: 0;
-}
-
-.header {
-  /* text-align: center; */
-  padding: 0;
-}
-
-.footer {
-  /* text-align: center; */
-  padding: 0;
-}
-
-@media (max-width: 768px) {
-  .image-slider {
-    max-width: 300px;
-    width: 90vw; /* Adjust width to scale with the viewport width */
-    height: 90h; /* Maintain aspect ratio */
-    max-height: 300px; /* Maximum height limitation */
-  }
-
-  .prev:hover,
-  .next:hover {
-    background-color: rgba(0, 0, 0, 0.8); /* Darkens on hover */
-  }
-}
-.custom-create-game-section {
-  background-color: #f8f9fa; /* או צבע אחר שמתאים לעיצוב האתר */
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-}
-
-.custom-create-game-section h2 {
-  color: #0056b3; /* או צבע אחר לבחירתך */
-  margin-bottom: 15px;
-}
-
-.custom-create-game-section p {
-  color: #333;
-  line-height: 1.6;
-}
-
-.custom-create-game-section ul {
-  list-style-type: disc;
-  margin-left: 20px;
-}
-.whatsapp-button {
-  color: #ffffff;
-  background-color: #25d366; /* ירוק וואטסאפ */
-  padding: 10px 20px;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.whatsapp-button i {
-  margin-left: 10px;
-}
-
-.whatsapp-button:hover {
-  background-color: #128c7e; /* ירוק כהה יותר */
-}
-.card {
-  width: 100px; /* קבע ערכים כרצונך */
-  height: 100px; /* קבע ערכים כרצונך */
-  background-color: #000; /* רקע שחור לסימול גב הקלף */
-  display: inline-block;
-  margin: 5px;
-  cursor: pointer;
-  transition: transform 0.6s, background-image 0.6s ease-in-out;
-  transform-style: preserve-3d;
-  transform: rotateY(180deg); /* פתיחה עם צד הרקע */
-  background-size: cover; /* מילוי הקלף עם התמונה */
-  background-position: center; /* ממקום את התמונה במרכז */
-  background-image: none; /* הוסף שורה זו */
-}
-
-.card.flipped {
-  transform: rotateY(0deg);
-  background-image: inherit; /* הוראה להציג את התמונה כשהקלף מתהפך */
-}
-/* CSS לסרטון */
-.video-container iframe {
-    width: 100%;
-    height: auto;
-    max-width: 100%;
-    border: none;
-}
-.chat-info ul {
-  list-style: disc !important; /* מבטיח שהנקודות יופיעו */
-  padding-left: 20px;
-  margin-top: 10px;
-}
-
-.chat-info ul li {
-  margin-bottom: 10px;
-}
+.brand-logo{position:relative;display:block;width:58px;height:58px;flex-shrink:0;border-radius:50%;overflow:hidden}
+.brand .brand-logo img{position:absolute;width:94px;height:81px;max-width:none;left:-14px;top:-15px;border-radius:0;object-fit:contain}
+@media(max-width:760px){.brand-logo{width:43px;height:43px}.brand .brand-logo img{width:70px;height:60px;left:-10px;top:-12px}.card-video{padding:16px}.card-video iframe{width:min(100%,260px)}}
