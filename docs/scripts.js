@@ -2,15 +2,58 @@
 document.addEventListener('DOMContentLoaded', () => {
  const base=document.body.dataset.base || '';
  const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
- function gallery(images,name,tag='') {
+
+ function gallery(images,name,tag='',autoPlayMs=0) {
   const el=document.createElement('div');el.className='gallery';el.setAttribute('aria-label','גלריית '+name);
-  const img=document.createElement('img');img.src=base+images[0];img.alt=name+' — תמונה 1';img.loading='lazy';el.append(img);
+  let img=document.createElement('img');img.src=base+images[0];img.alt=name+' — תמונה 1';img.loading=autoPlayMs?'eager':'lazy';el.append(img);
   if(tag){const label=document.createElement('span');label.className='gallery-tag';label.textContent=tag;el.append(label);}
   if(images.length>1){
-   let index=0;const count=document.createElement('span');count.className='gallery-count';
-   const show=()=>{img.src=base+images[index];img.alt=name+' — תמונה '+(index+1);count.textContent=(index+1)+' / '+images.length;};
-   ['prev','next'].forEach((dir,i)=>{const b=document.createElement('button');b.type='button';b.className=dir;b.textContent=i?'←':'→';b.setAttribute('aria-label',(i?'התמונה הבאה':'התמונה הקודמת')+' — '+name);b.addEventListener('click',()=>{index=(index+(i?1:-1)+images.length)%images.length;show();});el.append(b);});
-   el.append(count);show();
+   let index=0,requestedIndex=0,requestId=0,pending=false,timer;
+   const cache=new Map(),count=document.createElement('span');count.className='gallery-count';
+   count.textContent='1 / '+images.length;
+   function preload(i){
+    if(!cache.has(i)){
+     const ready=new Promise(resolve=>{
+      const photo=new Image();
+      photo.onload=async()=>{try{await photo.decode();}catch{}resolve(photo);};
+      photo.onerror=()=>{cache.delete(i);resolve(null);};
+      photo.src=base+images[i];
+     });
+     cache.set(i,ready);
+    }return cache.get(i);
+   }
+   function preloadNeighbors(){preload((index+1)%images.length);preload((index-1+images.length)%images.length);}
+   async function show(nextIndex){
+    const token=++requestId;pending=true;el.setAttribute('aria-busy','true');
+    const photo=await preload(nextIndex);
+    if(token!==requestId)return;
+    pending=false;el.setAttribute('aria-busy','false');
+    if(!photo){requestedIndex=index;return;}
+    photo.alt=name+' — תמונה '+(nextIndex+1);
+    // Swap a loaded, decoded image and its counter together.
+    img.replaceWith(photo);img=photo;index=nextIndex;requestedIndex=index;
+    count.textContent=(index+1)+' / '+images.length;preloadNeighbors();
+   }
+   let playing=!!autoPlayMs&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+   function resetTimer(){
+    clearInterval(timer);
+    if(playing)timer=setInterval(()=>{
+     if(!document.hidden&&!pending){requestedIndex=(index+1)%images.length;show(requestedIndex);}
+    },autoPlayMs);
+   }
+   ['prev','next'].forEach((dir,i)=>{
+    const b=document.createElement('button');b.type='button';b.className=dir;b.textContent=i?'←':'→';
+    b.setAttribute('aria-label',(i?'התמונה הבאה':'התמונה הקודמת')+' — '+name);
+    b.addEventListener('click',()=>{requestedIndex=(requestedIndex+(i?1:-1)+images.length)%images.length;show(requestedIndex);resetTimer();});
+    el.append(b);
+   });
+   if(autoPlayMs){
+    const pause=document.createElement('button');pause.type='button';pause.className='gallery-autoplay';
+    function labelPause(){pause.textContent=playing?'השהיה Ⅱ':'הפעלה ▶';pause.setAttribute('aria-label',playing?'השהיית החלפת התמונות האוטומטית':'הפעלת החלפת התמונות האוטומטית');}
+    pause.addEventListener('click',()=>{playing=!playing;labelPause();resetTimer();});
+    labelPause();el.append(pause);resetTimer();
+   }
+   el.append(count);preloadNeighbors();
   }return el;
  }
  function card(p,featured){
@@ -35,6 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
  }
  const target=document.getElementById('catalog');if(target)DERECH_CATALOG.forEach(p=>target.append(card(p,false)));
  const featured=document.getElementById('featured-games');if(featured)DERECH_CATALOG.slice(0,2).forEach(p=>featured.append(card(p,true)));
- const home=document.getElementById('home-gallery');if(home)home.append(gallery(DERECH_HOME_IMAGES,'פעילות דרך הכלב'));
+ const home=document.getElementById('home-gallery');if(home)home.append(gallery(DERECH_HOME_IMAGES,'פעילות דרך הכלב','',2000));
  if(location.hash.startsWith('#game-')){const product=document.getElementById(location.hash.slice(1));if(product){product.querySelector('.detail-toggle')?.click();requestAnimationFrame(()=>product.scrollIntoView());}}
 });
