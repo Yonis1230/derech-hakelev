@@ -2,3 +2,18 @@
 # not necessary for Craft 3 (https://github.com/craftcms/craft/issues/26)
 /craft/storage/*
 !/craft/storage/rebrand
+
+# Astro / Efrat Bazar
+node_modules/
+dist/
+.astro/
+.tools/
+.env
+.env.*
+!.env.example
+*.log
+
+# Deployment and Studio local state
+.vercel/
+.sanity/
+.image-review/
