@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const copy=document.createElement('div');copy.className='card-copy';
   copy.innerHTML='<h3>'+escape(p.name)+'</h3>'+(p.summary?'<p>'+escape(p.summary)+'</p>':'')+'<div class="card-bottom">'+(p.outOfStock?'<span class="stock">אזל מהמלאי · לקבלת עדכון</span>':'<span class="price">'+p.price+' ₪</span>')+'</div>';
   const bottom=copy.querySelector('.card-bottom');
+  if(p.badge){const badge=document.createElement('span');badge.className='product-sticker';badge.textContent=p.badge;copy.prepend(badge);}
   if(featured){const a=document.createElement('a');a.className='card-link';a.href=base+'pages/games/index.html#game-'+p.id;a.textContent='לפרטים ולהזמנה ←';bottom.append(a);}
   else{
    const button=document.createElement('button');button.type='button';button.className='detail-toggle';button.setAttribute('aria-expanded','false');button.setAttribute('aria-controls','details-'+p.id);button.innerHTML='לפרטים ולהזמנה <span aria-hidden="true">←</span>';bottom.append(button);
