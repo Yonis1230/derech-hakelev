@@ -10,12 +10,14 @@
 
  function start() {
   // Local previews never send visitor data to the live project.
-  if (!production || started || consent !== 'granted') return;
-  started = true;
+  if (!production || consent === 'denied') return;
   window.clarity = window.clarity || function () {
    (window.clarity.q = window.clarity.q || []).push(arguments);
   };
-  window.clarity('consentv2', {analytics_Storage: 'granted', ad_Storage: 'denied'});
+  // Queue the storage decision before loading Clarity, including on first visit.
+  window.clarity('consentv2', {analytics_Storage: consent === 'granted' ? 'granted' : 'denied', ad_Storage: 'denied'});
+  if (started) return;
+  started = true;
   window.clarity('set', 'site_page', document.getElementById('catalog') ? 'games' : 'home');
   const script = document.createElement('script');
   script.async = true;
@@ -24,14 +26,14 @@
  }
 
  function event(name) {
-  if (started && consent === 'granted') window.clarity('event', name);
+  if (started && consent !== 'denied') window.clarity('event', name);
  }
 
  document.addEventListener('DOMContentLoaded', () => {
   const panel = document.createElement('section');
   panel.className = 'analytics-consent';
   panel.setAttribute('aria-label', 'העדפות מדידה');
-  panel.innerHTML = '<p>באישורכם נשתמש בעוגיות וב־Microsoft Clarity למדידת שימוש והקלטת אינטראקציות לשיפור האתר. <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">פרטיות Microsoft</a> · שינוי הבחירה בתחתית האתר.</p><div class="analytics-actions"><button type="button" data-consent="granted">אישור</button><button type="button" data-consent="denied">ללא מדידה</button></div>';
+  panel.innerHTML = '<p>לשיפור האתר מתבצעת מדידת שימוש מוגבלת והקלטת אינטראקציות באמצעות Microsoft Clarity ללא עוגיות. באישורכם יופעלו גם עוגיות למדידה מלאה. <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">פרטיות Microsoft</a> · שינוי הבחירה בתחתית האתר.</p><div class="analytics-actions"><button type="button" data-consent="granted">אישור</button><button type="button" data-consent="denied">ללא מדידה</button></div>';
   panel.hidden = consent === 'granted' || consent === 'denied';
   document.body.append(panel);
   const preferences = document.createElement('button');
