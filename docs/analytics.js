@@ -31,7 +31,7 @@
   const panel = document.createElement('section');
   panel.className = 'analytics-consent';
   panel.setAttribute('aria-label', 'העדפות מדידה');
-  panel.innerHTML = '<p><strong>עוזרים לנו לשפר את האתר?</strong> באישורכם נשתמש ב־Microsoft Clarity למדידת שימוש, מפות חום והקלטות של האינטראקציות באתר, באמצעות עוגיות. המידע מועבר ל־Microsoft. אפשר להמשיך לגלוש גם ללא אישור ולשנות את הבחירה בתחתית העמוד. <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">פרטיות Microsoft</a></p><div class="analytics-actions"><button type="button" data-consent="granted">אישור מדידה</button><button type="button" data-consent="denied">ללא מדידה</button></div>';
+  panel.innerHTML = '<p>באישורכם נשתמש בעוגיות וב־Microsoft Clarity למדידת שימוש והקלטת אינטראקציות לשיפור האתר. <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">פרטיות Microsoft</a> · שינוי הבחירה בתחתית האתר.</p><div class="analytics-actions"><button type="button" data-consent="granted">אישור</button><button type="button" data-consent="denied">ללא מדידה</button></div>';
   panel.hidden = consent === 'granted' || consent === 'denied';
   document.body.append(panel);
   const preferences = document.createElement('button');
