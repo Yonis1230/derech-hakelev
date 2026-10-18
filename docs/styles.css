@@ -194,3 +194,7 @@ main,.site-footer{padding-inline:18px}
 .analytics-consent a{color:#94401f;text-decoration:underline}
 
 @media(max-width:760px){.analytics-consent{inset-inline:8px;bottom:8px;padding:12px;flex-direction:column;align-items:stretch;gap:8px}.analytics-actions button{flex:1}}
+
+/* Reserve gallery space and isolate image layout while loading. */
+.gallery{contain:layout paint}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
