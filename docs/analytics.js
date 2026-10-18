@@ -58,7 +58,7 @@
     // Reload without the tracker after withdrawing consent.
     location.reload();
    }
-   preferences.focus();
+   preferences.focus({preventScroll: true});
   }
   panel.addEventListener('click', e => {
    const button = e.target.closest('[data-consent]');
