@@ -10,7 +10,7 @@
 
  function start() {
   // Local previews never send visitor data to the live project.
-  if (!production || consent === 'denied') return;
+  if (!production || consent !== 'granted') return;
   window.clarity = window.clarity || function () {
    (window.clarity.q = window.clarity.q || []).push(arguments);
   };
@@ -26,31 +26,31 @@
  }
 
  function event(name) {
-  if (started && consent !== 'denied') window.clarity('event', name);
+  if (started && consent === 'granted') window.clarity('event', name);
  }
 
  document.addEventListener('DOMContentLoaded', () => {
   const panel = document.createElement('section');
   panel.className = 'analytics-consent';
   panel.setAttribute('aria-label', 'העדפות מדידה');
-  panel.innerHTML = '<p>לשיפור האתר מתבצעת מדידת שימוש מוגבלת והקלטת אינטראקציות באמצעות Microsoft Clarity ללא עוגיות. באישורכם יופעלו גם עוגיות למדידה מלאה. <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener">פרטיות Microsoft</a> · שינוי הבחירה בתחתית האתר.</p><div class="analytics-actions"><button type="button" data-consent="granted">אישור</button><button type="button" data-consent="denied">ללא מדידה</button></div>';
-  panel.hidden = consent === 'granted' || consent === 'denied';
+  panel.innerHTML = '<p>כדי לספק חוויית גלישה טובה יותר, אנו משתמשים בטכנולוגיות כמו עוגיות (Cookies) למדידת השימוש באתר ולשיפורו. המדידה תתחיל רק לאחר אישורכם. ניתן לבטל את ההסכמה בתחתית האתר.</p><div class="analytics-actions"><button type="button" data-consent="granted">אישור</button></div>';
+  panel.hidden = consent === 'granted';
   document.body.append(panel);
   const preferences = document.createElement('button');
   preferences.type = 'button';
   preferences.className = 'analytics-preferences';
-  preferences.textContent = 'העדפות פרטיות ומדידה';
+  preferences.textContent = consent === 'granted' ? 'ביטול הסכמה למדידה' : 'העדפות פרטיות ומדידה';
   preferences.addEventListener('click', () => {
+   if (consent === 'granted') { choose('denied'); return; }
    panel.hidden = false;
    panel.querySelector('button').focus();
   });
   document.querySelector('.site-footer')?.append(preferences);
-  panel.addEventListener('click', e => {
-   const button = e.target.closest('[data-consent]');
-   if (!button) return;
-   consent = button.dataset.consent;
+  function choose(value) {
+   consent = value;
    try { localStorage.setItem(storageKey, consent); } catch { /* Keep this page's choice. */ }
-   panel.hidden = true;
+   panel.hidden = consent === 'granted';
+   preferences.textContent = consent === 'granted' ? 'ביטול הסכמה למדידה' : 'העדפות פרטיות ומדידה';
    if (consent === 'granted') start();
    else if (started) {
     window.clarity('consentv2', {analytics_Storage: 'denied', ad_Storage: 'denied'});
@@ -59,6 +59,10 @@
     location.reload();
    }
    preferences.focus();
+  }
+  panel.addEventListener('click', e => {
+   const button = e.target.closest('[data-consent]');
+   if (button) choose(button.dataset.consent);
   });
   start();
 
