@@ -200,3 +200,42 @@ main,.site-footer{padding-inline:18px}
 /* Reserve gallery space and isolate image layout while loading. */
 .gallery{contain:layout paint}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* Optional game selector: its JavaScript loads only when the visitor opens it. */
+.game-advisor-invite{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:14px;margin-top:30px}
+.game-advisor-invite p{margin:0}
+.game-advisor-trigger{margin-top:22px;max-width:100%;white-space:normal}
+body.game-advisor-open{overflow:hidden}
+.game-advisor{width:min(680px,calc(100% - 28px));max-height:calc(100dvh - 28px);padding:26px;border:1px solid var(--line);border-radius:24px;background:var(--cream);color:var(--ink);box-shadow:0 16px 70px #302f2933;overflow:auto;overscroll-behavior:contain}
+.game-advisor::backdrop{background:#302f2973}
+.game-advisor-header{display:flex;justify-content:space-between;align-items:start;gap:16px}
+.game-advisor-header .eyebrow{margin-bottom:6px}
+.game-advisor-header h2{font-size:27px;line-height:1.4}
+.game-advisor-close{display:grid;place-items:center;flex-shrink:0;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:var(--white);color:var(--ink);font-size:26px;line-height:1}
+.game-advisor-intro{font-size:14px;margin-top:14px}
+.game-advisor-progress{margin-block:18px 12px;color:var(--orange);font-size:13px;font-weight:600}
+.game-advisor-question{border:0;padding:0;margin:0;min-width:0}
+.game-advisor-question legend,.game-advisor-content>h3{font-size:21px;line-height:1.6;margin-bottom:18px;font-weight:600;max-width:100%}
+.game-advisor-question legend:focus,.game-advisor-content>h3:focus{outline:none}
+.game-advisor-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.game-advisor-option{display:flex;align-items:start;gap:9px;cursor:pointer;min-height:54px;border:1px solid #c9cdbf;border-radius:15px;padding:12px 14px;background:var(--white);color:var(--ink);text-align:start;font-size:15px;line-height:1.5;white-space:normal}
+.game-advisor-option input{flex-shrink:0;width:18px;height:18px;margin:3px 0 0;accent-color:var(--orange);cursor:pointer}
+.game-advisor-option span{min-width:0}
+.game-advisor-option:hover,.game-advisor-option[data-selected=true]{border-color:var(--orange);background:#f8ebdc}
+.game-advisor-option:focus-within{outline:3px solid var(--orange);outline-offset:3px}
+.game-advisor-hint{font-size:13px;margin:0 0 14px;line-height:1.6}
+.game-advisor-next{margin-top:18px;min-height:44px}
+.game-advisor-next:disabled{opacity:.5;cursor:not-allowed}
+.game-advisor-nav{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 18px;border-top:1px solid var(--line);margin-top:24px;padding-top:12px}
+.game-advisor-nav button{min-height:44px;padding:6px 0;border:0;background:transparent;color:var(--orange);text-decoration:underline;font-size:13px}
+.game-advisor-nav button[hidden]{display:none}
+.game-advisor-selection{font-size:12px;margin-bottom:16px;color:var(--muted)}
+.game-advisor-results{display:grid;gap:12px}
+.game-advisor-result{padding:18px;border:1px solid #d7dbd0;border-radius:18px;background:var(--sage)}
+.game-advisor-result h4{font-size:20px;margin:0 0 8px;line-height:1.5}
+.game-advisor-result p{font-size:14px;line-height:1.7}
+.game-advisor-result .game-advisor-age{font-size:12px;color:#55594d;margin-top:10px}
+.game-advisor-result-actions{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:14px}
+.game-advisor-result-actions .button{font-size:13px;padding:9px 16px;min-height:44px}
+.game-advisor-help{display:inline-flex;align-items:center;min-height:44px;margin-top:14px;color:var(--orange);text-decoration:underline;font-size:14px}
+.game-advisor-empty{padding:18px;border-radius:16px;background:var(--sage);font-size:15px}
+@media(max-width:480px){.game-advisor{padding:18px;width:calc(100% - 20px);max-height:calc(100dvh - 20px);border-radius:18px}.game-advisor-header h2{font-size:23px}.game-advisor-question legend,.game-advisor-content>h3{font-size:19px}.game-advisor-options{gap:8px}.game-advisor-option{padding:11px 10px;font-size:14px}.game-advisor-result{padding:14px}.game-advisor-trigger{font-size:14px;padding-inline:18px}.game-advisor-nav{gap:8px}}

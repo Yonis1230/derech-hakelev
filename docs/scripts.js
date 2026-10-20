@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
  const base=document.body.dataset.base || '';
  const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const media=window.DERECH_MEDIA || {};
@@ -59,7 +59,7 @@
    function resetTimer(){
     clearInterval(timer);
     if(playing&&visible&&!document.hidden)timer=setInterval(()=>{
-     if(!pending&&img.complete&&img.naturalWidth){requestedIndex=(index+1)%images.length;show(requestedIndex);}
+     if(!document.body.classList.contains('game-advisor-open')&&!pending&&img.complete&&img.naturalWidth){requestedIndex=(index+1)%images.length;show(requestedIndex);}
     },autoPlayMs);
    }
    ['prev','next'].forEach((dir,i)=>{
@@ -109,5 +109,21 @@
   selected.slice(0,2).forEach(p=>featured.append(card(p,true)));
  }
  const home=document.getElementById('home-gallery');if(home)home.append(gallery(DERECH_HOME_IMAGES,'פעילות דרך הכלב','',2000));
+ let advisorModule;
+ document.querySelectorAll('[data-game-advisor]').forEach(button=>{
+  button.addEventListener('click',async()=>{
+   button.disabled=true;button.setAttribute('aria-busy','true');
+   try{
+    advisorModule ||= import('./advisor.js?v=20261020-multiple').catch(error=>{advisorModule=undefined;throw error;});
+    const advisor=await advisorModule;
+    advisor.openGameAdvisor({base,catalog:DERECH_CATALOG,trigger:button});
+    button.parentElement.querySelector('[data-advisor-error]')?.remove();
+   }catch{
+    let status=button.parentElement.querySelector('[data-advisor-error]');
+    if(!status){status=document.createElement('p');status.dataset.advisorError='';status.setAttribute('role','status');button.after(status);}
+    status.textContent='לא הצלחתי לפתוח את השאלון. נסו לרענן את העמוד, או פנו אליי בוואטסאפ לעזרה בבחירה.';
+   }finally{button.disabled=false;button.removeAttribute('aria-busy');}
+  });
+ });
  if(location.hash.startsWith('#game-')){const product=document.getElementById(location.hash.slice(1));if(product){product.querySelector('.detail-toggle')?.click();requestAnimationFrame(()=>product.scrollIntoView());}}
 });
