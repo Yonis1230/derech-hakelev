@@ -102,6 +102,39 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   main.append(copy);el.prepend(main);return el;
  }
+ function createPackOffer(context='catalog'){
+  const offer=document.createElement('aside');offer.className='pack-offer';offer.setAttribute('aria-label','מבצע על מארזי הקלפים');
+  const heading=context==='advisor'?'h4':'h3';
+  offer.innerHTML='<div class="pack-offer-copy"><'+heading+'>מבצע על מארזי הקלפים</'+heading+'><p class="pack-offer-prices"><strong>2 מארזים ב־320 ₪</strong><span class="pack-offer-separator" aria-hidden="true"> · </span><strong>3 מארזים ב־450 ₪</strong></p><p class="pack-offer-note">המבצע חל על מארזי הקלפים שמחירם 165 ₪ למארז.</p></div><a class="pack-offer-contact">לכמויות אחרות — שלחו הודעה ↗</a>';
+  offer.querySelector('a').href=document.querySelector('.header-contact').href;
+  return offer;
+ }
+ function mountFloatingOffer(){
+  const section=document.querySelectorAll('.games-teaser, .catalog-section')[0];
+  if(!section)return;
+  const offer=createPackOffer('floating');offer.classList.add('floating-offer');offer.hidden=true;
+  offer.querySelector('.pack-offer-note').textContent='למארזי הקלפים שמחירם 165 ₪.';
+  const bundle=document.getElementById('bundle-offer');
+  const quietSections=[bundle,...document.querySelectorAll('.games-teaser-actions, .catalog-advisor-invite, .contact-section, .site-footer')].filter(Boolean);
+  const link=offer.querySelector('a');link.textContent='ומחכה גם מבצע על כל המוצרים ←';link.href=bundle?'#bundle-offer':base+'pages/games/index.html#bundle-offer';
+  const close=document.createElement('button');close.type='button';close.className='floating-offer-close';close.textContent='×';close.setAttribute('aria-label','סגירת תזכורת המבצעים');offer.prepend(close);
+  let reachedGames=false,dismissed=false,observer;
+  const visibleQuietSections=new Set();
+  function update(){offer.hidden=dismissed||!reachedGames||visibleQuietSections.size>0;}
+  close.addEventListener('click',()=>{dismissed=true;update();observer?.disconnect();});
+  document.body.append(offer);
+  if('IntersectionObserver' in window){
+   observer=new IntersectionObserver(entries=>{
+    for(const entry of entries){
+     if(entry.target===section)reachedGames=entry.isIntersecting||entry.boundingClientRect.top<0;
+     else if(entry.isIntersecting)visibleQuietSections.add(entry.target);else visibleQuietSections.delete(entry.target);
+    }
+    update();
+   });
+   observer.observe(section);quietSections.forEach(target=>observer.observe(target));
+  }else{reachedGames=true;update();}
+ }
+ mountFloatingOffer();
  const target=document.getElementById('catalog');if(target)DERECH_CATALOG.forEach(p=>target.append(card(p,false)));
  const featured=document.getElementById('featured-games');
  if(featured){
@@ -114,9 +147,9 @@ document.addEventListener('DOMContentLoaded', () => {
   button.addEventListener('click',async()=>{
    button.disabled=true;button.setAttribute('aria-busy','true');
    try{
-    advisorModule ||= import('./advisor.js?v=20261020-multiple').catch(error=>{advisorModule=undefined;throw error;});
+    advisorModule ||= import('./advisor.js?v=20261021-offers').catch(error=>{advisorModule=undefined;throw error;});
     const advisor=await advisorModule;
-    advisor.openGameAdvisor({base,catalog:DERECH_CATALOG,trigger:button});
+    advisor.openGameAdvisor({base,catalog:DERECH_CATALOG,trigger:button,createPackOffer});
     button.parentElement.querySelector('[data-advisor-error]')?.remove();
    }catch{
     let status=button.parentElement.querySelector('[data-advisor-error]');

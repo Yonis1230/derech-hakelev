@@ -1,4 +1,4 @@
-import {QUESTIONS, recommendGames} from './advisor-data.js?v=20261020-multiple';
+import {QUESTIONS, recommendGames} from './advisor-data.js?v=20261021-offers';
 
 let dialog;
 let content;
@@ -11,6 +11,7 @@ let restoreFocus = true;
 let step = 0;
 let answers = {};
 let drafts = {};
+let createPackOffer;
 
 function element(tag, className, text) {
  const node = document.createElement(tag);
@@ -92,6 +93,7 @@ function renderResults() {
    list.append(card);
   }
   content.append(list);
+  if (createPackOffer) content.append(createPackOffer('advisor'));
  }
  content.append(helpLink());
  heading.focus({preventScroll: true});
@@ -167,6 +169,7 @@ export function openGameAdvisor(options) {
  base = options.base || '';
  catalog = options.catalog || [];
  trigger = options.trigger;
+ createPackOffer = options.createPackOffer;
  restoreFocus = true;
  if (!dialog) buildDialog();
  if (!dialog.open) dialog.showModal();

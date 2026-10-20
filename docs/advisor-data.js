@@ -34,8 +34,8 @@ export const QUESTIONS = [
 // Scores rank documented activities; they are not a clinical assessment or a
 // percentage of suitability. Zero relevance always excludes a product.
 const FACTS = {
- resilience:{format:'cards',setting:{individual:3,group:3,home:2},
-  ageNote:'לא צוינה המלצת גיל. כדאי לברר התאמה לגיל המשתתפים ולאופן העבודה שלכם.',
+ resilience:{format:'cards',minAge:3,setting:{individual:3,group:3,home:2},
+  ageNote:'מומלץ מגיל 3. אפשר להשתמש בקלפים לעבודה פרטנית וגם לפעילות קבוצתית.',
   goals:{
    emotional:[5,'הקלפים מחברים בין מצבים מעוררי לחץ, תחושות גוף ושיטות רגיעה, ויכולים לשמש לבחירה אישית ולשיחה על החוויה.'],
    stress:[10,'הקלפים עוסקים במצבים מעוררי לחץ, בתחושות הגוף ובשיטות רגיעה דרך המחשבות, הגוף והנשימה. אפשר לשוחח וגם להתנסות בשיטות.']
@@ -66,8 +66,8 @@ const FACTS = {
    social:[8,'רביעיות ודאבל מזמינים תקשורת ומשחק משותף. החוברת כוללת גם מערכים שעוסקים בשיתוף פעולה, בהיכרות ובאחריות.'],
    activity:[9,'שני משחקים מוכרים בגרסה כלבית: משלימים רביעיות או מחפשים סמלים משותפים בדאבל. החוברת מציעה כמה דרכי משחק.']
   }},
- emotions:{format:'cards',minAge:5,setting:{individual:3,group:3,home:3},
-  ageNote:'מומלץ מגיל 5, לשני משתתפים ומעלה.',
+ emotions:{format:'cards',minAge:4,setting:{individual:3,group:3,home:3},
+  ageNote:'מומלץ מגיל 4, לשני משתתפים ומעלה.',
   goals:{
    emotional:[10,'קלפי התמונות והרגשות מזמינים לבחור מילים לתחושות ולגלות שאותה תמונה יכולה לעורר רגשות שונים אצל משתתפים שונים.'],
    thinking:[3,'המשתתפים מתבוננים באותה תמונה ומסבירים רגשות ופרשנויות שונות. זו דרך לפתוח שיחה על נקודות מבט שונות.'],
@@ -82,8 +82,8 @@ const FACTS = {
    social:[7,'פנטומימה, זיכרון עם שאלות ומשימות ומשחקי תכונות מציעים דרכים שונות להיכרות ולתקשורת בין המשתתפים.'],
    activity:[10,'שלושה משחקים במארז אחד: מציגים בפנטומימה, מוצאים זוגות בזיכרון או מחברים תמונות לתכונות. אפשר גם להמציא סיפורים ומשחקים נוספים.']
   }},
- workbook:{format:'digital',childrenOnly:true,setting:{individual:3,group:2,home:3},
-  ageNote:'החוברת מיועדת לעבודה רגשית עם ילדים; לא צוינה המלצת גיל מדויקת.',
+ workbook:{format:'digital',minAge:6,childrenOnly:true,setting:{individual:3,group:2,home:3},
+  ageNote:'החוברת מיועדת לעבודה רגשית עם ילדים מגיל 6.',
   goals:{
    emotional:[8,'חוברת דיגיטלית עם כלים לעבודה רגשית עם ילדים בנושאי רגשות, ויסות, דימוי עצמי, הבעה, חוזקות והצלחות.'],
    problems:[6,'החוברת כוללת כלים בנושאי פתרון בעיות ויחסים חברתיים, לצד נושאים רגשיים נוספים לעבודה עם ילדים.'],
@@ -91,8 +91,8 @@ const FACTS = {
    thinking:[7,'החוברת כוללת עבודה על טעויות חשיבה, לצד דחיית סיפוקים ונושאים רגשיים נוספים לעבודה עם ילדים.'],
    social:[5,'החוברת כוללת כלים בנושאי יחסים חברתיים ופתרון בעיות, ויכולה לחבר בין העבודה עם הילד לבין ההורים והבית.']
   }},
- escape:{format:'digital',setting:{individual:0,group:3,home:2},
-  ageNote:'לא צוינה המלצת גיל. כדאי לברר התאמה לגיל המשתתפים ולרמת החידות שבחרתם.',
+ escape:{format:'digital',minAge:5,setting:{individual:0,group:3,home:2},
+  ageNote:'מומלץ מגיל 5. אפשר לבחור את החידות ואת הרמה בהתאם למשתתפים.',
   goals:{
    social:[5,'פעילות משותפת של פתרון חידות מעולם הכלבים בדרך לגילוי קוד התיבה. אפשר לבחור חידות ורמות שונות ולהתאים את הפעילות לקבוצה.'],
    activity:[10,'קבצים להדפסה עם חידות ופתרונות, ליצירת פעילות בסגנון חדר בריחה. להפעלה צריך להכין תיבה או קופסה ומנעול עם קוד.']
@@ -115,7 +115,9 @@ function choices(value,id) {
 
 function ageEligible(facts,age,minimum=facts.minAge) {
  if(age==='unsure')return true;
- if(age==='under4')return Boolean(facts.allAges);
+ // The under4 cohort also contains age3. A documented3+ product can be shown
+ // only with the narrower age qualification in its visible note below.
+ if(age==='under4')return Boolean(facts.allAges) || (Number.isFinite(minimum) && minimum<=3);
  if(facts.childrenOnly && age==='adult')return false;
  return !minimum || AGE[age]>=minimum;
 }
@@ -162,6 +164,11 @@ export function recommendGames(answers,catalog) {
      ? 'ההצעה מתייחסת לכל קבוצות הגיל שבחרתם. '
      : 'לקבוצות הגיל שבחרתם נדרש בירור התאמה. ')+ageNote;
    }
+  }
+  if(eligibleAges.includes('under4') && !facts.allAges){
+   ageNote='בקבוצת ״מתחת לגיל 4״, המשחק מתאים מגיל '+facts.minAge+'.';
+   const otherGroups=eligibleAges.filter(age=>age!=='under4').map(age=>AGE_LABEL[age]);
+   if(otherGroups.length)ageNote+=' ההצעה מתייחסת גם לקבוצות שבחרתם: '+otherGroups.join(', ')+'.';
   }
   candidates.push({product,reason,ageNote,score});
  }
