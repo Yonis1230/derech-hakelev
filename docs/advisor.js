@@ -1,4 +1,4 @@
-import {QUESTIONS, recommendGames} from './advisor-data.js?v=20261021-offers';
+import {QUESTIONS, recommendGames} from './advisor-data.js?v=20261021-solutions-age3';
 
 let dialog;
 let content;

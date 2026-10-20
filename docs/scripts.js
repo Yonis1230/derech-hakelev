@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
   button.addEventListener('click',async()=>{
    button.disabled=true;button.setAttribute('aria-busy','true');
    try{
-    advisorModule ||= import('./advisor.js?v=20261021-offers').catch(error=>{advisorModule=undefined;throw error;});
+    advisorModule ||= import('./advisor.js?v=20261021-solutions-age3').catch(error=>{advisorModule=undefined;throw error;});
     const advisor=await advisorModule;
     advisor.openGameAdvisor({base,catalog:DERECH_CATALOG,trigger:button,createPackOffer});
     button.parentElement.querySelector('[data-advisor-error]')?.remove();
