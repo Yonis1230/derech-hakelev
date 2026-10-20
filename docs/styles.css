@@ -15,6 +15,8 @@ h1 span{color:var(--orange)}
 p{color:var(--muted)}
 .button{display:inline-flex;align-items:center;justify-content:center;padding:12px 25px;background:var(--orange);color:white;border:1px solid var(--orange);border-radius:99px;font-weight:600;gap:10px;transition:background .2s}
 .button:hover{background:#913d1d}
+.button-secondary{background:transparent;color:var(--orange)}
+.button-secondary:hover{background:#f2e8db}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--orange);outline-offset:5px}
 .text-link{display:inline-block;border-bottom:1px solid var(--orange);padding-bottom:5px;font-weight:500}
 .eyebrow{display:block;color:var(--orange);font-size:13px;font-weight:600;letter-spacing:.4px;margin-bottom:15px}
@@ -29,7 +31,7 @@ nav a:hover,nav a[aria-current]{color:var(--orange)}
 main,.contact-section,.site-footer{max-width:1360px;margin:auto;padding-inline:40px}
 .hero{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center;padding-block:65px 75px}
 .hero-copy>p{max-width:490px;font-size:18px;margin-top:25px}
-.actions{display:flex;align-items:center;gap:26px;margin-top:30px}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:30px}
 .hero-note{display:block;font-size:12px;color:var(--muted);margin-top:28px}
 .hero-visual{position:relative}
 .hero-visual .gallery{height:470px;border-radius:110px 24px 24px 24px}

@@ -103,7 +103,11 @@
   main.append(copy);el.prepend(main);return el;
  }
  const target=document.getElementById('catalog');if(target)DERECH_CATALOG.forEach(p=>target.append(card(p,false)));
- const featured=document.getElementById('featured-games');if(featured)DERECH_CATALOG.slice(0,2).forEach(p=>featured.append(card(p,true)));
+ const featured=document.getElementById('featured-games');
+ if(featured){
+  const selected=window.DERECH_FEATURED_GAMES ? window.DERECH_FEATURED_GAMES.map(id=>DERECH_CATALOG.find(p=>p.id===id)).filter(Boolean) : DERECH_CATALOG;
+  selected.slice(0,2).forEach(p=>featured.append(card(p,true)));
+ }
  const home=document.getElementById('home-gallery');if(home)home.append(gallery(DERECH_HOME_IMAGES,'פעילות דרך הכלב','',2000));
  if(location.hash.startsWith('#game-')){const product=document.getElementById(location.hash.slice(1));if(product){product.querySelector('.detail-toggle')?.click();requestAnimationFrame(()=>product.scrollIntoView());}}
 });
