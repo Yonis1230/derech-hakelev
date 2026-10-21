@@ -4,6 +4,14 @@
   "imageHandling": "Local images preserve complete logos, with proportional resizing and WebP compression where useful. No external image requests at page load.",
   "verifiedLogos": [
     {
+      "id": "kesher",
+      "name": "קשר — הבית של המשפחות המיוחדות",
+      "file": "assets/images/partners/kesher.webp",
+      "page": "https://www.kesher.org.il/",
+      "sourceImage": "https://www.kesher.org.il/wp-content/uploads/2019/03/logo-march-19.png",
+      "note": "Owner identified the previously unnamed family organization as Kesher and requested its official name/logo. The separate מרכז עד״י entry was removed at the owner's request."
+    },
+    {
       "id": "beit-moriah",
       "name": "בית מוריה",
       "file": "assets/images/partners/beit-moriah.webp",
@@ -84,14 +92,5 @@
       "sourceImage": "https://www.beer-sheva.muni.il/SiteCollectionImages/logo.png"
     }
   ],
-  "textOnlyOrganizations": [
-    {
-      "name": "מרכז עד״י",
-      "reason": "No separate official logo verified. Do not substitute WIZO or ADI logos."
-    },
-    {
-      "name": "בית למשפחות מיוחדות בבאר שבע",
-      "reason": "No separate official logo verified. Do not substitute another city’s center logo."
-    }
-  ]
+  "textOnlyOrganizations": []
 }
