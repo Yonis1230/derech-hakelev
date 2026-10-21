@@ -1,4 +1,4 @@
-import {QUESTIONS, recommendGames} from './advisor-data.js?v=20261021-solutions-age3';
+import {QUESTIONS, recommendGames, recommendBundle} from './advisor-data.js?v=20261021-care-shopping';
 
 let dialog;
 let content;
@@ -12,6 +12,8 @@ let step = 0;
 let answers = {};
 let drafts = {};
 let createPackOffer;
+let prepareProductImage;
+let bundleOffer;
 
 function element(tag, className, text) {
  const node = document.createElement(tag);
@@ -65,6 +67,53 @@ function helpLink() {
  return link;
 }
 
+function resultHeading(product) {
+ const heading = element('div', 'game-advisor-result-heading');
+ const path = product.images?.[0];
+ if (path && prepareProductImage) {
+  const photo = element('img', 'game-advisor-thumbnail');
+  photo.alt = product.name;
+  photo.loading = 'lazy';
+  photo.decoding = 'async';
+  prepareProductImage(photo, path, '80px');
+  photo.width = 80;
+  photo.height = 80;
+  heading.append(photo);
+ }
+ heading.append(element('h4', '', product.name));
+ return heading;
+}
+
+function bundleLink() {
+ const link = element('a', 'button', 'לפרטים ולהזמנת החבילה ←');
+ link.href = bundleOffer.href;
+ link.addEventListener('click', event => {
+  const target = document.getElementById('bundle-offer');
+  restoreFocus = false;
+  dialog.close();
+  if (target) {
+   event.preventDefault();
+   history.pushState(null, '', link.href);
+   target.setAttribute('tabindex', '-1');
+   target.focus({preventScroll: true});
+   target.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start'});
+  }
+ });
+ return link;
+}
+
+function renderBundle(recommendation) {
+ const card = element('article', 'game-advisor-bundle');
+ card.append(resultHeading(bundleOffer));
+ card.append(element('p', '', recommendation.reason));
+ if (recommendation.ageNote) card.append(element('p', 'game-advisor-age', recommendation.ageNote));
+ const bottom = element('div', 'game-advisor-result-actions');
+ bottom.append(element('span', 'price', bundleOffer.price + ' ₪'));
+ bottom.append(bundleLink());
+ card.append(bottom);
+ content.append(card);
+}
+
 function renderResults() {
  progress.textContent = 'סיימנו — אלה האפשרויות שכדאי להכיר';
  const heading = element('h3', '', 'משחקים שיכולים להתאים לבחירות שלכם');
@@ -76,14 +125,20 @@ function renderResults() {
   return question.options.filter(item => values.includes(item.value)).map(item => item.label).join(', ');
  }).filter(Boolean);
  content.append(element('p', 'game-advisor-selection', selected.join(' · ')));
- const results = recommendGames(answers, catalog);
- if (!results.length) {
+ const results = recommendGames(answers, catalog).slice(0, 3);
+ const validBundle = bundleOffer?.name && bundleOffer.href && Number.isFinite(bundleOffer.price) && bundleOffer.price > 0;
+ const bundle = validBundle && answers.format !== 'digital' ? recommendBundle(answers, catalog) : null;
+ if (!results.length && !bundle) {
   content.append(element('p', 'game-advisor-empty', 'לא מצאתי כרגע הצעה שמתאימה לבחירות האלה. אפשר לשנות חלק מהבחירות או להתייעץ איתי, ואעזור למצוא כיוון.'));
  } else {
+  if (bundle) {
+   renderBundle(bundle);
+   if (results.length) content.append(element('p', 'game-advisor-alternatives', 'אפשר גם לבחור משחקים בודדים:'));
+  }
   const list = element('div', 'game-advisor-results');
   for (const {product, reason, ageNote} of results) {
    const card = element('article', 'game-advisor-result');
-   card.append(element('h4', '', product.name));
+   card.append(resultHeading(product));
    card.append(element('p', '', reason));
    if (ageNote) card.append(element('p', 'game-advisor-age', ageNote));
    const bottom = element('div', 'game-advisor-result-actions');
@@ -92,7 +147,7 @@ function renderResults() {
    card.append(bottom);
    list.append(card);
   }
-  content.append(list);
+  if (results.length) content.append(list);
   if (createPackOffer) content.append(createPackOffer('advisor'));
  }
  content.append(helpLink());
@@ -170,6 +225,8 @@ export function openGameAdvisor(options) {
  catalog = options.catalog || [];
  trigger = options.trigger;
  createPackOffer = options.createPackOffer;
+ prepareProductImage = options.prepareProductImage;
+ bundleOffer = options.bundleOffer;
  restoreFocus = true;
  if (!dialog) buildDialog();
  if (!dialog.open) dialog.showModal();

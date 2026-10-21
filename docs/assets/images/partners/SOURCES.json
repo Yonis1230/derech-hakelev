@@ -1,0 +1,97 @@
+{
+  "verifiedOn": "2026-10-21",
+  "relationshipSource": "Organization names and work relationships supplied by the website owner. Official websites used only to identify logos.",
+  "imageHandling": "Local images preserve complete logos, with proportional resizing and WebP compression where useful. No external image requests at page load.",
+  "verifiedLogos": [
+    {
+      "id": "beit-moriah",
+      "name": "בית מוריה",
+      "file": "assets/images/partners/beit-moriah.webp",
+      "page": "https://www.bmoriah.org.il/",
+      "sourceImage": "https://www.bmoriah.org.il/wp-content/uploads/2025/03/לוגו.svg"
+    },
+    {
+      "id": "kivunim",
+      "name": "כיוונים",
+      "file": "assets/images/partners/kivunim.webp",
+      "page": "https://www.kivunim7.co.il/",
+      "sourceImage": "https://kivunim7.co.il/wp-content/uploads/2019/08/logo-1.png"
+    },
+    {
+      "id": "slav",
+      "name": "שלו",
+      "file": "assets/images/partners/slav.webp",
+      "page": "https://slavpro.co.il/",
+      "sourceImage": "https://slavpro.co.il/wp-content/themes/slav-theme/images/logo.jpg"
+    },
+    {
+      "id": "trauma-coalition",
+      "name": "הקואליציה הישראלית לטראומה",
+      "file": "assets/images/partners/trauma-coalition.webp",
+      "page": "https://israeltraumacoalition.org/",
+      "sourceImage": "https://israeltraumacoalition.org/wp-content/uploads/2023/04/לוגו-קואליציה-עברית-כולל-ער-מעודכן-אוגוסט-2020.png"
+    },
+    {
+      "id": "adi-negev",
+      "name": "עדי נגב",
+      "file": "assets/images/partners/adi-negev.webp",
+      "page": "https://adi-il.org.il/negev/",
+      "sourceImage": "https://adi-il.org.il/app/uploads/2025/08/adi-logo-1536x869-1-1_layerstyle.svg",
+      "note": "The ADI network logo displayed on the official Negev page. Not the separate מרכז עד״י."
+    },
+    {
+      "id": "hosen-aman",
+      "name": "מרכז חוסן אמ״ן",
+      "file": "assets/images/partners/hosen-aman.webp",
+      "page": "https://www.coing.co/israeltraumacoalition_south_amn/calendar",
+      "sourceImage": "https://org-images.coing.co/489/hubs/e638bc51f4ea91ca59f2b70c0c386e58.png"
+    },
+    {
+      "id": "amit",
+      "name": "תכנית עמית",
+      "file": "assets/images/partners/amit.webp",
+      "page": "https://tochnitamit.mod.gov.il/",
+      "sourceImage": "https://tochnitamit.mod.gov.il/images/logo.svg"
+    },
+    {
+      "id": "mod-rehabilitation",
+      "name": "אגף השיקום משרד הביטחון",
+      "file": "assets/images/partners/mod-rehabilitation.svg",
+      "page": "https://shikum.mod.gov.il/",
+      "sourceImage": "https://shikum.mod.gov.il/icons/blue/logo-blue-large.svg"
+    },
+    {
+      "id": "move",
+      "name": "MOVE",
+      "file": "assets/images/partners/move.svg",
+      "page": "https://www.move-club.co.il/",
+      "sourceImage": "https://www.move-club.co.il/wp-content/uploads/2026/02/move-logo1.svg"
+    },
+    {
+      "id": "welfare-ministry",
+      "name": "משרד הרווחה והביטחון החברתי",
+      "file": "assets/images/partners/welfare-ministry.webp",
+      "page": "https://www.gov.il/he/departments/molsa",
+      "verifiedLogoPage": "https://campus.gov.il/municipality/the-ministry-of-welfare-and-social-affairs/",
+      "sourceImage": "https://campus.gov.il/wp-content/uploads/2024/03/לוגו-משרד-לקמפוס-IL-1.jpg",
+      "note": "Owner requested replacing the Beer Sheva welfare department with the ministry. Official gov.il department page returned HTTP 403; the ministry logo was verified on its government Campus IL page with explicit ministry-name alt text."
+    },
+    {
+      "id": "beer-sheva",
+      "name": "עיריית באר שבע",
+      "file": "assets/images/partners/beer-sheva.png",
+      "page": "https://www.beer-sheva.muni.il/",
+      "sourceImage": "https://www.beer-sheva.muni.il/SiteCollectionImages/logo.png"
+    }
+  ],
+  "textOnlyOrganizations": [
+    {
+      "name": "מרכז עד״י",
+      "reason": "No separate official logo verified. Do not substitute WIZO or ADI logos."
+    },
+    {
+      "name": "בית למשפחות מיוחדות בבאר שבע",
+      "reason": "No separate official logo verified. Do not substitute another city’s center logo."
+    }
+  ]
+}

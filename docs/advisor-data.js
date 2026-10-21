@@ -175,3 +175,28 @@ export function recommendGames(answers,catalog) {
  candidates.sort((a,b)=>b.score-a.score || ORDER.indexOf(a.product.id)-ORDER.indexOf(b.product.id));
  return candidates.slice(0,3).map(({product,reason,ageNote})=>({product,reason,ageNote}));
 }
+
+// The existing complete offer contains these seven physical packs and both
+// digital products. Its price, order link and imagery remain owned by the UI.
+const BUNDLE_PARTS = ['solutions','resilience','drive','world','thoughts','emotions','derech','workbook','escape'];
+
+export function recommendBundle(answers,catalog) {
+ if(!answers || !Array.isArray(catalog) || !['cards','either'].includes(answers.format))return null;
+ const goals=choices(answers.goal,'goal'),ages=choices(answers.age,'age'),settings=choices(answers.setting,'setting');
+ if(!goals || !ages || !settings)return null;
+ const knownAges=ages.filter(age=>age!=='unsure');
+ // Preview rule: at least five of the six topics, with either two known age
+ // cohorts or two settings. Several ages alone never trigger a bundle offer.
+ if(goals.length<5 || (knownAges.length<2 && settings.length<2))return null;
+ // The full package includes8+ material. Do not make it the primary offer for
+ // exclusively younger cohorts, even when several topics/settings are selected.
+ if(knownAges.length && !knownAges.some(age=>AGE[age]>=8))return null;
+ if(BUNDLE_PARTS.some(id=>!catalog.some(product=>product?.id===id && !product.outOfStock)))return null;
+ const scope=knownAges.length>=2
+  ? settings.length>=2 ? 'נושאים רבים, כמה קבוצות גיל וכמה מסגרות שימוש' : 'נושאים רבים ועבודה עם כמה קבוצות גיל'
+  : 'נושאים רבים וכמה מסגרות שימוש';
+ const reason='בחרתם '+scope+'. החבילה כוללת את שבעת מארזי הקלפים ואת שני הקבצים הדיגיטליים, ואפשר לבחור ממנה כלים שונים למפגשים שונים.';
+ let ageNote='למשחקים בחבילה גילי התחלה שונים; בוחרים לכל קבוצת משתתפים את המשחקים המתאימים לגיל שלה. חוברת ״ארגז הכלים לשיח רגשי״ מיועדת לילדים מגיל 6.';
+ if(knownAges.includes('under4'))ageNote='בקבוצת ״מתחת לגיל 4״, ״לכל בעיה פתרון״ ו״הדרך אל החוסן״ מתאימים מגיל 3. '+ageNote;
+ return {reason,ageNote};
+}

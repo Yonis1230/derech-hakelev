@@ -94,6 +94,12 @@ document.addEventListener('DOMContentLoaded', () => {
   else{
    const button=document.createElement('button');button.type='button';button.className='detail-toggle';button.setAttribute('aria-expanded','false');button.setAttribute('aria-controls','details-'+p.id);button.innerHTML='לפרטים ולהזמנה <span aria-hidden="true">←</span>';bottom.append(button);
    const details=document.createElement('div');details.className='game-details';details.id='details-'+p.id;details.hidden=true;details.append(...content.childNodes);
+   const orderLink=details.querySelector('.whatsapp-button');
+   if(orderLink&&!['workbook','escape'].includes(p.id)){
+    const delivery=document.createElement('p');delivery.className='product-delivery';
+    delivery.textContent='משלוח עד הבית ב־35 ₪ בלבד · איסוף עצמי ללא עלות מבאר שבע';
+    orderLink.before(delivery);
+   }
    details.querySelectorAll('a[target="_blank"]').forEach(a=>a.rel='noopener');
    button.addEventListener('click',()=>{
     const open=details.hidden;details.hidden=!open;button.setAttribute('aria-expanded',String(open));button.innerHTML=open?'סגירת הפרטים <span aria-hidden="true">−</span>':'לפרטים ולהזמנה <span aria-hidden="true">←</span>';
@@ -142,14 +148,21 @@ document.addEventListener('DOMContentLoaded', () => {
   selected.slice(0,2).forEach(p=>featured.append(card(p,true)));
  }
  const home=document.getElementById('home-gallery');if(home)home.append(gallery(DERECH_HOME_IMAGES,'פעילות דרך הכלב','',2000));
+ const partners=document.getElementById('therapy-partners');
+ if(partners)(window.DERECH_PARTNERS || []).forEach(partner=>{
+  const item=document.createElement('li');
+  if(partner.logo){const logo=document.createElement('img');logo.src=base+partner.logo;logo.alt='';logo.width=150;logo.height=64;logo.loading='lazy';logo.decoding='async';item.append(logo);}
+  const name=document.createElement('span');name.textContent=partner.name;item.append(name);partners.append(item);
+ });
  let advisorModule;
  document.querySelectorAll('[data-game-advisor]').forEach(button=>{
   button.addEventListener('click',async()=>{
    button.disabled=true;button.setAttribute('aria-busy','true');
    try{
-    advisorModule ||= import('./advisor.js?v=20261021-solutions-age3').catch(error=>{advisorModule=undefined;throw error;});
+    advisorModule ||= import('./advisor.js?v=20261021-care-shopping').catch(error=>{advisorModule=undefined;throw error;});
     const advisor=await advisorModule;
-    advisor.openGameAdvisor({base,catalog:DERECH_CATALOG,trigger:button,createPackOffer});
+    const bundleOffer=window.DERECH_BUNDLE_OFFER ? {...window.DERECH_BUNDLE_OFFER,href:base+'pages/games/index.html#bundle-offer'} : null;
+    advisor.openGameAdvisor({base,catalog:DERECH_CATALOG,trigger:button,createPackOffer,prepareProductImage:image,bundleOffer});
     button.parentElement.querySelector('[data-advisor-error]')?.remove();
    }catch{
     let status=button.parentElement.querySelector('[data-advisor-error]');
