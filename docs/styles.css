@@ -286,6 +286,7 @@ body.game-advisor-open{overflow:hidden}
 /* Therapy and supplier information use the same warm palette as the catalog. */
 .therapy-intro{max-width:780px;margin-top:18px;font-size:17px}
 .hero-benefits-link{display:inline-block;margin-top:12px;color:var(--orange);font-size:13px;text-decoration:underline;text-underline-offset:4px}
+.hero-treatment-links{display:flex;flex-direction:column;align-items:flex-start}
 .therapy-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
 .therapy-grid article{padding:26px 22px;background:#f0eee5}
 .therapy-grid h3{font-size:22px;line-height:1.5;margin-bottom:12px}
