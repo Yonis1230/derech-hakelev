@@ -4,6 +4,14 @@
   "imageHandling": "Local images preserve complete logos, with proportional resizing and WebP compression where useful. No external image requests at page load.",
   "verifiedLogos": [
     {
+      "id": "education-ministry",
+      "name": "גפ״ן — משרד החינוך",
+      "file": "assets/images/partners/education-ministry.webp",
+      "page": "https://campus.gov.il/municipality/קורס-ai-משרד-החינוך/",
+      "sourceImage": "https://campus.gov.il/wp-content/uploads/2025/01/logo-edu-1.png",
+      "note": "Owner requested adding GEFEN using the official Ministry of Education logo. Complete ministry mark verified on its government Campus IL page."
+    },
+    {
       "id": "kesher",
       "name": "קשר — הבית של המשפחות המיוחדות",
       "file": "assets/images/partners/kesher.webp",
