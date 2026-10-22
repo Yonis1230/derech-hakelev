@@ -1,0 +1,245 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "sourceName": "IMG_20240222_174353.jpg",
+      "status": "duplicate",
+      "duplicateOf": "game-solutions-b1"
+    },
+    {
+      "sourceName": "IMG_20240416_173321.jpg",
+      "status": "duplicate",
+      "duplicateOf": "game-solutions-b3"
+    },
+    {
+      "sourceName": "IMG_20240416_173510.jpg",
+      "status": "duplicate",
+      "duplicateOf": "game-solutions-b5"
+    },
+    {
+      "sourceName": "IMG_20240630_183458.jpg",
+      "status": "duplicate",
+      "duplicateOf": "game-general-fd"
+    },
+    {
+      "sourceName": "IMG_20240630_183657.jpg",
+      "id": "game-review-01",
+      "status": "include"
+    },
+    {
+      "sourceName": "IMG_20240711_160940.jpg",
+      "status": "duplicate",
+      "duplicateOf": "game-general-f3"
+    },
+    {
+      "sourceName": "IMG_20240808_091913.jpg",
+      "id": "game-review-02",
+      "status": "include"
+    },
+    {
+      "sourceName": "IMG_20241030_174616.jpg",
+      "id": "game-review-03",
+      "status": "include"
+    },
+    {
+      "sourceName": "IMG_20250107_162104.jpg",
+      "id": "game-review-04",
+      "status": "include"
+    },
+    {
+      "sourceName": "IMG_20250107_210254.jpg",
+      "id": "game-review-05",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_2024-02-23-05-29-34-759_com.whatsapp-edit.jpg",
+      "status": "duplicate",
+      "duplicateOf": "game-solutions-b6"
+    },
+    {
+      "sourceName": "Screenshot_2024-03-12-23-35-43-491_com.whatsapp-edit.jpg",
+      "status": "duplicate",
+      "duplicateOf": "game-solutions-b4"
+    },
+    {
+      "sourceName": "Screenshot_2024-07-10-12-38-37-217_com.whatsapp-edit.jpg",
+      "id": "game-review-06",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_2024-07-29-15-51-12-700_com.whatsapp-edit.jpg",
+      "id": "game-review-07",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_2024-11-24-19-34-42-671_com.whatsapp-edit.jpg",
+      "status": "duplicate",
+      "duplicateOf": "game-review-08"
+    },
+    {
+      "sourceName": "Screenshot_2024-12-31-17-39-11-881_com.whatsapp-edit.jpg",
+      "status": "duplicate",
+      "duplicateOf": "game-review-09"
+    },
+    {
+      "sourceName": "Screenshot_2025-01-01-15-42-53-097_com.whatsapp-edit.jpg",
+      "id": "game-review-10",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_2025-01-07-17-51-40-334_com.whatsapp-edit.jpg",
+      "id": "game-review-11",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_2025-01-07-20-31-16-644_com.whatsapp-edit.jpg",
+      "id": "game-review-12",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_2025-01-25-23-28-03-661_com.whatsapp-edit.jpg",
+      "id": "game-review-13",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_2025-03-12-21-49-38-884_com(1).jpg",
+      "id": "game-review-14",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20250618_092833_WhatsApp.jpg",
+      "id": "game-review-15",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20250622_185738_WhatsApp.jpg",
+      "id": "game-review-16",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20250630_193535_WhatsApp.jpg",
+      "id": "game-review-17",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20250724_180205_WhatsApp.jpg",
+      "id": "game-review-18",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20250917_222949_WhatsApp.jpg",
+      "id": "game-review-19",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20251105_201940_WhatsApp.jpg",
+      "id": "game-review-20",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20251210_124244_WhatsApp.jpg",
+      "id": "game-review-21",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20251210_173237_Messenger.jpg",
+      "id": "game-review-22",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20251211_152334_WhatsApp.jpg",
+      "id": "game-review-23",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20261022_093643_WhatsApp.jpg",
+      "id": "game-review-24",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20261022_094055_WhatsApp.jpg",
+      "status": "include",
+      "id": "game-review-09"
+    },
+    {
+      "sourceName": "Screenshot_20261022_094133_WhatsApp.jpg",
+      "status": "include",
+      "id": "game-review-08"
+    },
+    {
+      "sourceName": "Screenshot_20261022_101440_Facebook.jpg",
+      "id": "game-review-25",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20261022_101541_Facebook.jpg",
+      "id": "game-review-26",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20261022_101802_Facebook.jpg",
+      "id": "game-review-27",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20261022_102046_Facebook.jpg",
+      "status": "therapy",
+      "id": "therapy-facebook-01"
+    },
+    {
+      "sourceName": "Screenshot_20261022_163319_Facebook.jpg",
+      "id": "game-review-28",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20261022_163344_Facebook.jpg",
+      "id": "game-review-29",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20261022_163400_Facebook.jpg",
+      "id": "game-review-30",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20261022_163428_Facebook.jpg",
+      "id": "game-review-31",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20261022_163506_Facebook.jpg",
+      "id": "game-review-32",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20261022_163544_Facebook.jpg",
+      "id": "game-review-38",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20261022_163612_Facebook.jpg",
+      "id": "game-review-33",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20261022_163630_Facebook.jpg",
+      "id": "game-review-34",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20261022_163723_Facebook.jpg",
+      "id": "game-review-35",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20261022_163804_Facebook.jpg",
+      "id": "game-review-36",
+      "status": "include"
+    },
+    {
+      "sourceName": "Screenshot_20261022_163858_Facebook.jpg",
+      "id": "game-review-37",
+      "status": "include"
+    }
+  ]
+}

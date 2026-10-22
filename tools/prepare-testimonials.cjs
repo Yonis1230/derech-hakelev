@@ -14,7 +14,7 @@ const os = require('node:os');
 const sharp = require('sharp');
 
 const root = path.resolve(__dirname, '..');
-const sourceFolder = path.resolve(process.argv[2] || path.join(os.homedir(), 'Downloads', 'תמונות המלצות לאתר'));
+const sourceFolder = path.resolve(process.argv[2] || path.join(os.homedir(), 'Downloads', 'תמונות המלצות  לאתר טיפולי'));
 const fullFolder = path.join(root, 'docs/assets/images/testimonials');
 const thumbFolder = path.join(root, 'docs/assets/optimized/testimonials');
 const artifactFolder = path.join(root, 'artifacts');

@@ -120,12 +120,48 @@ window.DERECH_TESTIMONIALS = [
     label: 'מילים שקיבלנו'
   },
   {
-    id: 'therapy-06',
-    quote: 'תודה רבה על הכל',
-    image: 'assets/images/testimonials/therapy-06.webp',
-    thumbnail: 'assets/optimized/testimonials/therapy-06-480.webp',
-    width: 2000,
-    height: 2667,
+    id: 'therapy-ulpan-amit',
+    quote: 'רצינו להודות לך על ההשקעה והסבלנות שלך..תמיד חיכינו ליום חמישי..למשחקים ולפעילויות שהכנת לנו',
+    image: 'assets/images/home/slider/pic21.webp',
+    thumbnail: 'assets/optimized/home/slider/pic21-480.webp',
+    width: 3472,
+    height: 4624,
+    label: 'בנות כיתה ח׳3 · אולפנה אמי״ת אוריה ב״ש'
+  },
+  {
+    id: 'therapy-17',
+    quote: 'עדיין פוחד אבל שמים וארץ ממה שהיה בפעמים הקודמות.. הרבה יותר מאופק לא נכנס להיסטריה..',
+    image: 'assets/images/testimonials/therapy-17.webp',
+    thumbnail: 'assets/optimized/testimonials/therapy-17-480.webp',
+    width: 1080,
+    height: 1034,
     label: 'מילים שקיבלנו'
+  },
+  {
+    id: 'therapy-15',
+    quote: 'על התמיכה, על ההקשבה ועל זה שתמיד היית שם בשבילי',
+    image: 'assets/images/testimonials/therapy-15.webp',
+    thumbnail: 'assets/optimized/testimonials/therapy-15-480.webp',
+    width: 2000,
+    height: 3176,
+    label: 'מילים שקיבלנו'
+  },
+  {
+    id: 'therapy-16',
+    quote: 'על מפגשים מיוחדים על האיכפתיות והדאגה ההקשבה וההכוונה',
+    image: 'assets/images/testimonials/therapy-16.webp',
+    thumbnail: 'assets/optimized/testimonials/therapy-16-480.webp',
+    width: 2000,
+    height: 1500,
+    label: 'מילים שקיבלנו'
+  },
+  {
+    id: 'therapy-facebook-01',
+    quote: 'יוני, זכינו בך❤️ ריגשת!!! היטבת לתאר ולזקק את העשייה שלנו בבית למשפחות מיוחדות',
+    image: 'assets/images/testimonials/therapy-facebook-01.webp',
+    thumbnail: 'assets/optimized/testimonials/therapy-facebook-01-480.webp',
+    width: 1080,
+    height: 508,
+    label: 'על הפעילות בבית למשפחות מיוחדות · תגובה בפייסבוק'
   }
 ];

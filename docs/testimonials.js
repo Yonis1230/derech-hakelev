@@ -1,15 +1,15 @@
 (() => {
  'use strict';
 
- function init() {
-  const section = document.getElementById('therapy-testimonials');
-  if (!section) return;
+ function initSection(section) {
   const stage = section.querySelector('.testimonials-stage');
   const previous = section.querySelector('[data-testimonials-prev]');
   const next = section.querySelector('[data-testimonials-next]');
   const pause = section.querySelector('[data-testimonials-pause]');
   const status = section.querySelector('[data-testimonials-status]');
-  const items = (Array.isArray(window.DERECH_TESTIMONIALS) ? window.DERECH_TESTIMONIALS : []).filter(item =>
+  const sourceName = section.getAttribute('data-testimonials-source') ?? 'DERECH_TESTIMONIALS';
+  const source = window[sourceName];
+  const items = (Array.isArray(source) ? source : []).filter(item =>
    item && ((typeof item.quote === 'string' && item.quote.trim()) || item.image)
   );
   if (!stage || !previous || !next || !pause || !status || !items.length) {
@@ -50,6 +50,9 @@
   next.setAttribute('aria-label', 'ההמלצות הבאות');
 
   function wrap(value) { return (value + items.length) % items.length; }
+  function describe(item) {
+   return [item.context, item.label].filter(value => typeof value === 'string' && value.trim()).join(' · ');
+  }
   function blockedByDialog() {
    return document.body.classList.contains('game-advisor-open') ||
     document.body.classList.contains('testimonial-viewer-open') || Boolean(document.querySelector('dialog[open]'));
@@ -148,12 +151,13 @@
    if (!item.image) return;
    if (!viewer) buildViewer();
    returnFocus = button;
-   viewer.setAttribute('aria-label', item.label ? 'המלצה מקורית — ' + item.label : 'המלצה מקורית');
-   viewerCaption.textContent = item.label || '';
+   const description = describe(item);
+   viewer.setAttribute('aria-label', description ? 'המלצה מקורית — ' + description : 'המלצה מקורית');
+   viewerCaption.textContent = description;
    viewerText.textContent = item.fullText || '';
    viewerText.hidden = !item.fullText;
    viewerStatus.textContent = '';
-   viewerImage.alt = 'צילום ההמלצה המלאה' + (item.label ? ' — ' + item.label : '') + (!item.fullText && item.quote ? '. ' + item.quote : '');
+   viewerImage.alt = 'צילום ההמלצה המלאה' + (description ? ' — ' + description : '') + (!item.fullText && item.quote ? '. ' + item.quote : '');
    if (item.width) viewerImage.width = item.width;
    if (item.height) viewerImage.height = item.height;
    document.body.classList.add('testimonial-viewer-open');
@@ -166,12 +170,19 @@
    const article = document.createElement('article');
    article.className = 'testimonial-card';
    if (stage.getAttribute('role') === 'list') article.setAttribute('role', 'listitem');
+   if (typeof item.context === 'string' && item.context.trim()) {
+    const context = document.createElement('small');
+    context.className = 'testimonial-context';
+    context.textContent = item.context;
+    article.append(context);
+   }
    if (item.image) {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'testimonial-open';
     button.dataset.testimonialIndex = String(itemIndex);
-    button.setAttribute('aria-label', 'פתיחת ההמלצה המקורית' + (item.label ? ' — ' + item.label : ''));
+    const description = describe(item);
+    button.setAttribute('aria-label', 'פתיחת ההמלצה המקורית' + (description ? ' — ' + description : ''));
     const openLabel = document.createElement('span');
     openLabel.className = 'testimonial-open-label';
     openLabel.textContent = 'לקריאת ההמלצה המלאה ↗';
@@ -281,6 +292,13 @@
   if (window.location?.hash === fragment) requestAnimationFrame(() => {
    if (window.location?.hash === fragment) section.scrollIntoView({block: 'start'});
   });
+ }
+
+ function init() {
+  const sections = new Set(document.querySelectorAll('[data-testimonials-source]'));
+  const therapy = document.getElementById('therapy-testimonials');
+  if (therapy) sections.add(therapy);
+  sections.forEach(initSection);
  }
 
  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once: true});
