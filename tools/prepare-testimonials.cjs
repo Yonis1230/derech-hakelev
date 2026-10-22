@@ -34,13 +34,14 @@ function reconcileSources(existing, filenames) {
  const mapping = [], ids = new Set(), names = new Set();
  let lastId = 0;
  for(const entry of existing) {
-  if(!entry || Object.keys(entry).sort().join(',') !== 'id,sourceName')throw new Error('Source mappings may contain only id and sourceName.');
+  if(!entry || !['id,sourceName', 'id,retired,sourceName'].includes(Object.keys(entry).sort().join(',')))throw new Error('Source mappings may contain only id, sourceName and optional retired.');
+  if(entry.retired !== undefined && typeof entry.retired !== 'boolean')throw new Error('Retired must be a boolean: ' + entry.id);
   const match = /^therapy-(\d{2,})$/.exec(entry.id), numericId = Number(match?.[1]);
   if(!match || !Number.isSafeInteger(numericId) || numericId < 1 || entry.id !== 'therapy-' + String(numericId).padStart(2, '0'))throw new Error('Invalid persisted testimonial ID: ' + entry.id);
   if(!validName(entry.sourceName))throw new Error('Invalid source filename in mapping: ' + entry.sourceName);
   if(ids.has(entry.id) || names.has(entry.sourceName.toLowerCase()))throw new Error('Duplicate testimonial ID or source filename: ' + entry.id);
   ids.add(entry.id);names.add(entry.sourceName.toLowerCase());lastId = Math.max(lastId, numericId);
-  mapping.push({id: entry.id, sourceName: entry.sourceName});
+  mapping.push({id: entry.id, sourceName: entry.sourceName, ...(entry.retired === undefined ? {} : {retired: entry.retired})});
  }
  const current = new Set();
  for(const filename of filenames) {
@@ -55,8 +56,8 @@ function reconcileSources(existing, filenames) {
   const entry = {id: 'therapy-' + String(++lastId).padStart(2, '0'), sourceName: filename};
   mapping.push(entry);added.push(entry);byName.set(filename, entry);names.add(filename.toLowerCase());
  }
- const active = mapping.filter(entry => current.has(entry.sourceName)).sort((first, second) => Number(first.id.slice(8)) - Number(second.id.slice(8)));
- const missing = mapping.filter(entry => !current.has(entry.sourceName));
+ const active = mapping.filter(entry => !entry.retired && current.has(entry.sourceName)).sort((first, second) => Number(first.id.slice(8)) - Number(second.id.slice(8)));
+ const missing = mapping.filter(entry => !entry.retired && !current.has(entry.sourceName));
  return {mapping, active, missing, added};
 }
 
@@ -114,9 +115,9 @@ async function main() {
  const manifest = [];
  for(const entry of plan.active)manifest.push(await preparePhoto(entry));
  await fs.writeFile(path.join(artifactFolder, 'testimonials-manifest.json'), JSON.stringify(manifest, null, 2) + '\n', 'utf8');
- await contactSheet(manifest);
+ if(manifest.length)await contactSheet(manifest);
  const totals = manifest.reduce((total, entry) => ({fullBytes: total.fullBytes + entry.fullBytes, thumbBytes: total.thumbBytes + entry.thumbBytes}), {fullBytes: 0, thumbBytes: 0});
- console.log(JSON.stringify({images: manifest.length, newSources: plan.added.length, missingSources: plan.missing.length, ...totals, manifest: 'artifacts/testimonials-manifest.json', contactSheet: 'artifacts/testimonials-contactsheet.jpg'}, null, 2));
+ console.log(JSON.stringify({images: manifest.length, newSources: plan.added.length, missingSources: plan.missing.length, ...totals, manifest: 'artifacts/testimonials-manifest.json', contactSheet: manifest.length ? 'artifacts/testimonials-contactsheet.jpg' : null}, null, 2));
 }
 
 module.exports = {reconcileSources};

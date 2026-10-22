@@ -37,7 +37,8 @@
   },
   {
     "id": "therapy-10",
-    "sourceName": "Screenshot_20261021_194147_WhatsApp.jpg"
+    "sourceName": "Screenshot_20261021_194147_WhatsApp.jpg",
+    "retired": true
   },
   {
     "id": "therapy-11",

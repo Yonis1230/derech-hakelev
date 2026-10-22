@@ -75,15 +75,6 @@ window.DERECH_TESTIMONIALS = [
     label: 'מילים שקיבלנו'
   },
   {
-    id: 'therapy-10',
-    quote: 'היא מאמצת את הטיפים שאתה נותן לה.',
-    image: 'assets/images/testimonials/therapy-10.webp',
-    thumbnail: 'assets/optimized/testimonials/therapy-10-480.webp',
-    width: 1080,
-    height: 529,
-    label: 'מילים שקיבלנו'
-  },
-  {
     id: 'therapy-11',
     quote: 'ואין ספק שעזרו לה בכל מה שקשור לבטחון וחוזק נפשי',
     image: 'assets/images/testimonials/therapy-11.webp',
