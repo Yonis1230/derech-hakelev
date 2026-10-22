@@ -343,23 +343,27 @@ body.game-advisor-open{overflow:hidden}
 }
 @media(max-width:360px){.therapy-grid{grid-template-columns:1fr}.game-advisor-result-heading{gap:12px}.game-advisor-thumbnail{width:64px;height:64px}.partners-grid li{width:50%}}
 
-/* Original thank-you notes: three at a time, with a readable excerpt and viewer. */
+/* The editorial treatment is limited to testimonials; the site's existing design is retained. */
+@font-face{font-family:"Frank Ruhl Libre";font-style:normal;font-weight:400 600;font-display:swap;src:url("assets/fonts/frank-ruhl-libre/hebrew.woff2") format("woff2");unicode-range:U+0307-0308,U+0590-05FF,U+200C-2010,U+20AA,U+25CC,U+FB1D-FB4F}
+@font-face{font-family:"Frank Ruhl Libre";font-style:normal;font-weight:400 600;font-display:swap;src:url("assets/fonts/frank-ruhl-libre/latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 .testimonials-section[hidden]{display:none}
 .testimonials-intro{font-size:15px;margin-top:16px}
 .testimonials-controls{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.testimonials-controls button{display:grid;place-items:center;min-width:44px;min-height:44px;padding:8px 12px;border:1px solid #d5d8cc;border-radius:50%;background:var(--white);color:var(--ink);font-size:20px;touch-action:manipulation}
-.testimonials-controls [data-testimonials-pause]{border-radius:30px;min-width:112px;font-size:13px}
+.testimonials-controls button{display:grid;place-items:center;min-width:44px;min-height:44px;padding:8px 12px;border:1px solid #c7c9bc;border-radius:7px;background:transparent;color:var(--ink);font-size:18px;touch-action:manipulation}
+.testimonials-controls [data-testimonials-pause]{min-width:112px;font-size:13px}
 .testimonials-controls button:hover{background:var(--sage);border-color:#b6bea9}
-.testimonials-stage{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;opacity:1;transition:opacity .09s ease;min-height:520px}
+.testimonials-stage{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;opacity:1;transition:opacity .09s ease;min-height:440px;border-block:1px solid var(--line)}
 .testimonials-stage.is-changing{opacity:0}
-.testimonial-card{display:flex;flex-direction:column;min-width:0;min-height:520px;height:520px;background:var(--white);border:1px solid var(--line);border-radius:22px;overflow:hidden}
-.testimonial-open{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:100%;padding:12px 14px 0;border:0;border-bottom:1px solid var(--line);border-radius:0;background:#eeede5;color:var(--ink);text-align:center;touch-action:manipulation}
-.testimonial-photo{display:block;width:100%;height:210px;object-fit:contain;flex-shrink:0}
-.testimonial-open-label{display:flex;align-items:center;justify-content:center;min-height:44px;font-size:12px;color:var(--orange);text-decoration:underline;text-underline-offset:4px}
+.testimonial-card{display:flex;flex-direction:column;min-width:0;min-height:440px;height:440px;background:none;border:0;border-radius:0;overflow:hidden;padding:30px;position:relative}
+.testimonial-card+.testimonial-card{border-inline-start:1px solid var(--line)}
+.testimonial-card::before{content:"״";font-family:"Frank Ruhl Libre",Heebo,serif;font-size:68px;position:absolute;top:10px;inset-inline-start:28px;color:#b39c81;line-height:1;pointer-events:none}
+.testimonial-open{display:flex;flex-direction:row;align-items:center;gap:14px;flex-shrink:0;width:100%;min-height:96px;padding:14px 0 0;border:0;border-top:1px solid var(--line);border-radius:0;background:transparent;color:var(--ink);text-align:start;touch-action:manipulation}
+.testimonial-photo{display:block;width:64px;height:72px;object-fit:contain;flex-shrink:0;background:#efede5;padding:4px;border:1px solid var(--line)}
+.testimonial-open-label{display:flex;align-items:center;min-height:44px;font-size:12px;color:var(--ink);text-decoration:underline;text-underline-offset:4px}
 .testimonial-open:hover .testimonial-open-label{color:#853a1d}
 .testimonial-open:focus-visible{outline-offset:-5px}
-.testimonial-quote{flex:1;min-height:0;overflow:auto;margin:0;padding:22px 24px 14px;font-size:16px;line-height:1.9;color:var(--ink);overflow-wrap:anywhere}
-.testimonial-source{display:block;flex-shrink:0;padding:0 24px 22px;font-size:12px;color:var(--muted)}
+.testimonial-quote{order:-1;flex:1;min-height:0;overflow:auto;margin:0;padding:28px 0 16px;font-family:"Frank Ruhl Libre",Heebo,serif;font-size:21px;line-height:1.7;color:var(--ink);overflow-wrap:anywhere}
+.testimonial-source{display:block;flex-shrink:0;padding:0 0 18px;font-size:12px;color:var(--muted)}
 .testimonials-status{font-size:12px;text-align:center;margin-top:18px;color:var(--muted);min-height:22px}
 .testimonials-actions{display:flex;justify-content:center;margin-top:22px}
 body.testimonial-viewer-open{overflow:hidden}
@@ -376,15 +380,21 @@ body.testimonial-viewer-open .floating-offer{display:none}
 .testimonial-viewer-caption{font-size:13px;color:var(--muted);margin-block:12px 0}
 .testimonial-viewer-transcript{white-space:pre-line;margin-top:16px}
 .testimonial-viewer-status{font-size:13px;margin-top:12px}
-@media(min-width:761px) and (max-width:1050px){.testimonial-quote{font-size:15px;padding:20px 18px 12px}}
+@media(min-width:761px) and (max-width:1050px){.testimonial-card{padding:26px 18px;min-height:480px;height:480px}.testimonials-stage{min-height:480px}.testimonial-card::before{inset-inline-start:18px}.testimonial-quote{font-size:19px}.testimonial-open{gap:8px}.testimonial-photo{width:48px}.testimonial-open-label{font-size:11px}}
 @media(max-width:760px){
+ .site-header nav{justify-content:space-between;gap:8px}
+ .site-header nav a{white-space:nowrap}
  .testimonials-section .section-heading{gap:22px}
- .testimonials-controls{width:100%;justify-content:center}
- .testimonials-stage{grid-template-columns:1fr;gap:0;min-height:520px}
- .testimonial-card{height:520px;min-height:520px}
- .testimonial-quote{padding:20px 22px 12px;font-size:16px}
- .testimonial-source{padding-inline:22px}
+ .testimonials-controls{width:100%;justify-content:start}
+ .testimonials-stage{grid-template-columns:1fr;min-height:420px}
+ .testimonial-card{height:420px;min-height:420px;padding:22px 4px 20px}
+ .testimonial-card::before{top:7px;inset-inline-start:0;font-size:60px}
+ .testimonial-quote{padding:27px 0 16px;font-size:23px;line-height:1.6}
+ .testimonial-source{padding:0 0 14px}
+ .testimonial-open{min-height:78px;padding-top:12px}
+ .testimonial-photo{width:58px;height:58px}
  .testimonial-viewer{padding:14px;width:calc(100% - 16px);max-height:calc(100dvh - 16px);border-radius:16px}
  .testimonial-viewer-media{max-height:68dvh}
 }
+@media(max-width:360px){.testimonial-quote{font-size:22px}}
 @media(prefers-reduced-motion:reduce){.testimonials-stage{transition:none}}
