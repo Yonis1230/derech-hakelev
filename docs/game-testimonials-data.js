@@ -1,6 +1,7 @@
 // Reviewed excerpts from the supplied screenshots. Keep wording faithful to the originals.
 // Paths are relative to docs. Reorder entries here to change their display order.
 // Source history and duplicate decisions: tools/game-testimonials-sources.json.
+// productIds links verified product-specific reviews to product pages; omit for general feedback.
 window.DERECH_GAME_TESTIMONIALS = [
   {
     "id": "game-review-03",
@@ -16,6 +17,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-26",
     "quote": "המשחק מצליח להוציא מלל גם מהשקטים יותר שבחבורה ואין על יצירתיות של ילדים !",
     "context": "לכל בעיה פתרון",
+    "productIds": [
+      "solutions"
+    ],
     "image": "assets/images/game-testimonials/game-review-26.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-26-480.webp",
     "width": 1080,
@@ -26,6 +30,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-16",
     "quote": "הילדים ממש שיתפו פעולה וזה זימן לנו שיח רגשי מאוורר על החרדות והפחדים ודרכי התמודדות",
     "context": "הדרך אל החוסן",
+    "productIds": [
+      "resilience"
+    ],
     "image": "assets/images/game-testimonials/game-review-16.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-16-480.webp",
     "width": 1080,
@@ -36,6 +43,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-solutions-b4",
     "quote": "אני משתמשת בזה לגמישות מחשבתית, פתרון בעיות, ארגון מסר מורכב...",
     "context": "לכל בעיה פתרון",
+    "productIds": [
+      "solutions"
+    ],
     "image": "assets/images/games/reviews/b4.jpeg",
     "thumbnail": "assets/optimized/games/reviews/b4-480.webp",
     "width": 1080,
@@ -46,6 +56,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-solutions-b1",
     "quote": "מאוד מתאים לכלים התנהגותיים שאנחנו עובדות איתם. רלוונטי להרבה גילאים ורמות תפקוד.",
     "context": "לכל בעיה פתרון",
+    "productIds": [
+      "solutions"
+    ],
     "image": "assets/images/games/reviews/b1.jpeg",
     "thumbnail": "assets/optimized/games/reviews/b1-480.webp",
     "width": 1080,
@@ -56,6 +69,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-solutions-b5",
     "quote": "יש המון מצבים שימושיים בצורה חמודה ועדינה. אפשר להשתמש גם כקלפים טיפוליים.",
     "context": "לכל בעיה פתרון",
+    "productIds": [
+      "solutions"
+    ],
     "image": "assets/images/games/reviews/b5.jpeg",
     "thumbnail": "assets/optimized/games/reviews/b5-480.webp",
     "width": 1080,
@@ -76,6 +92,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-solutions-b6",
     "quote": "כבר זמן שאני מחפשת משחק לעבוד על פתרון בעיות",
     "context": "לכל בעיה פתרון",
+    "productIds": [
+      "solutions"
+    ],
     "image": "assets/images/games/reviews/b6.jpeg",
     "thumbnail": "assets/optimized/games/reviews/b6-480.webp",
     "width": 1080,
@@ -86,6 +105,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-general-f3",
     "quote": "אחי שאפו!! אחלה משחק!! אהבתי מאוד",
     "context": "רגשות מעורבים",
+    "productIds": [
+      "emotions"
+    ],
     "image": "assets/images/games/1/f3.webp",
     "thumbnail": "assets/optimized/games/1/f3-480.webp",
     "width": 1080,
@@ -96,6 +118,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-solutions-b2",
     "quote": "היי, קיבלתי, תודה רבה. נראה מקסים. אמליץ בשמחה לחברים",
     "context": "לכל בעיה פתרון",
+    "productIds": [
+      "solutions"
+    ],
     "image": "assets/images/games/reviews/b2.jpeg",
     "thumbnail": "assets/optimized/games/reviews/b2-480.webp",
     "width": 1080,
@@ -106,6 +131,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-solutions-b3",
     "quote": "תקשיב זה באמת מקסים וקליל אני מתה לשחק עם הילדים כבר",
     "context": "לכל בעיה פתרון",
+    "productIds": [
+      "solutions"
+    ],
     "image": "assets/images/games/reviews/b3.jpeg",
     "thumbnail": "assets/optimized/games/reviews/b3-480.webp",
     "width": 1080,
@@ -116,6 +144,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-01",
     "quote": "אחד הפעילויות האהובות על הילדים ועליי !! משחק מהמם",
     "context": "לכל בעיה פתרון",
+    "productIds": [
+      "solutions"
+    ],
     "image": "assets/images/game-testimonials/game-review-01.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-01-480.webp",
     "width": 1080,
@@ -126,6 +157,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-02",
     "quote": "כל הכבוד על העשייה!",
     "context": "לכל בעיה פתרון",
+    "productIds": [
+      "solutions"
+    ],
     "image": "assets/images/game-testimonials/game-review-02.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-02-480.webp",
     "width": 1080,
@@ -136,6 +170,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-04",
     "quote": "הוספנו למשחק שכל פעם שלוקחים יצר צריך להגיד איך היצר הזה מתבטא בחיים שלנו וזה הוביל גם לשיח ממש מעניין",
     "context": "דרייב",
+    "productIds": [
+      "drive"
+    ],
     "image": "assets/images/game-testimonials/game-review-04.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-04-480.webp",
     "width": 1080,
@@ -146,6 +183,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-05",
     "quote": "המשחק לכל בעיה יש פתרון עובד נהדר על גמישות מחשבתית",
     "context": "לכל בעיה פתרון",
+    "productIds": [
+      "solutions"
+    ],
     "image": "assets/images/game-testimonials/game-review-05.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-05-480.webp",
     "width": 1080,
@@ -156,6 +196,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-06",
     "quote": "משחק מקסים שנותן פתח להמון דברים והאיורים ממש מקסימים",
     "context": "לכל בעיה פתרון",
+    "productIds": [
+      "solutions"
+    ],
     "image": "assets/images/game-testimonials/game-review-06.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-06-480.webp",
     "width": 1080,
@@ -166,6 +209,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-07",
     "quote": "הילדות עפו עליו! שאלות נחמדות שמפתחות שיח, והמשימות ממש כייפיות.",
     "context": "מארז דרך הכלב",
+    "productIds": [
+      "derech"
+    ],
     "image": "assets/images/game-testimonials/game-review-07.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-07-480.webp",
     "width": 1080,
@@ -176,6 +222,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-08",
     "quote": "זה פשוט משחק מהמם!! אפשר לשחק בו שעות בכל כך הרבה וריאציות...",
     "context": "רגשות מעורבים",
+    "productIds": [
+      "emotions"
+    ],
     "image": "assets/images/game-testimonials/game-review-08.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-08-480.webp",
     "width": 1080,
@@ -186,6 +235,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-09",
     "quote": "סיימתי עכשיו טיפול פרטני עם משחק הרביעיות! וואו, מושקע ויפה כל כך!",
     "context": "עולם הכלב",
+    "productIds": [
+      "world"
+    ],
     "image": "assets/images/game-testimonials/game-review-09.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-09-480.webp",
     "width": 1080,
@@ -206,6 +258,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-11",
     "quote": "הילד ממש רצה להמשיך משחק נוסף גם אחרי שנגמר הזמן, אז יש לנו המשכיות... תודה.",
     "context": "עולם הכלב",
+    "productIds": [
+      "world"
+    ],
     "image": "assets/images/game-testimonials/game-review-11.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-11-480.webp",
     "width": 1080,
@@ -216,6 +271,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-12",
     "quote": "ממש טוב לעבודה על גמישות מחשבתית נהדר לילדים מקובעים מלמד שלכל בעיה יכולים להיות כמה פתרונות",
     "context": "לכל בעיה פתרון",
+    "productIds": [
+      "solutions"
+    ],
     "image": "assets/images/game-testimonials/game-review-12.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-12-480.webp",
     "width": 1080,
@@ -226,6 +284,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-13",
     "quote": "שיחקתי כבר עם כמה קבוצות לכל בעיה פתרון וזה היה משחק ממש ממש משמעותי",
     "context": "לכל בעיה פתרון",
+    "productIds": [
+      "solutions"
+    ],
     "image": "assets/images/game-testimonials/game-review-13.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-13-480.webp",
     "width": 1080,
@@ -236,6 +297,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-14",
     "quote": "הם הפכו לכלי משמעותי בעבודה שלי עם נשים שאני מלווה ומאפשרים לייצר שיח מעמיק ומקרב!",
     "context": "רגשות מעורבים",
+    "productIds": [
+      "emotions"
+    ],
     "image": "assets/images/game-testimonials/game-review-14.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-14-480.webp",
     "width": 1080,
@@ -246,6 +310,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-15",
     "quote": "אני מאוד אוהבת את הציורים המתוקים, מוצלח ממש",
     "context": "הדרך אל החוסן",
+    "productIds": [
+      "resilience"
+    ],
     "image": "assets/images/game-testimonials/game-review-15.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-15-480.webp",
     "width": 2000,
@@ -266,6 +333,10 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-18",
     "quote": "ממש נהננו מהמשחק של למצוא פתרון כמה יצירתיות המשחק הזה מעורר!",
     "context": "לכל בעיה פתרון · הדרך אל החוסן",
+    "productIds": [
+      "solutions",
+      "resilience"
+    ],
     "image": "assets/images/game-testimonials/game-review-18.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-18-480.webp",
     "width": 1080,
@@ -286,6 +357,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-20",
     "quote": "בעזרת הקלפי חוסן שלך הצלחנו להגיע למצב שהיא מצליחה להסתכל על הפחדים, להתחיל לדבר עליהם",
     "context": "הדרך אל החוסן",
+    "productIds": [
+      "resilience"
+    ],
     "image": "assets/images/game-testimonials/game-review-20.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-20-480.webp",
     "width": 1080,
@@ -296,6 +370,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-21",
     "quote": "חוברת מדהימה!! אשתמש בה בטיפולים. תודה רבה, אתה משהו מיוחד!",
     "context": "על החוברת",
+    "productIds": [
+      "workbook"
+    ],
     "image": "assets/images/game-testimonials/game-review-21.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-21-480.webp",
     "width": 1080,
@@ -306,6 +383,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-22",
     "quote": "קניתי והתפעלתי מהחוברת המושקעת והמקצועית שתשדרג לי בכמה רמות את השיח הרגשי במפגשים שלי!!",
     "context": "על החוברת",
+    "productIds": [
+      "workbook"
+    ],
     "image": "assets/images/game-testimonials/game-review-22.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-22-480.webp",
     "width": 1080,
@@ -316,6 +396,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-23",
     "quote": "מתאימה לי בול לתהליך שאני עוברת עם הקבוצות החברתיות שלי",
     "context": "על החוברת",
+    "productIds": [
+      "workbook"
+    ],
     "image": "assets/images/game-testimonials/game-review-23.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-23-480.webp",
     "width": 1080,
@@ -336,6 +419,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-25",
     "quote": "חוברת נהדרת! מלאה כלים ורעיונות מקסימים!",
     "context": "על החוברת",
+    "productIds": [
+      "workbook"
+    ],
     "image": "assets/images/game-testimonials/game-review-25.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-25-480.webp",
     "width": 1080,
@@ -346,6 +432,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-27",
     "quote": "פעולה פשוטה, יומיומית, שהופכת לכלי להתמודד עם כעסים וקשיים.",
     "context": "לכל בעיה פתרון",
+    "productIds": [
+      "solutions"
+    ],
     "image": "assets/images/game-testimonials/game-review-27.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-27-480.webp",
     "width": 1080,
@@ -356,6 +445,9 @@ window.DERECH_GAME_TESTIMONIALS = [
     "id": "game-review-28",
     "quote": "וואו. דראייב משחק מוביל, אבל גם משחקים אחרים מאוד עוזרים לי בעבודה.",
     "context": "דרייב",
+    "productIds": [
+      "drive"
+    ],
     "image": "assets/images/game-testimonials/game-review-28.webp",
     "thumbnail": "assets/optimized/game-testimonials/game-review-28-480.webp",
     "width": 1080,

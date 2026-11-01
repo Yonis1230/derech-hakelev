@@ -1,0 +1,7 @@
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://derech-hakelev.com/sitemap.xml

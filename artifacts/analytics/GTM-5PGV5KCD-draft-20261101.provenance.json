@@ -1,0 +1,13 @@
+{
+  "reviewDate": "2026-11-01",
+  "source": "C:/Users/USER/Downloads/GTM-5PGV5KCD-draft.json",
+  "target": "artifacts\\analytics\\GTM-5PGV5KCD-draft-20261101.json",
+  "sha256": "71042698d9e07d8430a18abedd95306ac16572c1625e13b4d1da3fee3772b75c",
+  "exportTime": "2026-11-01 05:14:22",
+  "containerPublicId": "GTM-5PGV5KCD",
+  "containerVersionId": "0",
+  "tags": 2,
+  "triggers": 1,
+  "variables": 15,
+  "note": "Owner supplied draft export. No account setting, publication or receipt is verified by this archive."
+}

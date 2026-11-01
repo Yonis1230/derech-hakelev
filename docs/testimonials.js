@@ -9,8 +9,10 @@
   const status = section.querySelector('[data-testimonials-status]');
   const sourceName = section.getAttribute('data-testimonials-source') ?? 'DERECH_TESTIMONIALS';
   const source = window[sourceName];
+  const productId = section.getAttribute('data-testimonials-product');
   const items = (Array.isArray(source) ? source : []).filter(item =>
-   item && ((typeof item.quote === 'string' && item.quote.trim()) || item.image)
+   item && ((typeof item.quote === 'string' && item.quote.trim()) || item.image) &&
+   (productId === null || (Array.isArray(item.productIds) && item.productIds.includes(productId)))
   );
   if (!stage || !previous || !next || !pause || !status || !items.length) {
    section.hidden = true;
@@ -44,6 +46,8 @@
 
   section.setAttribute('data-clarity-mask', 'true');
   section.hidden = false;
+  const controls = section.querySelector('.testimonials-controls');
+  if (controls) controls.hidden = false;
   stage.setAttribute('aria-live', 'off');
   [previous, next, pause].forEach(button => { button.type = 'button'; });
   previous.setAttribute('aria-label', 'ההמלצות הקודמות');
@@ -83,6 +87,7 @@
    pause.textContent = playing ? 'השהיה Ⅱ' : 'הפעלה ▶';
    pause.setAttribute('aria-label', playing ? 'השהיית המעבר האוטומטי בין ההמלצות' : 'הפעלת המעבר האוטומטי בין ההמלצות');
    pause.setAttribute('aria-pressed', String(!playing));
+   if (controls) controls.hidden = items.length <= pageSize;
    [previous, next, pause].forEach(button => { button.disabled = items.length <= pageSize; });
   }
 
@@ -169,6 +174,7 @@
   function card(item, itemIndex) {
    const article = document.createElement('article');
    article.className = 'testimonial-card';
+   if (item.id) article.dataset.testimonialId = item.id;
    if (stage.getAttribute('role') === 'list') article.setAttribute('role', 'listitem');
    if (typeof item.context === 'string' && item.context.trim()) {
     const context = document.createElement('small');

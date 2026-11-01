@@ -14,6 +14,20 @@ let drafts = {};
 let createPackOffer;
 let prepareProductImage;
 let bundleOffer;
+let runStarted = false;
+let runCompleted = false;
+let runPlacement = 'finder';
+
+function measure(name, params) {
+ try { window.DERECH_MEASUREMENT?.track(name, params); } catch {}
+}
+
+function startRun() {
+ if (!runStarted && dialog.open) {
+  runStarted = true;
+  measure('finder_start', {placement: runPlacement});
+ }
+}
 
 function element(tag, className, text) {
  const node = document.createElement(tag);
@@ -33,7 +47,10 @@ function buildDialog() {
  backButton = dialog.querySelector('.game-advisor-back');
  dialog.querySelector('.game-advisor-close').addEventListener('click', () => dialog.close());
  backButton.addEventListener('click', () => { if (step > 0) { step--; render(); } });
- dialog.querySelector('.game-advisor-reset').addEventListener('click', () => { answers = {}; drafts = {}; step = 0; render(); });
+ dialog.querySelector('.game-advisor-reset').addEventListener('click', () => {
+  answers = {}; drafts = {}; step = 0; runStarted = false; runCompleted = false;
+  startRun(); render();
+ });
  dialog.addEventListener('close', () => {
   document.body.classList.remove('game-advisor-open');
   if (restoreFocus && trigger?.isConnected) trigger.focus({preventScroll: true});
@@ -44,6 +61,9 @@ function buildDialog() {
 function resultLink(product) {
  const link = element('a', 'button', 'לפרטים ולהזמנה ←');
  link.href = base + 'pages/games/index.html#game-' + product.id;
+ link.dataset.measureId = 'finder_product_' + product.id;
+ link.dataset.measurePlacement = 'finder';
+ link.dataset.productId = product.id;
  link.addEventListener('click', event => {
   const target = document.getElementById('game-' + product.id);
   const details = document.getElementById('details-' + product.id);
@@ -51,7 +71,12 @@ function resultLink(product) {
   dialog.close();
   if (target && details) {
    event.preventDefault();
-   if (details.hidden) target.querySelector('.detail-toggle').click();
+   if (details.hidden) {
+    const toggle = target.querySelector('.detail-toggle');
+    const placement = toggle.dataset.measurePlacement;
+    toggle.dataset.measurePlacement = 'finder';
+    try { toggle.click(); } finally { toggle.dataset.measurePlacement = placement || 'catalog'; }
+   }
    history.pushState(null, '', link.href);
    target.setAttribute('tabindex', '-1');
    target.focus({preventScroll: true});
@@ -64,6 +89,8 @@ function resultLink(product) {
 function helpLink() {
  const link = element('a', 'game-advisor-help', 'אפשר גם להתייעץ איתי בוואטסאפ ↗');
  link.href = document.querySelector('.header-contact').href;
+ link.dataset.measureId = 'finder_whatsapp';
+ link.dataset.measurePlacement = 'finder';
  return link;
 }
 
@@ -87,6 +114,8 @@ function resultHeading(product) {
 function bundleLink() {
  const link = element('a', 'button', 'לפרטים ולהזמנת החבילה ←');
  link.href = bundleOffer.href;
+ link.dataset.measureId = 'finder_bundle';
+ link.dataset.measurePlacement = 'finder';
  link.addEventListener('click', event => {
   const target = document.getElementById('bundle-offer');
   restoreFocus = false;
@@ -151,6 +180,10 @@ function renderResults() {
   if (createPackOffer) content.append(createPackOffer('advisor'));
  }
  content.append(helpLink());
+ if (!runCompleted && runStarted) {
+  runCompleted = true;
+  measure('finder_complete', {placement: runPlacement});
+ }
  heading.focus({preventScroll: true});
 }
 
@@ -230,6 +263,8 @@ export function openGameAdvisor(options) {
  restoreFocus = true;
  if (!dialog) buildDialog();
  if (!dialog.open) dialog.showModal();
+ if (!runStarted) runPlacement = trigger?.dataset.measurePlacement || 'finder';
+ startRun();
  document.body.classList.add('game-advisor-open');
  render();
 }

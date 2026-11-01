@@ -1,0 +1,845 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-11-01 05:14:22",
+  "containerVersion": {
+    "path": "accounts/6401539304/containers/284567050/versions/0",
+    "accountId": "6401539304",
+    "containerId": "284567050",
+    "containerVersionId": "0",
+    "container": {
+      "path": "accounts/6401539304/containers/284567050",
+      "accountId": "6401539304",
+      "containerId": "284567050",
+      "name": "derech-hakelev.com",
+      "publicId": "GTM-5PGV5KCD",
+      "usageContext": [
+        "WEB"
+      ],
+      "fingerprint": "1793480723223",
+      "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/6401539304/containers/284567050/workspaces?apiLink=container",
+      "features": {
+        "supportUserPermissions": true,
+        "supportEnvironments": true,
+        "supportWorkspaces": true,
+        "supportGtagConfigs": false,
+        "supportBuiltInVariables": true,
+        "supportClients": false,
+        "supportFolders": true,
+        "supportTags": true,
+        "supportTemplates": true,
+        "supportTriggers": true,
+        "supportVariables": true,
+        "supportVersions": true,
+        "supportZones": true,
+        "supportTransformations": false
+      },
+      "tagIds": [
+        "GTM-5PGV5KCD"
+      ]
+    },
+    "tag": [
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "tagId": "3",
+        "name": "DERECH - Google tag",
+        "type": "googtag",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "tagId",
+            "value": "G-603TM871H0"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "configSettingsVariable",
+            "value": "{{Google Tag Configuration Settings}}"
+          },
+          {
+            "type": "LIST",
+            "key": "configSettingsTable",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "send_page_view"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Boolean false}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "allow_google_signals"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Boolean false}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "allow_ad_personalization_signals"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Boolean false}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "allow_interest_groups"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Boolean false}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "page_location"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Context location}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "page_referrer"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Context referrer}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "page_title"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Context title}}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "eventSettingsVariable",
+            "value": "{{DERECH - Safe shared event settings}}"
+          }
+        ],
+        "fingerprint": "1793509794905",
+        "firingTriggerId": [
+          "2147479573"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "monitoringMetadata": {
+          "type": "MAP"
+        },
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "type": "LIST",
+            "list": [
+              {
+                "type": "TEMPLATE",
+                "value": "analytics_storage"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "tagId": "20",
+        "name": "DERECH - Website events",
+        "type": "gaawe",
+        "parameter": [
+          {
+            "type": "BOOLEAN",
+            "key": "sendEcommerceData",
+            "value": "false"
+          },
+          {
+            "type": "LIST",
+            "key": "eventSettingsTable",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "page_location"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Event location}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "page_referrer"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Event referrer}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "page_title"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Event title}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "placement"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Placement}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "channel"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Channel}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "button_id"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Button ID}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "product_id"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Product ID}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "game_id"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Game ID}}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "eventName",
+            "value": "{{DERECH - Event name}}"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "measurementIdOverride",
+            "value": "G-603TM871H0"
+          }
+        ],
+        "fingerprint": "1793510035501",
+        "firingTriggerId": [
+          "19"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT",
+        "monitoringMetadata": {
+          "type": "MAP"
+        },
+        "consentSettings": {
+          "consentStatus": "NEEDED",
+          "consentType": {
+            "type": "LIST",
+            "list": [
+              {
+                "type": "TEMPLATE",
+                "value": "analytics_storage"
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "trigger": [
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "triggerId": "19",
+        "name": "DERECH - Approved website event",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{_event}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "derech_event"
+              }
+            ]
+          }
+        ],
+        "filter": [
+          {
+            "type": "MATCH_REGEX",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{DERECH - Event name}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "^(page_view|contact_click|product_details_open|finder_start|finder_complete|canva_game_open|memory_game_complete)$"
+              }
+            ]
+          }
+        ],
+        "fingerprint": "1793509888262"
+      }
+    ],
+    "variable": [
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "variableId": "4",
+        "name": "Google Tag Configuration Settings",
+        "type": "gtcs",
+        "fingerprint": "1793483936040"
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "variableId": "5",
+        "name": "DERECH - Context location",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "derech_page_context.page_location"
+          }
+        ],
+        "fingerprint": "1793484312757",
+        "formatValue": {}
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "variableId": "6",
+        "name": "DERECH - Context referrer",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "derech_page_context.page_referrer"
+          }
+        ],
+        "fingerprint": "1793484350506",
+        "formatValue": {}
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "variableId": "7",
+        "name": "DERECH - Context title",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "derech_page_context.page_title"
+          }
+        ],
+        "fingerprint": "1793484385066",
+        "formatValue": {}
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "variableId": "8",
+        "name": "DERECH - Safe shared event settings",
+        "type": "gtes",
+        "parameter": [
+          {
+            "type": "LIST",
+            "key": "eventSettingsTable",
+            "list": [
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "page_location"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Context location}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "page_referrer"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Context referrer}}"
+                  }
+                ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "page_title"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DERECH - Context title}}"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "fingerprint": "1793485867868"
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "variableId": "9",
+        "name": "DERECH - Event name",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "derech_event_name"
+          }
+        ],
+        "fingerprint": "1793486430845",
+        "formatValue": {}
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "variableId": "10",
+        "name": "DERECH - Event location",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "derech_event_params.page_location"
+          }
+        ],
+        "fingerprint": "1793486499299",
+        "formatValue": {}
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "variableId": "11",
+        "name": "DERECH - Event referrer",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "derech_event_params.page_referrer"
+          }
+        ],
+        "fingerprint": "1793509557225",
+        "formatValue": {}
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "variableId": "12",
+        "name": "DERECH - Event title",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "derech_event_params.page_title"
+          }
+        ],
+        "fingerprint": "1793509574688",
+        "formatValue": {}
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "variableId": "13",
+        "name": "DERECH - Placement",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "derech_event_params.placement"
+          }
+        ],
+        "fingerprint": "1793509602874",
+        "formatValue": {}
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "variableId": "14",
+        "name": "DERECH - Channel",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "derech_event_params.channel"
+          }
+        ],
+        "fingerprint": "1793509619108",
+        "formatValue": {}
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "variableId": "15",
+        "name": "DERECH - Button ID",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "derech_event_params.button_id"
+          }
+        ],
+        "fingerprint": "1793509638710",
+        "formatValue": {}
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "variableId": "16",
+        "name": "DERECH - Product ID",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "derech_event_params.product_id"
+          }
+        ],
+        "fingerprint": "1793509657338",
+        "formatValue": {}
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "variableId": "17",
+        "name": "DERECH - Game ID",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "derech_event_params.game_id"
+          }
+        ],
+        "fingerprint": "1793509678027",
+        "formatValue": {}
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "variableId": "18",
+        "name": "DERECH - Boolean false",
+        "type": "jsm",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "javascript",
+            "value": "function () { return false; }"
+          }
+        ],
+        "fingerprint": "1793509715070",
+        "formatValue": {}
+      }
+    ],
+    "builtInVariable": [
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "type": "PAGE_URL",
+        "name": "Page URL"
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "type": "PAGE_HOSTNAME",
+        "name": "Page Hostname"
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "type": "PAGE_PATH",
+        "name": "Page Path"
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "type": "REFERRER",
+        "name": "Referrer"
+      },
+      {
+        "accountId": "6401539304",
+        "containerId": "284567050",
+        "type": "EVENT",
+        "name": "Event"
+      }
+    ],
+    "fingerprint": "1793510062260",
+    "tagManagerUrl": "https://tagmanager.google.com/#/versions/accounts/6401539304/containers/284567050/versions/0?apiLink=version"
+  }
+}
