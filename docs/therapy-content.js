@@ -12,5 +12,6 @@ window.DERECH_PARTNERS = [
  {name:'MOVE',logo:'assets/images/partners/move.svg'},
  {name:'עדי נגב',logo:'assets/images/partners/adi-negev.webp'},
  {name:'הקואליציה הישראלית לטראומה',logo:'assets/images/partners/trauma-coalition.webp'},
- {name:'עיריית באר שבע',logo:'assets/images/partners/beer-sheva.png'}
+ {name:'עיריית באר שבע',logo:'assets/images/partners/beer-sheva.png'},
+ {name:'SAR High School',logo:'assets/images/partners/sar-high-school.webp'}
 ];

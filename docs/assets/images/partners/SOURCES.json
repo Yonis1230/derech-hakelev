@@ -93,6 +93,15 @@
       "note": "Owner requested replacing the Beer Sheva welfare department with the ministry. Official gov.il department page returned HTTP 403; the ministry logo was verified on its government Campus IL page with explicit ministry-name alt text."
     },
     {
+      "id": "sar-high-school",
+      "name": "SAR High School",
+      "file": "assets/images/partners/sar-high-school.webp",
+      "page": "https://saracademy.org/program/alumni/sar_tagline/",
+      "sourceImage": "https://saracademy.org/wp-content/uploads/2023/07/SAR_Tagline.jpg",
+      "verifiedOn": "2026-11-02",
+      "note": "Owner supplied the work relationship and this logo reference. The matching official full logo, including the English tagline, is proportionally resized without cropping."
+    },
+    {
       "id": "beer-sheva",
       "name": "עיריית באר שבע",
       "file": "assets/images/partners/beer-sheva.png",
