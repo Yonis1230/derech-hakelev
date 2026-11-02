@@ -199,7 +199,7 @@ ${generatedMarker}
 <meta property="og:image" content="${image || absolute('assets/optimized/brand/logo-128.webp')}">
 <link rel="icon" href="${base}assets/optimized/favicon-32.png?v=20261018">
 ${chrome.fonts}
-<link rel="stylesheet" href="${base}styles.css?v=20261101-whatsapp-desktop">
+<link rel="stylesheet" href="${base}styles.css?v=20261102-articles">
 <script type="application/ld+json">${JSON.stringify(schema).replace(/</g, '\\u003c')}</script>
 <script src="${base}media.js?v=${version}" defer></script>
 <script src="${base}catalog.js?v=${version}" defer></script>

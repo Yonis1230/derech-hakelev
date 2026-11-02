@@ -49,14 +49,16 @@ for(const p of pages){
  const html=`<!doctype html>\n<html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${escape(p.title)} | דרך הכלב</title><meta name="description" content="${escape(p.description)}"><link rel="canonical" href="${url}">
 <meta property="og:title" content="${escape(p.title)} | דרך הכלב"><meta property="og:description" content="${escape(p.description)}"><meta property="og:url" content="${url}"><meta property="og:type" content="website"><meta property="og:locale" content="he_IL"><meta property="og:image" content="https://derech-hakelev.com/assets/optimized/brand/logo-128.webp">
-<link rel="icon" href="../../assets/optimized/favicon-32.png"><link rel="stylesheet" href="../../styles.css?v=20261101-whatsapp-desktop">
+<link rel="icon" href="../../assets/optimized/favicon-32.png"><link rel="stylesheet" href="../../styles.css?v=20261102-articles">
 <script src="../../scripts.js?v=20261031-measurement" defer></script><script src="../../accessibility.js?v=20261031-accessibility-menu" defer></script><script src="../../analytics.js?v=20261031-measurement" defer></script><script src="../../measurement.js?v=20261031-ga4" defer></script></head>
 <body data-base="../../"><a class="skip-link" href="#main">דלגו לתוכן</a>${header}
 <main id="main" class="information-page"><h1>${escape(p.title)}</h1>${contactMarkers(p.content)}</main>${footer}</body></html>\n`;
  const dir=path.join(docs,'pages',p.id);fs.mkdirSync(dir,{recursive:true});fs.writeFileSync(path.join(dir,'index.html'),html);
 }
 // Only real public canonical pages. No previews, reports, or external destinations.
-const routes=['','pages/games/',...pages.map(p=>`pages/${p.id}/`),...catalog.map(p=>`pages/games/products/${p.id}/`)];
+const approvedArticles=require('./articles-content.cjs').filter(article=>article.status==='approved');
+const articleRoutes=approvedArticles.length?['pages/articles/',...approvedArticles.map(article=>`pages/articles/${article.slug}/`)]:[];
+const routes=['','pages/games/',...pages.map(p=>`pages/${p.id}/`),...catalog.map(p=>`pages/games/products/${p.id}/`),...articleRoutes];
 fs.writeFileSync(path.join(docs,'sitemap.xml'),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+routes.map(r=>`  <url><loc>https://derech-hakelev.com/${r}</loc></url>`).join('\n')+'\n</urlset>\n');
 // No new wildcard or AI-training bot permissions.
 fs.writeFileSync(path.join(docs,'robots.txt'),'User-agent: Googlebot\nAllow: /\n\nUser-agent: Bingbot\nAllow: /\n\nSitemap: https://derech-hakelev.com/sitemap.xml\n');
