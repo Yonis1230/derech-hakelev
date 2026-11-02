@@ -101,7 +101,7 @@ function layout({title, description, route, base, content, schema = '', image}) 
   '<link rel="canonical" href="' + canonical + '">',
   '<meta property="og:title" content="' + escape(title) + ' | דרך הכלב"><meta property="og:description" content="' + escape(description) + '"><meta property="og:url" content="' + canonical + '"><meta property="og:type" content="' + (route !== 'pages/articles/' ? 'article' : 'website') + '"><meta property="og:locale" content="he_IL"><meta property="og:image" content="' + origin + '/' + socialImage + '">',
   image ? '<meta property="og:image:alt" content="' + escape(image.alt) + '">' : '',
-  '<link rel="icon" href="' + base + 'assets/optimized/favicon-32.png"><link rel="stylesheet" href="' + base + 'styles.css?v=20261102-sharing">',
+  '<link rel="icon" href="' + base + 'assets/optimized/favicon-32.png"><link rel="stylesheet" href="' + base + 'styles.css?v=20261102-contact-form">',
   schema,
   '<script src="' + base + 'scripts.js?v=20261031-measurement" defer></script><script src="' + base + 'accessibility.js?v=20261031-accessibility-menu" defer></script><script src="' + base + 'analytics.js?v=20261031-measurement" defer></script><script src="' + base + 'measurement.js?v=20261031-ga4" defer></script>',
   route !== 'pages/articles/' ? '<script src="' + base + 'article-share.js?v=20261102-sharing" defer></script>' : '',

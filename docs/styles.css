@@ -103,6 +103,27 @@ main,.contact-section,.site-footer{max-width:1360px;margin:auto;padding-inline:4
 .contact-section p{margin-top:15px}
 .contact-actions{display:flex;flex-direction:column;align-items:start;gap:10px}
 .contact-actions>a:not(.button){font-size:14px}
+.contact-section[data-contact-form-section]{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start;gap:clamp(30px,5vw,80px)}
+.contact-info{min-width:0}
+.contact-info .contact-actions{margin-top:28px}
+.contact-form{min-width:0;padding:28px;border:1px solid #a6af9b;border-radius:16px;background:var(--cream)}
+.contact-form h3{font-size:25px;line-height:1.35;margin:0}
+.contact-form p{margin:12px 0 20px;font-size:14px;line-height:1.7}
+.contact-form-field{display:flex;flex-direction:column;gap:7px;margin-bottom:17px;min-width:0}
+.contact-form label{font-size:15px;font-weight:600}
+.contact-form label span{font-weight:400;color:var(--muted)}
+.contact-form input:not([type="hidden"]),.contact-form textarea{width:100%;min-width:0;min-height:46px;padding:11px 13px;border:1px solid #87917b;border-radius:7px;background:var(--cream);color:var(--ink);font:inherit;font-size:16px}
+.contact-form textarea{resize:vertical;min-height:95px}
+.contact-form :is(input,textarea):focus-visible{outline:3px solid var(--orange,#a44622);outline-offset:3px}
+.contact-form .contact-form-privacy{font-size:12px;margin:4px 0 18px}
+.contact-form-privacy a{text-decoration:underline;text-underline-offset:3px}
+.contact-form-honey{position:absolute;inset-inline-start:-10000px;width:1px;height:1px;overflow:hidden}
+.contact-form .button{min-height:46px}
+.contact-form .button:disabled{cursor:wait;opacity:.65}
+.contact-form .contact-form-status{margin:0;font-size:14px}
+.contact-form .contact-form-status:not(:empty){margin:16px 0 0;padding:12px;border-inline-start:3px solid #526343;background:var(--sage)}
+.contact-form-status[data-state="error"]{border-inline-start-color:#a44622}
+@media(max-width:760px){.contact-section[data-contact-form-section]{grid-template-columns:minmax(0,1fr);gap:30px}.contact-form{width:100%;padding:21px}.contact-form h3{font-size:23px}}
 .site-footer{display:flex;justify-content:space-between;padding-block:30px;font-size:12px;color:var(--muted)}
 .site-footer div{display:flex;gap:20px}
 .skip-link{position:fixed;top:-100px;z-index:20;background:white;padding:15px}
