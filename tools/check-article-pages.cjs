@@ -79,6 +79,21 @@ for (const article of articles) {
   assert.equal(schema.author.name, article.author);
   assert.ok(schema.image?.startsWith(origin + '/assets/optimized/'));
   assert.ok(published.includes('<time datetime="' + article.publishedOn + '">'));
+  const canonical = origin + '/' + relative;
+  assert.equal((published.match(/data-article-share\b/g) || []).length, 2, 'Share controls at the start and end of each article.');
+  assert.equal((published.match(/src="[^"]*article-share\.js\?/g) || []).length, 1, 'Load sharing once per article.');
+  for (const match of published.matchAll(/data-share-url="([^"]+)"/g)) assert.equal(match[1], canonical);
+  const whatsappLinks = [...published.matchAll(/href="(https:\/\/wa\.me\/\?text=[^"]+)"/g)];
+  const facebookLinks = [...published.matchAll(/href="(https:\/\/www\.facebook\.com\/sharer\/sharer\.php\?u=[^"]+)"/g)];
+  assert.equal(whatsappLinks.length, 2);
+  assert.equal(facebookLinks.length, 2);
+  for (const [, link] of whatsappLinks) assert.equal(new URL(link).searchParams.get('text'), article.title + '\n' + canonical);
+  for (const [, link] of facebookLinks) assert.equal(new URL(link).searchParams.get('u'), canonical);
+  for (const position of ['top', 'bottom']) {
+   assert.ok(published.includes('id="share-status-' + position + '" data-share-status role="status" aria-live="polite"'));
+   assert.ok(published.includes('<label for="share-url-' + position + '">'));
+   assert.ok(published.includes('id="share-url-' + position + '" data-share-input type="text" value="' + canonical + '" dir="ltr" readonly'));
+  }
   assert.ok(map.includes(origin + '/' + relative));
  }
 }

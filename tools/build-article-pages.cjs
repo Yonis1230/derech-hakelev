@@ -101,9 +101,10 @@ function layout({title, description, route, base, content, schema = '', image}) 
   '<link rel="canonical" href="' + canonical + '">',
   '<meta property="og:title" content="' + escape(title) + ' | דרך הכלב"><meta property="og:description" content="' + escape(description) + '"><meta property="og:url" content="' + canonical + '"><meta property="og:type" content="' + (route !== 'pages/articles/' ? 'article' : 'website') + '"><meta property="og:locale" content="he_IL"><meta property="og:image" content="' + origin + '/' + socialImage + '">',
   image ? '<meta property="og:image:alt" content="' + escape(image.alt) + '">' : '',
-  '<link rel="icon" href="' + base + 'assets/optimized/favicon-32.png"><link rel="stylesheet" href="' + base + 'styles.css?v=20261102-articles">',
+  '<link rel="icon" href="' + base + 'assets/optimized/favicon-32.png"><link rel="stylesheet" href="' + base + 'styles.css?v=20261102-sharing">',
   schema,
   '<script src="' + base + 'scripts.js?v=20261031-measurement" defer></script><script src="' + base + 'accessibility.js?v=20261031-accessibility-menu" defer></script><script src="' + base + 'analytics.js?v=20261031-measurement" defer></script><script src="' + base + 'measurement.js?v=20261031-ga4" defer></script>',
+  route !== 'pages/articles/' ? '<script src="' + base + 'article-share.js?v=20261102-sharing" defer></script>' : '',
   '</head><body data-base="' + base + '" data-page="article"><a class="skip-link" href="#main">דלגו לתוכן</a>' + shared('header', base, route),
   content, shared('footer', base), '</body></html>', ''
  ].join('\n');
@@ -130,6 +131,23 @@ function photograph(article, base, thumbnail = false) {
  const entry = media[article.image.source];
  const srcset = entry.srcset.split(',').map(candidate => base + candidate.trim()).join(', ');
  return '<img class="' + (thumbnail ? 'article-thumbnail' : 'article-photo') + '" src="' + base + entry.src + '" srcset="' + srcset + '" sizes="' + (thumbnail ? '(max-width: 760px) calc(100vw - 36px), 250px' : '(max-width: 760px) calc(100vw - 36px), 760px') + '" width="' + entry.width + '" height="' + entry.height + '" alt="' + (thumbnail ? '' : escape(article.image.alt)) + '" ' + (thumbnail ? 'loading="lazy"' : 'fetchpriority="high"') + ' decoding="async">';
+}
+
+function shareControls(article, route, position) {
+ if (article.status !== 'approved') return '';
+ const canonical = origin + '/' + route;
+ const whatsapp = 'https://wa.me/?text=' + encodeURIComponent(article.title + '\n' + canonical);
+ const facebook = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(canonical);
+ const shareIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg>';
+ const copyIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>';
+ return '<div class="article-share article-share-' + position + '" role="group" aria-label="שיתוף המאמר" data-article-share data-share-url="' + canonical + '" data-share-title="' + escape(article.title) + '">' +
+  '<span class="article-share-label">שיתוף המאמר</span><div class="article-share-actions">' +
+  '<a class="article-share-control article-share-whatsapp" href="' + escape(whatsapp) + '" target="_blank" rel="noopener noreferrer" aria-label="שיתוף המאמר בוואטסאפ (נפתח בחלון חדש)"><img src="../../../assets/icons/whatsapp.svg" width="18" height="18" alt="" aria-hidden="true">וואטסאפ</a>' +
+  '<a class="article-share-control" href="' + escape(facebook) + '" target="_blank" rel="noopener noreferrer" aria-label="שיתוף המאמר בפייסבוק (נפתח בחלון חדש)">' + shareIcon + 'פייסבוק</a>' +
+  '<button class="article-share-control" type="button" data-share-native hidden>' + shareIcon + 'אפשרויות נוספות</button>' +
+  '<button class="article-share-control" type="button" data-share-copy hidden>' + copyIcon + 'העתקת קישור</button></div>' +
+  '<p class="article-share-status" id="share-status-' + position + '" data-share-status role="status" aria-live="polite"></p>' +
+  '<div class="article-share-fallback" data-share-fallback hidden><label for="share-url-' + position + '">קישור למאמר</label><input id="share-url-' + position + '" data-share-input type="text" value="' + canonical + '" dir="ltr" readonly aria-describedby="share-status-' + position + '"></div></div>';
 }
 
 if (selected.length) {
@@ -166,9 +184,9 @@ for (const article of selected) {
   content: '<main id="main" class="reading-page">' + previewNote() +
    '<nav class="article-breadcrumbs" aria-label="מיקום באתר"><a href="../">כל המאמרים</a><span aria-hidden="true">/</span><span aria-current="page">' + escape(article.title) + '</span></nav>' +
    '<article><header class="article-heading"><span class="eyebrow">' + escape(article.category) + '</span><h1>' + escape(article.title) + '</h1>' +
-   '<div class="article-meta">' + date + '<span>כ־' + Math.max(1, Math.ceil(words / 170)) + ' דקות קריאה</span></div></header>' +
+   '<div class="article-meta">' + date + '<span>כ־' + Math.max(1, Math.ceil(words / 170)) + ' דקות קריאה</span></div>' + shareControls(article, route, 'top') + '</header>' +
    (article.image ? '<figure class="article-hero">' + photograph(article, '../../../') + '</figure>' : '') +
-   '<div class="article-body"><p class="article-intro">' + inline(article.intro) + '</p>' + opening + body + '</div>' + references + '</article><aside class="article-next" aria-label="להמשך"><h2>' + escape(next.heading) + '</h2><p>' + escape(next.description) + '</p><a class="button" href="../../../' + next.path + '">' + escape(next.label) + ' <span aria-hidden="true">←</span></a></aside></main>'
+   '<div class="article-body"><p class="article-intro">' + inline(article.intro) + '</p>' + opening + body + '</div>' + references + shareControls(article, route, 'bottom') + '</article><aside class="article-next" aria-label="להמשך"><h2>' + escape(next.heading) + '</h2><p>' + escape(next.description) + '</p><a class="button" href="../../../' + next.path + '">' + escape(next.label) + ' <span aria-hidden="true">←</span></a></aside></main>'
  }));
 }
 
