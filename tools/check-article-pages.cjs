@@ -6,6 +6,8 @@ const path = require('node:path');
 const {execFileSync} = require('node:child_process');
 const articles = require('./articles-content.cjs');
 const articleRoute = require('./article-routes.cjs');
+const vm = require('node:vm');
+const {searchIndex} = require('./article-search-model.cjs');
 const root = path.resolve(__dirname, '..');
 const docs = path.join(root, 'docs');
 const previewRoot = path.join(root, 'artifacts/preview/article-pages');
@@ -15,6 +17,23 @@ for (const args of [['--check'], ['--preview', '--check']]) {
  execFileSync(process.execPath, [path.join(__dirname, 'build-article-pages.cjs'), ...args], {cwd: root, stdio: 'pipe'});
 }
 const map = fs.readFileSync(path.join(docs, 'sitemap.xml'), 'utf8');
+const expectedIndex = searchIndex(articles);
+for (const directory of [docs, previewRoot]) {
+ const context = {window: {}};
+ vm.runInNewContext(fs.readFileSync(path.join(directory, 'article-search-index.js'), 'utf8'), context);
+ assert.deepEqual(JSON.parse(JSON.stringify(context.window.DERECH_ARTICLE_SEARCH)), expectedIndex, 'Search index includes only approved articles.');
+}
+const hub = fs.readFileSync(path.join(docs, 'pages/articles/index.html'), 'utf8');
+assert.match(hub, /data-article-search data-clarity-mask="true"/);
+assert.match(hub, /data-article-search-input type="search"/);
+assert.match(hub, /class="articles-list" data-article-list>/, 'The ordinary list remains available without JavaScript.');
+for (const record of expectedIndex) {
+ const html = fs.readFileSync(path.join(docs, new URL(record.url).pathname, 'index.html'), 'utf8');
+ const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
+ assert.equal(new Set(ids).size, ids.length, 'No duplicate IDs in article.');
+ for (const entry of record.entries) assert.ok(html.includes('id="' + entry.id + '" class="article-anchor'), 'Search link resolves to an actual article anchor.');
+ assert.equal((html.match(/src="[^"]*article-search-target\.js\?/g) || []).length, 1);
+}
 let references = 0;
 const routes = ['pages/articles/', ...articles.map(articleRoute)];
 for (const route of routes) {
