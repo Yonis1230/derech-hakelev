@@ -5,6 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {execFileSync} = require('node:child_process');
 const articles = require('./articles-content.cjs');
+const articleRoute = require('./article-routes.cjs');
 const root = path.resolve(__dirname, '..');
 const docs = path.join(root, 'docs');
 const previewRoot = path.join(root, 'artifacts/preview/article-pages');
@@ -15,14 +16,14 @@ for (const args of [['--check'], ['--preview', '--check']]) {
 }
 const map = fs.readFileSync(path.join(docs, 'sitemap.xml'), 'utf8');
 let references = 0;
-const routes = ['pages/articles/', ...articles.map(article => 'pages/articles/' + article.slug + '/')];
+const routes = ['pages/articles/', ...articles.map(articleRoute)];
 for (const route of routes) {
  const html = fs.readFileSync(path.join(previewRoot, route, 'index.html'), 'utf8');
  assert.match(html, /<html lang="he" dir="rtl">/);
  assert.match(html, /<meta name="robots" content="noindex, nofollow">/);
  assert.equal((html.match(/<h1\b/g) || []).length, 1);
  assert.match(html, /class="skip-link" href="#main"/);
- assert.match(html, /<link rel="canonical" href="https:\/\/derech-hakelev.com\/pages\/articles\//);
+ assert.ok(html.includes('<link rel="canonical" href="' + origin + '/' + route + '">'));
  assert.doesNotMatch(html, /<iframe\b|<script type="application\/ld\+json">/);
  assert.equal((html.match(/src="[^"]*analytics\.js\?/g) || []).length, 1);
  assert.equal((html.match(/src="[^"]*measurement\.js\?/g) || []).length, 1);
@@ -47,7 +48,7 @@ for (const route of routes) {
  }
 }
 for (const article of articles) {
- const relative = 'pages/articles/' + article.slug + '/';
+ const relative = articleRoute(article);
  const html = fs.readFileSync(path.join(previewRoot, relative, 'index.html'), 'utf8');
  if (article.image) {
   assert.match(html, /<img class="article-photo"[^>]+width="\d+" height="\d+" alt="[^"]+"[^>]+fetchpriority="high"/);
@@ -55,7 +56,11 @@ for (const article of articles) {
   assert.match(html, /<meta property="og:image" content="https:\/\/derech-hakelev.com\/assets\/optimized\/home\/slider\//);
  }
  if (article.references?.length) {
-  assert.match(html, /aria-labelledby="research-sources"/);
+  const disclosure = html.match(/<details\b[^>]*class="article-references"[^>]*>[\s\S]*?<\/details>/)?.[0];
+  assert.ok(disclosure, 'Sources need a native disclosure.');
+  assert.doesNotMatch(disclosure.match(/^<details[^>]*>/)[0], /\sopen(?:\s|=|>)/, 'Sources start closed.');
+  assert.match(disclosure, /<summary>מקורות<\/summary>/);
+  assert.ok(disclosure.includes('id="research-sources"'));
   for (const reference of article.references) {
    if (reference.url) assert.ok(html.includes('href="' + reference.url + '"'), 'Missing authored research link.');
   }
@@ -77,6 +82,7 @@ for (const article of articles) {
   assert.equal(schema.headline, article.title);
   assert.equal(schema.datePublished, article.publishedOn);
   assert.equal(schema.author.name, article.author);
+  if (article.seoTitle) assert.ok(published.includes('<title>' + article.seoTitle + '</title>'));
   assert.ok(schema.image?.startsWith(origin + '/assets/optimized/'));
   assert.ok(published.includes('<time datetime="' + article.publishedOn + '">'));
   const canonical = origin + '/' + relative;

@@ -10,7 +10,7 @@ http.createServer((req,res)=>{
  let relative;try{relative=decodeURIComponent(new URL(req.url,'http://localhost').pathname);}catch{res.writeHead(400).end();return;}
  let file=path.resolve(root,'.'+relative);
  if(file!==root&&!file.startsWith(root+path.sep)){res.writeHead(403).end();return;}
- if(relative==='/pages/articles'||relative.startsWith('/pages/articles/')){
+ if(relative==='/pages/articles'||relative.startsWith('/pages/articles/')||relative==='/articles'||relative.startsWith('/articles/')){
   const candidate=path.resolve(articlePreviewRoot,'.'+relative);
   if(candidate.startsWith(articlePreviewRoot+path.sep)&&fs.existsSync(candidate))file=candidate;
  }

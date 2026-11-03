@@ -462,8 +462,16 @@ body.testimonial-viewer-open .floating-offer{display:none}
 .article-body section{margin-top:36px}
 .article-body h2{font-size:27px;margin-bottom:16px}
 .article-body p{color:var(--ink)}
+.article-body .article-note{font-size:15px;line-height:1.9;color:var(--muted)}
 .article-body a{color:var(--orange);text-decoration:underline;text-underline-offset:4px}
 .article-references{border-block-start:1px solid var(--line);margin-block-start:42px;padding-block-start:28px}
+.article-references>summary{display:flex;align-items:center;justify-content:space-between;gap:18px;width:fit-content;max-width:100%;min-height:44px;padding:10px 16px;border:1px solid var(--line);border-radius:8px;background:var(--white);color:var(--ink);font-size:16px;font-weight:500;line-height:1.5;cursor:pointer;list-style:none}
+.article-references>summary::-webkit-details-marker{display:none}
+.article-references>summary::after{content:"";width:8px;height:8px;flex-shrink:0;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg)}
+.article-references>summary:hover{background:var(--sage);border-color:var(--muted)}
+.article-references>summary:focus-visible{outline:3px solid var(--orange);outline-offset:4px}
+.article-references[open]>summary::after{transform:rotate(225deg)}
+.article-references-body{padding-block-start:24px}
 .article-references h2{font-size:25px}
 .article-references ul{list-style:none;padding:0;margin:22px 0 0}
 .article-references li+li{margin-block-start:24px}

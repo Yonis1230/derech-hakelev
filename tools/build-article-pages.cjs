@@ -7,6 +7,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const articles = require('./articles-content.cjs');
+const articleRoute = require('./article-routes.cjs');
 const root = path.resolve(__dirname, '..');
 const docs = path.join(root, 'docs');
 const preview = process.argv.includes('--preview');
@@ -55,12 +56,15 @@ function blockText(block) {
 }
 
 function renderBlock(block) {
+ if (block.type === 'note') return '<p class="article-note">' + inline(block.text) + '</p>';
  return block.type === 'list' ? '<ul>' + block.items.map(item => '<li>' + inline(item) + '</li>').join('') + '</ul>' : '<p>' + inline(block.text) + '</p>';
 }
 
 for (const article of articles) {
  if (!/^[a-z]+(?:-[a-z]+)*$/.test(article.slug) || slugs.has(article.slug)) throw new Error('Invalid or duplicate article slug.');
  slugs.add(article.slug);
+ articleRoute(article);
+ if (article.seoTitle !== undefined && (typeof article.seoTitle !== 'string' || !article.seoTitle.trim())) throw new Error('Invalid SEO title.');
  if (!['draft', 'approved'].includes(article.status) || !article.title || !article.description || !article.intro || !article.category || !article.sections?.length) throw new Error('Incomplete article: ' + article.slug);
  if (article.status === 'approved' && (!/^\d{4}-\d{2}-\d{2}$/.test(article.publishedOn || '') || !Number.isFinite(Date.parse(article.publishedOn)) || article.publishedOn > new Date().toISOString().slice(0, 10))) throw new Error('Approved articles need a real publication date: ' + article.slug);
  if (article.openingParagraphs && (!Array.isArray(article.openingParagraphs) || article.openingParagraphs.some(paragraph => typeof paragraph !== 'string' || !paragraph.trim() || /[<>]/.test(paragraph)))) throw new Error('Invalid opening paragraphs.');
@@ -90,12 +94,12 @@ for (const article of articles) {
    if (block.type === 'list') {
     if (!Array.isArray(block.items) || !block.items.length || block.items.some(item => typeof item !== 'string' || !item.trim())) throw new Error('Invalid article list.');
     block.items.forEach(inline);
-   } else if (block.type === 'paragraph' && typeof block.text === 'string' && block.text.trim()) {
+   } else if (['paragraph', 'note'].includes(block.type) && typeof block.text === 'string' && block.text.trim()) {
     inline(block.text);
    } else throw new Error('Invalid article text block.');
   }
  }
- if (article.status === 'draft' && fs.existsSync(path.join(docs, 'pages/articles', article.slug, 'index.html'))) throw new Error('A draft has a public output. Review and remove that output before continuing.');
+ if (article.status === 'draft' && fs.existsSync(path.join(docs, articleRoute(article), 'index.html'))) throw new Error('A draft has a public output. Review and remove that output before continuing.');
 }
 
 function shared(tag, base, route) {
@@ -108,22 +112,23 @@ function shared(tag, base, route) {
  return rebased.includes(link) ? rebased.replace(link, activeLink) : rebased.replace('</nav>', activeLink + '\n</nav>');
 }
 
-function layout({title, description, route, base, content, schema = '', image}) {
+function layout({title, seoTitle, description, route, base, content, schema = '', image}) {
  const canonical = origin + '/' + route;
+ const metadataTitle = seoTitle || title + ' | דרך הכלב';
  const socialImage = image ? media[image.source].src : 'assets/optimized/brand/logo-128.webp';
  return [
   marker, '<!doctype html>',
   '<html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">',
-  '<title>' + escape(title) + ' | דרך הכלב</title>',
+  '<title>' + escape(metadataTitle) + '</title>',
   '<meta name="description" content="' + escape(description) + '">',
   preview ? '<meta name="robots" content="noindex, nofollow">' : '',
   '<link rel="canonical" href="' + canonical + '">',
-  '<meta property="og:title" content="' + escape(title) + ' | דרך הכלב"><meta property="og:description" content="' + escape(description) + '"><meta property="og:url" content="' + canonical + '"><meta property="og:type" content="' + (route !== 'pages/articles/' ? 'article' : 'website') + '"><meta property="og:locale" content="he_IL"><meta property="og:image" content="' + origin + '/' + socialImage + '">',
+  '<meta property="og:title" content="' + escape(metadataTitle) + '"><meta property="og:description" content="' + escape(description) + '"><meta property="og:url" content="' + canonical + '"><meta property="og:type" content="' + (route !== 'pages/articles/' ? 'article' : 'website') + '"><meta property="og:locale" content="he_IL"><meta property="og:image" content="' + origin + '/' + socialImage + '">',
   image ? '<meta property="og:image:alt" content="' + escape(image.alt) + '">' : '',
-  '<link rel="icon" href="' + base + 'assets/optimized/favicon-32.png"><link rel="stylesheet" href="' + base + 'styles.css?v=20261102-contact-form">',
+  '<link rel="icon" href="' + base + 'assets/optimized/favicon-32.png"><link rel="stylesheet" href="' + base + 'styles.css?v=20261103-article-sources">',
   schema,
   '<script src="' + base + 'scripts.js?v=20261031-measurement" defer></script><script src="' + base + 'accessibility.js?v=20261031-accessibility-menu" defer></script><script src="' + base + 'analytics.js?v=20261031-measurement" defer></script><script src="' + base + 'measurement.js?v=20261031-ga4" defer></script>',
-  route !== 'pages/articles/' ? '<script src="' + base + 'article-share.js?v=20261102-sharing" defer></script>' : '',
+  route !== 'pages/articles/' ? '<script src="' + base + 'article-share.js?v=20261103-article-sources" defer></script>' : '',
   '</head><body data-base="' + base + '" data-page="article"><a class="skip-link" href="#main">דלגו לתוכן</a>' + shared('header', base, route),
   content, shared('footer', base), '</body></html>', ''
  ].join('\n');
@@ -152,7 +157,7 @@ function photograph(article, base, thumbnail = false) {
  return '<img class="' + (thumbnail ? 'article-thumbnail' : 'article-photo') + '" src="' + base + entry.src + '" srcset="' + srcset + '" sizes="' + (thumbnail ? '(max-width: 760px) calc(100vw - 36px), 250px' : '(max-width: 760px) calc(100vw - 36px), 760px') + '" width="' + entry.width + '" height="' + entry.height + '" alt="' + (thumbnail ? '' : escape(article.image.alt)) + '" ' + (thumbnail ? 'loading="lazy"' : 'fetchpriority="high"') + ' decoding="async">';
 }
 
-function shareControls(article, route, position) {
+function shareControls(article, route, position, base) {
  if (article.status !== 'approved') return '';
  const canonical = origin + '/' + route;
  const whatsapp = 'https://wa.me/?text=' + encodeURIComponent(article.title + '\n' + canonical);
@@ -161,7 +166,7 @@ function shareControls(article, route, position) {
  const copyIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg>';
  return '<div class="article-share article-share-' + position + '" role="group" aria-label="שיתוף המאמר" data-article-share data-share-url="' + canonical + '" data-share-title="' + escape(article.title) + '">' +
   '<span class="article-share-label">שיתוף המאמר</span><div class="article-share-actions">' +
-  '<a class="article-share-control article-share-whatsapp" href="' + escape(whatsapp) + '" target="_blank" rel="noopener noreferrer" aria-label="שיתוף המאמר בוואטסאפ (נפתח בחלון חדש)"><img src="../../../assets/icons/whatsapp.svg" width="18" height="18" alt="" aria-hidden="true">וואטסאפ</a>' +
+  '<a class="article-share-control article-share-whatsapp" href="' + escape(whatsapp) + '" target="_blank" rel="noopener noreferrer" aria-label="שיתוף המאמר בוואטסאפ (נפתח בחלון חדש)"><img src="' + base + 'assets/icons/whatsapp.svg" width="18" height="18" alt="" aria-hidden="true">וואטסאפ</a>' +
   '<a class="article-share-control" href="' + escape(facebook) + '" target="_blank" rel="noopener noreferrer" aria-label="שיתוף המאמר בפייסבוק (נפתח בחלון חדש)">' + shareIcon + 'פייסבוק</a>' +
   '<button class="article-share-control" type="button" data-share-native hidden>' + shareIcon + 'אפשרויות נוספות</button>' +
   '<button class="article-share-control" type="button" data-share-copy hidden>' + copyIcon + 'העתקת קישור</button></div>' +
@@ -172,8 +177,8 @@ function shareControls(article, route, position) {
 if (selected.length) {
  const cards = selected.map(article => [
   '<article class="article-list-item' + (article.image ? ' has-image' : '') + '">' + photograph(article, '../../', true) + '<div class="article-card-copy"><span class="eyebrow">' + escape(article.category) + '</span>',
-  '<h2><a href="' + article.slug + '/">' + escape(article.title) + '</a></h2><p>' + escape(article.description) + '</p>',
-  '<a class="text-link" href="' + article.slug + '/">לקריאת המאמר<span class="sr-only">: ' + escape(article.title) + '</span> <span aria-hidden="true">←</span></a></div></article>'
+  '<h2><a href="' + path.posix.relative('pages/articles', articleRoute(article)) + '/">' + escape(article.title) + '</a></h2><p>' + escape(article.description) + '</p>',
+  '<a class="text-link" href="' + path.posix.relative('pages/articles', articleRoute(article)) + '/">לקריאת המאמר<span class="sr-only">: ' + escape(article.title) + '</span> <span aria-hidden="true">←</span></a></div></article>'
  ].join('')).join('\n');
  write('pages/articles', layout({
   title: 'מאמרים ורעיונות למפגש',
@@ -184,12 +189,13 @@ if (selected.length) {
 }
 
 for (const article of selected) {
- const route = 'pages/articles/' + article.slug + '/';
+ const route = articleRoute(article);
+ const base = '../'.repeat(route.split('/').filter(Boolean).length);
  const body = article.sections.map(section => '<section><h2>' + escape(section.heading) + '</h2>' + sectionBlocks(section).map(renderBlock).join('') + '</section>').join('\n');
  const opening = (article.openingParagraphs || []).map(paragraph => '<p>' + inline(paragraph) + '</p>').join('');
  const words = [article.intro, ...(article.openingParagraphs || []), ...article.sections.flatMap(section => [section.heading, ...sectionBlocks(section).map(blockText)])].join(' ').replace(/<[^>]+>/g, '').split(/\s+/).length;
  const date = article.status === 'approved' ? '<span>יוני סויסה · <time datetime="' + article.publishedOn + '">' + article.publishedOn.split('-').reverse().join('.') + '</time></span>' : '<span>' + (article.author ? escape(article.author) + ' · ' : '') + 'טיוטה לבדיקה</span>';
- const references = article.references?.length ? '<section class="article-references" aria-labelledby="research-sources"><h2 id="research-sources">' + escape(article.referencesTitle || 'מקורות ומחקרים להרחבה') + '</h2><ul>' + article.references.map(reference => '<li><strong><bdi dir="ltr">' + escape(reference.title) + '</bdi></strong>' + (reference.workTitle ? '<p><em><bdi dir="ltr">' + escape(reference.workTitle) + '</bdi></em></p>' : '') + '<p>' + escape(reference.description) + '</p>' + (reference.note ? '<p class="research-note">' + escape(reference.note) + '</p>' : '') + (reference.url ? '<a href="' + escape(reference.url) + '">' + escape(reference.linkLabel || 'למחקר') + '<span class="sr-only">: ' + escape(reference.title) + '</span> <span aria-hidden="true">←</span></a>' : '') + '</li>').join('') + '</ul></section>' : '';
+ const references = article.references?.length ? '<details class="article-references"><summary>מקורות</summary><div class="article-references-body"><h2 id="research-sources">' + escape(article.referencesTitle || 'מקורות ומחקרים להרחבה') + '</h2><ul>' + article.references.map(reference => '<li><strong><bdi dir="ltr">' + escape(reference.title) + '</bdi></strong>' + (reference.workTitle ? '<p><em><bdi dir="ltr">' + escape(reference.workTitle) + '</bdi></em></p>' : '') + '<p>' + escape(reference.description) + '</p>' + (reference.note ? '<p class="research-note">' + escape(reference.note) + '</p>' : '') + (reference.url ? '<a href="' + escape(reference.url) + '">' + escape(reference.linkLabel || 'למחקר') + '<span class="sr-only">: ' + escape(reference.title) + '</span> <span aria-hidden="true">←</span></a>' : '') + '</li>').join('') + '</ul></div></details>' : '';
  const next = article.next || {heading: 'רוצים להכיר את המשחקים?', description: 'בקטלוג אפשר לראות מה יש בכל מארז, לאילו גילאים הוא מתאים ואיך משחקים בו.', label: 'לכל המשחקים והכלים', path: 'pages/games/'};
  const schema = !preview ? '<script type="application/ld+json">' + JSON.stringify({
   '@context': 'https://schema.org', '@type': 'Article', headline: article.title, description: article.description,
@@ -199,13 +205,13 @@ for (const article of selected) {
   publisher: {'@type': 'Organization', '@id': origin + '/#organization', name: 'דרך הכלב', url: origin + '/'}
  }).replace(/</g, '\\u003c') + '</script>' : '';
  write(route, layout({
-  title: article.title, description: article.description, route, base: '../../../', schema, image: article.image,
+  title: article.title, seoTitle: article.seoTitle, description: article.description, route, base, schema, image: article.image,
   content: '<main id="main" class="reading-page">' + previewNote() +
-   '<nav class="article-breadcrumbs" aria-label="מיקום באתר"><a href="../">כל המאמרים</a><span aria-hidden="true">/</span><span aria-current="page">' + escape(article.title) + '</span></nav>' +
+   '<nav class="article-breadcrumbs" aria-label="מיקום באתר"><a href="' + (route.startsWith('pages/') ? '../' : base + 'pages/articles/') + '">כל המאמרים</a><span aria-hidden="true">/</span><span aria-current="page">' + escape(article.title) + '</span></nav>' +
    '<article><header class="article-heading"><span class="eyebrow">' + escape(article.category) + '</span><h1>' + escape(article.title) + '</h1>' +
-   '<div class="article-meta">' + date + '<span>כ־' + Math.max(1, Math.ceil(words / 170)) + ' דקות קריאה</span></div>' + shareControls(article, route, 'top') + '</header>' +
-   (article.image ? '<figure class="article-hero">' + photograph(article, '../../../') + '</figure>' : '') +
-   '<div class="article-body"><p class="article-intro">' + inline(article.intro) + '</p>' + opening + body + '</div>' + references + shareControls(article, route, 'bottom') + '</article><aside class="article-next" aria-label="להמשך"><h2>' + escape(next.heading) + '</h2><p>' + escape(next.description) + '</p><a class="button" href="../../../' + next.path + '">' + escape(next.label) + ' <span aria-hidden="true">←</span></a></aside></main>'
+   '<div class="article-meta">' + date + '<span>כ־' + Math.max(1, Math.ceil(words / 170)) + ' דקות קריאה</span></div>' + shareControls(article, route, 'top', base) + '</header>' +
+   (article.image ? '<figure class="article-hero">' + photograph(article, base) + '</figure>' : '') +
+   '<div class="article-body"><p class="article-intro">' + inline(article.intro) + '</p>' + opening + body + '</div>' + references + shareControls(article, route, 'bottom', base) + '</article><aside class="article-next" aria-label="להמשך"><h2>' + escape(next.heading) + '</h2><p>' + escape(next.description) + '</p><a class="button" href="' + base + next.path + '">' + escape(next.label) + ' <span aria-hidden="true">←</span></a></aside></main>'
  }));
 }
 

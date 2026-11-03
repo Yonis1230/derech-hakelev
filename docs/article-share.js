@@ -16,7 +16,7 @@
   const url = section.getAttribute('data-share-url') || '';
   const title = (section.getAttribute('data-share-title') || '').trim();
   // Never share a browsing URL, query, fragment, draft URL or another origin.
-  if (!/^https:\/\/derech-hakelev\.com\/pages\/articles\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/.test(url)
+  if (!/^https:\/\/derech-hakelev\.com\/(?:pages\/)?articles\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/.test(url)
    || !title) return;
 
   const payload = {title, text: title, url};

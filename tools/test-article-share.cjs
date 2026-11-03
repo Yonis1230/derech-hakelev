@@ -59,6 +59,23 @@ test('both article controls copy only the canonical URL after a click', async ()
  assert.deepEqual(written, [canonical, canonical]);
 });
 
+test('the authored /articles/ address supports sharing and rejects private query data', async () => {
+ const url = 'https://derech-hakelev.com/articles/benefits-of-dogs-for-humans/';
+ const copied = [], shared = [];
+ const controls = fixture({urls: [url, url + '?private=secret'], navigator: {
+  clipboard: {async writeText(value) { copied.push(value); }},
+  async share(payload) { shared.push({...payload}); }
+ }});
+ assert.equal(controls[0].copy.hidden, false);
+ assert.equal(controls[0].native.hidden, false);
+ assert.equal(controls[1].copy.hidden, true);
+ assert.equal(controls[1].native.hidden, true);
+ await controls[0].copy.click();
+ await controls[0].native.click();
+ assert.deepEqual(copied, [url]);
+ assert.deepEqual(shared, [{title, text: title, url}]);
+});
+
 test('native share passes the approved title and canonical URL without tracking', async () => {
  const shared = [];
  const sections = fixture({navigator: {canShare: payload => payload.url === canonical, async share(payload) { shared.push({...payload}); }}});

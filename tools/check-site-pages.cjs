@@ -4,6 +4,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
 const docs=path.resolve(__dirname,'../docs'),origin='https://derech-hakelev.com';
 const files=[];function scan(dir){for(const item of fs.readdirSync(dir,{withFileTypes:true})){const full=path.join(dir,item.name);if(item.isDirectory())scan(full);else if(item.name.endsWith('.html'))files.push(full);}}
 scan(path.join(docs,'pages'));files.push(path.join(docs,'index.html'));
+if(fs.existsSync(path.join(docs,'articles')))scan(path.join(docs,'articles'));
 const titles=new Set(),descriptions=new Set(),canonicals=new Set();let references=0;
 for(const file of files){
  const html=fs.readFileSync(file,'utf8');

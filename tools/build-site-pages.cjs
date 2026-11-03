@@ -59,7 +59,7 @@ for(const p of pages){
 }
 // Only real public canonical pages. No previews, reports, or external destinations.
 const approvedArticles=require('./articles-content.cjs').filter(article=>article.status==='approved');
-const articleRoutes=approvedArticles.length?['pages/articles/',...approvedArticles.map(article=>`pages/articles/${article.slug}/`)]:[];
+const articleRoutes=approvedArticles.length?['pages/articles/',...approvedArticles.map(require('./article-routes.cjs'))]:[];
 const routes=['','pages/games/',...pages.map(p=>`pages/${p.id}/`),...catalog.map(p=>`pages/games/products/${p.id}/`),...articleRoutes];
 fs.writeFileSync(path.join(docs,'sitemap.xml'),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+routes.map(r=>`  <url><loc>https://derech-hakelev.com/${r}</loc></url>`).join('\n')+'\n</urlset>\n');
 // No new wildcard or AI-training bot permissions.
