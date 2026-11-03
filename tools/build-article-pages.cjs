@@ -204,10 +204,10 @@ if (selected.length) {
   '<a class="text-link" href="' + path.posix.relative('pages/articles', articleRoute(article)) + '/">לקריאת המאמר<span class="sr-only">: ' + escape(article.title) + '</span> <span aria-hidden="true">←</span></a></div></article>'
  ].join('')).join('\n');
  write('pages/articles', layout({
-  title: 'מאמרים ורעיונות למפגש',
+  title: 'מאמרים ורעיונות',
   description: 'מאמרים על טיפול רגשי בעזרת כלבים, קשר, משחק והתנסות בתוך המפגש.',
   route: 'pages/articles/', base: '../../',
-  content: '<main id="main" class="articles-page">' + previewNote() + '<div class="articles-intro"><span class="eyebrow">לקרוא, לחשוב, לנסות</span><h1>מאמרים ורעיונות למפגש</h1><p>על טיפול רגשי בעזרת כלבים, על קשר ועל משחק. מחשבות מתוך המפגש ורעיונות שאפשר לקחת איתנו להמשך.</p></div>' + searchPanel() + '<div class="articles-list" data-article-list>' + cards + '</div></main>'
+  content: '<main id="main" class="articles-page">' + previewNote() + '<div class="articles-intro"><span class="eyebrow">לקרוא, לחשוב, לנסות</span><h1>מאמרים ורעיונות</h1><p>על טיפול רגשי בעזרת כלבים, על קשר ועל משחק. מחשבות מתוך המפגשים ורעיונות שאפשר לקחת איתנו להמשך.</p></div>' + searchPanel() + '<div class="articles-list" data-article-list>' + cards + '</div></main>'
  }));
 }
 
