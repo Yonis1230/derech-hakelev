@@ -45,6 +45,19 @@ function inline(value) {
  }).join('');
 }
 
+// Ordered text/list blocks keep authored lists in place without allowing raw HTML.
+function sectionBlocks(section) {
+ return section.blocks || (section.paragraphs || []).map(text => ({type: 'paragraph', text}));
+}
+
+function blockText(block) {
+ return block.type === 'list' ? block.items.join(' ') : block.text;
+}
+
+function renderBlock(block) {
+ return block.type === 'list' ? '<ul>' + block.items.map(item => '<li>' + inline(item) + '</li>').join('') + '</ul>' : '<p>' + inline(block.text) + '</p>';
+}
+
 for (const article of articles) {
  if (!/^[a-z]+(?:-[a-z]+)*$/.test(article.slug) || slugs.has(article.slug)) throw new Error('Invalid or duplicate article slug.');
  slugs.add(article.slug);
@@ -71,9 +84,15 @@ for (const article of articles) {
  }
  if (article.next && (!article.next.heading || !article.next.description || !article.next.label || !/^(?:index\.html#[a-z]+|pages\/[a-z]+\/)$/.test(article.next.path))) throw new Error('Invalid article continuation.');
  for (const section of article.sections) {
-  if (!section.heading || !section.paragraphs?.length) throw new Error('Incomplete article section.');
-  for (const paragraph of section.paragraphs) {
-   inline(paragraph);
+  const blocks = sectionBlocks(section);
+  if (!section.heading || !Array.isArray(blocks) || !blocks.length || (section.blocks && section.paragraphs)) throw new Error('Incomplete article section.');
+  for (const block of blocks) {
+   if (block.type === 'list') {
+    if (!Array.isArray(block.items) || !block.items.length || block.items.some(item => typeof item !== 'string' || !item.trim())) throw new Error('Invalid article list.');
+    block.items.forEach(inline);
+   } else if (block.type === 'paragraph' && typeof block.text === 'string' && block.text.trim()) {
+    inline(block.text);
+   } else throw new Error('Invalid article text block.');
   }
  }
  if (article.status === 'draft' && fs.existsSync(path.join(docs, 'pages/articles', article.slug, 'index.html'))) throw new Error('A draft has a public output. Review and remove that output before continuing.');
@@ -166,9 +185,9 @@ if (selected.length) {
 
 for (const article of selected) {
  const route = 'pages/articles/' + article.slug + '/';
- const body = article.sections.map(section => '<section><h2>' + escape(section.heading) + '</h2>' + section.paragraphs.map(paragraph => '<p>' + inline(paragraph) + '</p>').join('') + '</section>').join('\n');
+ const body = article.sections.map(section => '<section><h2>' + escape(section.heading) + '</h2>' + sectionBlocks(section).map(renderBlock).join('') + '</section>').join('\n');
  const opening = (article.openingParagraphs || []).map(paragraph => '<p>' + inline(paragraph) + '</p>').join('');
- const words = [article.intro, ...(article.openingParagraphs || []), ...article.sections.flatMap(section => [section.heading, ...section.paragraphs])].join(' ').replace(/<[^>]+>/g, '').split(/\s+/).length;
+ const words = [article.intro, ...(article.openingParagraphs || []), ...article.sections.flatMap(section => [section.heading, ...sectionBlocks(section).map(blockText)])].join(' ').replace(/<[^>]+>/g, '').split(/\s+/).length;
  const date = article.status === 'approved' ? '<span>יוני סויסה · <time datetime="' + article.publishedOn + '">' + article.publishedOn.split('-').reverse().join('.') + '</time></span>' : '<span>' + (article.author ? escape(article.author) + ' · ' : '') + 'טיוטה לבדיקה</span>';
  const references = article.references?.length ? '<section class="article-references" aria-labelledby="research-sources"><h2 id="research-sources">' + escape(article.referencesTitle || 'מקורות ומחקרים להרחבה') + '</h2><ul>' + article.references.map(reference => '<li><strong><bdi dir="ltr">' + escape(reference.title) + '</bdi></strong>' + (reference.workTitle ? '<p><em><bdi dir="ltr">' + escape(reference.workTitle) + '</bdi></em></p>' : '') + '<p>' + escape(reference.description) + '</p>' + (reference.note ? '<p class="research-note">' + escape(reference.note) + '</p>' : '') + (reference.url ? '<a href="' + escape(reference.url) + '">' + escape(reference.linkLabel || 'למחקר') + '<span class="sr-only">: ' + escape(reference.title) + '</span> <span aria-hidden="true">←</span></a>' : '') + '</li>').join('') + '</ul></section>' : '';
  const next = article.next || {heading: 'רוצים להכיר את המשחקים?', description: 'בקטלוג אפשר לראות מה יש בכל מארז, לאילו גילאים הוא מתאים ואיך משחקים בו.', label: 'לכל המשחקים והכלים', path: 'pages/games/'};
