@@ -72,7 +72,7 @@ for (const article of articles) {
  if (article.image) {
   assert.match(html, /<img class="article-photo"[^>]+width="\d+" height="\d+" alt="[^"]+"[^>]+fetchpriority="high"/);
   assert.ok(html.includes(article.image.alt), 'Hero photo needs its authored alternative text.');
-  assert.match(html, /<meta property="og:image" content="https:\/\/derech-hakelev.com\/assets\/optimized\/home\/slider\//);
+  assert.match(html, /<meta property="og:image" content="https:\/\/derech-hakelev.com\/assets\/optimized\/(?:home\/slider|articles)\//);
  }
  if (article.references?.length) {
   const disclosure = html.match(/<details\b[^>]*class="article-references"[^>]*>[\s\S]*?<\/details>/)?.[0];

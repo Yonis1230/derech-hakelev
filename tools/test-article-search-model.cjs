@@ -49,3 +49,22 @@ test('formatting becomes readable text while authored display values remain avai
  assert.equal(plain('**קשר** עם *כלב*'), 'קשר עם כלב');
  assert.equal(plain('<a href="../../../pages/games/products/derech/">דרך</a> חדשה'), 'דרך חדשה');
 });
+
+test('adding an internal link preserves readable search text and existing destination anchors', () => {
+ const original = article();
+ const linked = article();
+ linked.openingParagraphs[0] = '[עוד מחשבה](/pages/articles/example/)';
+ const before = articleDocument(original), after = articleDocument(linked);
+ assert.equal(after.opening[0].id, before.opening[0].id);
+ assert.deepEqual(after.record, before.record);
+ assert.ok(!JSON.stringify(after.record.entries).includes('/pages/articles/'));
+});
+
+test('authored subheadings have heading anchors and searchable visible text', () => {
+ const content = article();
+ content.sections[0].blocks.unshift({type: 'subheading', text: 'כותרת ביניים'});
+ const result = articleDocument(content);
+ assert.match(result.sections[0].blocks[0].id, /^article-heading-/);
+ assert.equal(result.sections[0].blocks[0].text, 'כותרת ביניים');
+ assert.equal(result.sections[0].blocks[0].heading, 'כותרת ביניים');
+});

@@ -9,6 +9,7 @@ const vm = require('node:vm');
 const crypto = require('node:crypto');
 const articles = require('./articles-content.cjs');
 const articleRoute = require('./article-routes.cjs');
+const {renderInline, plainInline} = require('./article-inline.cjs');
 const {articleDocument, searchIndex} = require('./article-search-model.cjs');
 const root = path.resolve(__dirname, '..');
 const docs = path.join(root, 'docs');
@@ -29,24 +30,9 @@ const selected = articles.filter(article => preview || article.status === 'appro
 const slugs = new Set();
 let changes = 0;
 
-// Preserve authored bold text without accepting arbitrary inline HTML.
-// The older game article also includes a small set of local product links.
-function inline(value) {
- const productLink = /(<a href="\.\.\/\.\.\/\.\.\/pages\/games\/products\/[a-z]+\/">[^<>]+<\/a>)/g;
- function emphasis(text) {
-  return text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g).map(part => {
-   if (/^\*\*[^*]+\*\*$/.test(part)) return '<strong>' + escape(part.slice(2, -2)) + '</strong>';
-   if (/^\*[^*]+\*$/.test(part)) return '<em>' + escape(part.slice(1, -1)) + '</em>';
-   return escape(part);
-  }).join('');
- }
- return String(value).split(productLink).map(part => {
-  const link = part.match(/^<a href="(\.\.\/\.\.\/\.\.\/pages\/games\/products\/[a-z]+\/)">([^<>]+)<\/a>$/);
-  if (link) return '<a href="' + link[1] + '">' + emphasis(link[2]) + '</a>';
-  if (/[<>]/.test(part)) throw new Error('Unexpected inline article markup.');
-  return emphasis(part);
- }).join('');
-}
+// Only published article addresses can be linked from authored prose.
+const articleLinks = new Set(articles.filter(article => article.status === 'approved').map(article => '/' + articleRoute(article)));
+const inline = value => renderInline(value, articleLinks);
 
 // Ordered text/list blocks keep authored lists in place without allowing raw HTML.
 function sectionBlocks(section) {
@@ -59,6 +45,7 @@ function blockText(block) {
 
 function renderBlock(block) {
  if (block.type === 'list') return '<ul>' + block.items.map(item => '<li' + anchor(item) + '>' + inline(item.raw) + '</li>').join('') + '</ul>';
+ if (block.type === 'subheading') return '<h3' + anchor(block) + '>' + inline(block.raw) + '</h3>';
  return '<p' + anchor(block, block.type === 'note' ? 'article-note' : '') + '>' + inline(block.raw) + '</p>';
 }
 
@@ -76,7 +63,8 @@ for (const article of articles) {
  if (article.openingParagraphs && (!Array.isArray(article.openingParagraphs) || article.openingParagraphs.some(paragraph => typeof paragraph !== 'string' || !paragraph.trim() || /[<>]/.test(paragraph)))) throw new Error('Invalid opening paragraphs.');
  if (article.image) {
   const image = media[article.image.source];
-  if (!gallery.includes(article.image.source) || !article.image.alt?.trim() || !image?.srcset || !(image.width > 0) || !(image.height > 0)) throw new Error('Article image must reuse an existing gallery photograph with alternative text.');
+  const dedicatedImage = new RegExp('^assets/images/articles/' + article.slug + '\\.(?:jpe?g|webp|png)$').test(article.image.source);
+  if ((!gallery.includes(article.image.source) && !dedicatedImage) || !article.image.alt?.trim() || !image?.srcset || !(image.width > 0) || !(image.height > 0)) throw new Error('Article image must be a gallery or dedicated article photograph with alternative text.');
   for (const asset of [article.image.source, image.src, ...image.srcset.split(',').map(candidate => candidate.trim().split(/\s+/)[0])]) {
    const file = path.resolve(docs, asset);
    if (!file.startsWith(docs + path.sep) || !fs.existsSync(file) || !fs.statSync(file).isFile()) throw new Error('Missing or unsafe article image: ' + asset);
@@ -100,7 +88,7 @@ for (const article of articles) {
    if (block.type === 'list') {
     if (!Array.isArray(block.items) || !block.items.length || block.items.some(item => typeof item !== 'string' || !item.trim())) throw new Error('Invalid article list.');
     block.items.forEach(inline);
-   } else if (['paragraph', 'note'].includes(block.type) && typeof block.text === 'string' && block.text.trim()) {
+   } else if (['paragraph', 'note', 'subheading'].includes(block.type) && typeof block.text === 'string' && block.text.trim()) {
     inline(block.text);
    } else throw new Error('Invalid article text block.');
   }
@@ -134,7 +122,7 @@ function layout({title, seoTitle, description, route, base, content, schema = ''
   '<link rel="canonical" href="' + canonical + '">',
   '<meta property="og:title" content="' + escape(metadataTitle) + '"><meta property="og:description" content="' + escape(description) + '"><meta property="og:url" content="' + canonical + '"><meta property="og:type" content="' + (route !== 'pages/articles/' ? 'article' : 'website') + '"><meta property="og:locale" content="he_IL"><meta property="og:image" content="' + origin + '/' + socialImage + '">',
   image ? '<meta property="og:image:alt" content="' + escape(image.alt) + '">' : '',
-  '<link rel="icon" href="' + base + 'assets/optimized/favicon-32.png"><link rel="stylesheet" href="' + base + 'styles.css?v=20261103-article-search">',
+  '<link rel="icon" href="' + base + 'assets/optimized/favicon-32.png"><link rel="stylesheet" href="' + base + 'styles.css?v=20261103-article-links">',
   schema,
   '<script src="' + base + 'scripts.js?v=20261031-measurement" defer></script><script src="' + base + 'accessibility.js?v=20261031-accessibility-menu" defer></script><script src="' + base + 'analytics.js?v=20261103-consent-copy" defer></script><script src="' + base + 'measurement.js?v=20261031-ga4" defer></script>',
   route !== 'pages/articles/' ? '<script src="' + base + 'article-share.js?v=20261103-article-sources" defer></script>' : '',
@@ -229,7 +217,7 @@ for (const article of selected) {
  const searchDocument = articleDocument(article);
  const body = searchDocument.sections.map(section => '<section><h2' + anchor(section.heading) + '>' + escape(section.rawHeading) + '</h2>' + section.blocks.map(renderBlock).join('') + '</section>').join('\n');
  const opening = (article.openingParagraphs || []).map((paragraph, index) => '<p' + anchor(searchDocument.opening[index]) + '>' + inline(paragraph) + '</p>').join('');
- const words = [article.intro, ...(article.openingParagraphs || []), ...article.sections.flatMap(section => [section.heading, ...sectionBlocks(section).map(blockText)])].join(' ').replace(/<[^>]+>/g, '').split(/\s+/).length;
+ const words = [article.intro, ...(article.openingParagraphs || []), ...article.sections.flatMap(section => [section.heading, ...sectionBlocks(section).map(blockText)])].map(plainInline).join(' ').split(/\s+/).length;
  const date = article.status === 'approved' ? '<span>יוני סויסה · <time datetime="' + article.publishedOn + '">' + article.publishedOn.split('-').reverse().join('.') + '</time></span>' : '<span>' + (article.author ? escape(article.author) + ' · ' : '') + 'טיוטה לבדיקה</span>';
  const references = article.references?.length ? '<details class="article-references"><summary>מקורות</summary><div class="article-references-body"><h2 id="research-sources">' + escape(article.referencesTitle || 'מקורות ומחקרים להרחבה') + '</h2><ul>' + article.references.map((reference, index) => '<li' + anchor(searchDocument.references[index]) + '><strong><bdi dir="ltr">' + escape(reference.title) + '</bdi></strong>' + (reference.workTitle ? '<p><em><bdi dir="ltr">' + escape(reference.workTitle) + '</bdi></em></p>' : '') + '<p>' + escape(reference.description) + '</p>' + (reference.note ? '<p class="research-note">' + escape(reference.note) + '</p>' : '') + (reference.url ? '<a href="' + escape(reference.url) + '">' + escape(reference.linkLabel || 'למחקר') + '<span class="sr-only">: ' + escape(reference.title) + '</span> <span aria-hidden="true">←</span></a>' : '') + '</li>').join('') + '</ul></div></details>' : '';
  const next = article.next || {heading: 'רוצים להכיר את המשחקים?', description: 'בקטלוג אפשר לראות מה יש בכל מארז, לאילו גילאים הוא מתאים ואיך משחקים בו.', label: 'לכל המשחקים והכלים', path: 'pages/games/'};

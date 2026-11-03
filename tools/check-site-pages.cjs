@@ -21,7 +21,7 @@ for(const file of files){
  for(const match of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)){const data=JSON.parse(match[1]);assert.equal(data['@context'],'https://schema.org');}
  for(const match of html.matchAll(/\b(?:href|src)="([^"]+)"/g)){
   const url=match[1].replace(/&amp;/g,'&');if(!url||url.startsWith('#')||/^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(url))continue;
-  let target=path.resolve(path.dirname(file),decodeURIComponent(url.split(/[?#]/)[0]));
+  let target=path.resolve(docs,'.'+decodeURIComponent(new URL(url,canonical).pathname));
   assert.ok(target.startsWith(docs+path.sep));
   if(fs.existsSync(target)&&fs.statSync(target).isDirectory())target=path.join(target,'index.html');
   assert.ok(fs.existsSync(target),file+': broken '+url);references++;

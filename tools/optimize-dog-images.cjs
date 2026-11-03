@@ -38,6 +38,10 @@ async function collectSources() {
     for (const image of product.images || []) addSource(image);
   }
   for (const image of context.window.DERECH_HOME_IMAGES || []) addSource(image);
+  // Articles can use an owner-supplied photograph without adding it to the home gallery.
+  for (const article of require('./articles-content.cjs')) {
+    if (article.image) addSource(article.image.source);
+  }
   // Testimonials can reuse gallery originals without duplicating the source files.
   for (const [file, key] of [
     ['testimonials-data.js', 'DERECH_TESTIMONIALS'],

@@ -486,6 +486,7 @@ body.testimonial-viewer-open .floating-offer{display:none}
 .article-body{font-size:18px;line-height:1.95}
 .article-body section{margin-top:36px}
 .article-body h2{font-size:27px;margin-bottom:16px}
+.article-body h3{font-size:22px;margin-block:28px 14px}
 .article-body p{color:var(--ink)}
 .article-body .article-note{font-size:15px;line-height:1.9;color:var(--muted)}
 .article-body a{color:var(--orange);text-decoration:underline;text-underline-offset:4px}

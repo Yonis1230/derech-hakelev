@@ -1,9 +1,10 @@
 'use strict';
 const crypto = require('node:crypto');
 const articleRoute = require('./article-routes.cjs');
+const {plainInline} = require('./article-inline.cjs');
 
 function plain(value) {
- return String(value).replace(/<a\b[^>]*>([^<>]*)<\/a>/g, '$1').replace(/\*\*|\*/g, '').replace(/\s+/g, ' ').trim();
+ return plainInline(value);
 }
 
 // One model supplies both HTML anchors and the local search index.
@@ -25,7 +26,7 @@ function articleDocument(article) {
   const heading = entry('heading', section.heading, section.heading);
   const blocks = (section.blocks || section.paragraphs.map(text => ({type: 'paragraph', text}))).map(block => {
    if (block.type === 'list') return {...block, items: block.items.map(text => ({raw: text, ...entry('item', text, section.heading)}))};
-   return {...block, ...entry('paragraph', block.text, section.heading), raw: block.text};
+   return {...block, ...entry(block.type === 'subheading' ? 'heading' : 'paragraph', block.text, block.type === 'subheading' ? block.text : section.heading), raw: block.text};
   });
   return {heading, rawHeading: section.heading, blocks};
  });
