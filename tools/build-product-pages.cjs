@@ -205,7 +205,7 @@ ${chrome.fonts}
 <script src="${base}catalog.js?v=${version}" defer></script>
 <script src="${base}scripts.js?v=${version}" defer></script>
 <script src="${base}accessibility.js?v=${version}" defer></script>
-<script src="${base}analytics.js?v=${version}" defer></script>
+<script src="${base}analytics.js?v=20261103-consent-copy" defer></script>
 <script src="${base}measurement.js?v=20261031-ga4" defer></script>
 <script src="${base}contact-form.js?v=20261102-contact-form" defer></script>
 ${reviews.length ? `<script src="${base}game-testimonials-data.js?v=${version}" defer></script>\n<script src="${base}testimonials.js?v=${version}" defer></script>` : ''}

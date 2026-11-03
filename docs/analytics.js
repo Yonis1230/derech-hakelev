@@ -103,7 +103,7 @@
   const panel = document.createElement('section');
   panel.className = 'analytics-consent';
   panel.setAttribute('aria-label', 'העדפות מדידה');
-  panel.innerHTML = '<p>כדי לספק חוויית גלישה טובה יותר, אנו משתמשים בטכנולוגיות כמו עוגיות (Cookies) למדידת השימוש באתר ולשיפורו. המדידה תתחיל רק לאחר אישורכם. ניתן לבטל את ההסכמה בתחתית האתר.</p><div class="analytics-actions"><button type="button" data-consent="granted">אישור</button></div>';
+  panel.innerHTML = '<p>כדי לספק חוויית גלישה טובה יותר, אנו משתמשים בטכנולוגיות כמו עוגיות (Cookies) למדידת השימוש באתר ולשיפורו.</p><div class="analytics-actions"><button type="button" data-consent="granted">אישור</button></div>';
   panel.hidden = consent === 'granted';
   document.body.append(panel);
   const preferences = document.createElement('button');

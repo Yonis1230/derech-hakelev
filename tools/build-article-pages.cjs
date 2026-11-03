@@ -136,7 +136,7 @@ function layout({title, seoTitle, description, route, base, content, schema = ''
   image ? '<meta property="og:image:alt" content="' + escape(image.alt) + '">' : '',
   '<link rel="icon" href="' + base + 'assets/optimized/favicon-32.png"><link rel="stylesheet" href="' + base + 'styles.css?v=20261103-article-search">',
   schema,
-  '<script src="' + base + 'scripts.js?v=20261031-measurement" defer></script><script src="' + base + 'accessibility.js?v=20261031-accessibility-menu" defer></script><script src="' + base + 'analytics.js?v=20261031-measurement" defer></script><script src="' + base + 'measurement.js?v=20261031-ga4" defer></script>',
+  '<script src="' + base + 'scripts.js?v=20261031-measurement" defer></script><script src="' + base + 'accessibility.js?v=20261031-accessibility-menu" defer></script><script src="' + base + 'analytics.js?v=20261103-consent-copy" defer></script><script src="' + base + 'measurement.js?v=20261031-ga4" defer></script>',
   route !== 'pages/articles/' ? '<script src="' + base + 'article-share.js?v=20261103-article-sources" defer></script>' : '',
   route === 'pages/articles/' ? '<script src="' + base + 'article-search-index.js?v=' + searchIndexVersion + '" defer></script><script src="' + base + 'article-search.js?v=20261103-article-search" defer></script>' : '<script src="' + base + 'article-search-target.js?v=20261103-article-search" defer></script>',
   '</head><body data-base="' + base + '" data-page="article"><a class="skip-link" href="#main">דלגו לתוכן</a>' + shared('header', base, route),
