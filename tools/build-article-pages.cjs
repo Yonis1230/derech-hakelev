@@ -279,5 +279,13 @@ for (const article of selected) {
  }));
 }
 
+// Keep the homepage reading section in sync with published articles only.
+if (!preview) {
+ const section = require('./home-articles.cjs')(articles, articleRoute, escape, photograph);
+ const updated = home.includes('<!-- home-articles:start -->') ? home.replace(/<!-- home-articles:start -->[\s\S]*?<!-- home-articles:end -->/, section) : home.replace('<section class="section partners-section"', section + '\n<section class="section partners-section"');
+ if (updated === home && !home.includes('<!-- home-articles:start -->')) throw new Error('Missing homepage insertion point');
+ if (updated !== home) { changes++; if (!check) fs.writeFileSync(path.join(docs, 'index.html'), updated); }
+}
+
 console.log((check ? 'Checked' : 'Generated') + ' ' + selected.length + ' article(s) ' + (preview ? 'in local preview only' : 'approved for public output') + '; ' + changes + ' file change(s).');
 if (check && changes) process.exitCode = 1;
