@@ -7,6 +7,7 @@ const {renderInline, plainInline} = require('./article-inline.cjs');
 const first = '/pages/articles/emotional-therapy-with-dogs/';
 const second = '/pages/articles/developmental-attachment-dog-therapy/';
 const shortRoute = '/articles/benefits-of-dogs-for-humans/';
+const productRoute = '/pages/games/products/solutions/';
 const allowed = new Set([first, second, shortRoute]);
 
 test('authored Hebrew, punctuation and special characters are escaped as text', () => {
@@ -42,6 +43,15 @@ test('both existing public article address formats are supported exactly', () =>
  assert.throws(() => renderInline('טקסט', [first]), /must be a Set/);
 });
 
+test('catalog product links use the real page format and still require an explicit allowlist', () => {
+ const routes = new Set([...allowed, productRoute, '/pages/games/products/world/']);
+ const text = 'משחק [**לכל בעיה פתרון**](' + productRoute + ')';
+ assert.equal(renderInline(text, routes), 'משחק <a href="' + productRoute + '"><strong>לכל בעיה פתרון</strong></a>');
+ assert.equal(plainInline(text), 'משחק לכל בעיה פתרון');
+ assert.throws(() => renderInline(text, allowed), /not allowed/);
+ assert.throws(() => renderInline('[אין מוצר](/pages/games/products/body-language/)', routes), /not allowed/);
+});
+
 test('external URLs, scripts, traversal and query or fragment data cannot become links', () => {
  const invalid = [
   'https://example.com/article/', '//example.com/article/', 'javascript:alert(1)',
@@ -49,7 +59,12 @@ test('external URLs, scripts, traversal and query or fragment data cannot become
   '/pages/articles/example/#private', '/pages/articles/example', '/pages/articles/example/index.html',
   '/pages/articles/example\\private/', '/pages/articles/example/ extra', ' /pages/articles/example/',
   '/pages/articles/example%2fprivate/', '/pages/articles/Example/', '/pages/articles/example/" onclick="run()',
-  '/pages/articles/example/\n'
+  '/pages/articles/example/\n',
+  '/pages/products/solutions/', '/pages/games/products/solutions/?q=private',
+  '/pages/games/products/solutions/#part', '/pages/games/products/../private/',
+  '/pages/games/products/%2e%2e/private/', '/pages/games/products/solutions',
+  '/pages/games/products/solutions/index.html', '/pages/games/products/Solutions/',
+  'https://derech-hakelev.com/pages/games/products/solutions/'
  ];
  for (const href of invalid) {
   assert.throws(() => renderInline('[קישור](' + href + ')', new Set([href])), undefined, href);
@@ -98,6 +113,25 @@ test('adding links cannot change visible text or introduce destinations into sea
  assert.ok(!plainInline(linked).includes('/pages/'));
  assert.ok(!plainInline(linked).includes('href'));
  assert.equal(plainInline('[מילה\tעם רווחים](' + shortRoute + ')'), 'מילה עם רווחים');
+});
+
+test('adding product and article links preserves the complete search record and target anchors', () => {
+ const {articleDocument} = require('./article-search-model.cjs');
+ const content = {
+  slug: 'example', status: 'approved', title: 'משחקים וקשר', intro: 'תחילת המאמר',
+  sections: [{heading: 'משחק משותף', blocks: [
+   {type: 'paragraph', text: 'משחק **לכל בעיה פתרון** לצד קשר עם הכלב.'},
+   {type: 'list', items: ['לכל בעיה פתרון', '*עולם הכלב*']}
+  ]}]
+ };
+ const linked = structuredClone(content);
+ linked.sections[0].blocks[0].text = 'משחק [**לכל בעיה פתרון**](' + productRoute + ') לצד [קשר עם הכלב](' + first + ').';
+ linked.sections[0].blocks[1].items = ['[לכל בעיה פתרון](' + productRoute + ')', '*[עולם הכלב](/pages/games/products/world/)*'];
+ const before = articleDocument(content), after = articleDocument(linked);
+ assert.deepEqual(after.record, before.record);
+ assert.ok(!JSON.stringify(after.record.entries).includes('/pages/'));
+ assert.equal(after.sections[0].blocks[0].id, before.sections[0].blocks[0].id);
+ assert.equal(after.sections[0].blocks[1].items[1].id, before.sections[0].blocks[1].items[1].id);
 });
 
 test('multiple links and emphasis restore only internal tokens', () => {

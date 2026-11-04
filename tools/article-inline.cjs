@@ -1,6 +1,7 @@
 'use strict';
 
 const articlePath = /^\/(?:pages\/)?articles\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/;
+const productPath = /^\/pages\/games\/products\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/;
 const legacyProductLink = /^<a href="(\.\.\/\.\.\/\.\.\/pages\/games\/products\/[a-z]+\/)">([^<>]+)<\/a>/;
 const markdownLink = /^\[([^\]\r\n]*)\]\(([^)\r\n]*)\)/;
 const emphasisParts = /(\*\*[^*]+\*\*|\*[^*]+\*)/g;
@@ -74,14 +75,14 @@ function transform(value, validateRoute, html) {
  });
 }
 
-function validArticlePath(href) {
- if (!articlePath.test(href)) throw new Error('Invalid inline article destination.');
+function validDestination(href) {
+ if (!articlePath.test(href) && !productPath.test(href)) throw new Error('Invalid inline article destination.');
 }
 
 function renderInline(value, allowedRoutes = new Set()) {
  if (!(allowedRoutes instanceof Set)) throw new TypeError('Allowed article routes must be a Set.');
  return transform(value, href => {
-  validArticlePath(href);
+  validDestination(href);
   if (!allowedRoutes.has(href)) throw new Error('Inline article destination is not allowed: ' + href);
  }, true);
 }
@@ -89,7 +90,7 @@ function renderInline(value, allowedRoutes = new Set()) {
 function plainInline(value) {
  // Ownership/publication is checked by renderInline's allowlist. This helper
  // deliberately has no route context and never includes a link's URL in text.
- return transform(value, validArticlePath, false).replace(/\s+/g, ' ').trim();
+ return transform(value, validDestination, false).replace(/\s+/g, ' ').trim();
 }
 
 module.exports = {renderInline, plainInline};

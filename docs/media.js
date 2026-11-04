@@ -6,6 +6,12 @@ window.DERECH_MEDIA = {
     "width": 960,
     "height": 899
   },
+  "assets/images/articles/non-speaking-autistic-children-dog-therapy.jpg": {
+    "src": "assets/optimized/articles/non-speaking-autistic-children-dog-therapy-960.webp",
+    "srcset": "assets/optimized/articles/non-speaking-autistic-children-dog-therapy-480.webp 480w, assets/optimized/articles/non-speaking-autistic-children-dog-therapy-960.webp 960w",
+    "width": 960,
+    "height": 1151
+  },
   "assets/images/brand/logo.png": {
     "src": "assets/optimized/brand/logo-128.webp",
     "srcset": "assets/optimized/brand/logo-128.webp 128w",
