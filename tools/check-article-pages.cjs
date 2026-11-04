@@ -8,6 +8,7 @@ const articles = require('./articles-content.cjs');
 const articleRoute = require('./article-routes.cjs');
 const vm = require('node:vm');
 const {searchIndex} = require('./article-search-model.cjs');
+const commentsConfig = require('./article-comments-config.cjs');
 const root = path.resolve(__dirname, '..');
 const docs = path.join(root, 'docs');
 const previewRoot = path.join(root, 'artifacts/preview/article-pages');
@@ -24,6 +25,7 @@ for (const directory of [docs, previewRoot]) {
  assert.deepEqual(JSON.parse(JSON.stringify(context.window.DERECH_ARTICLE_SEARCH)), expectedIndex, 'Search index includes only approved articles.');
 }
 const hub = fs.readFileSync(path.join(docs, 'pages/articles/index.html'), 'utf8');
+assert.doesNotMatch(hub, /data-article-read-aloud|article-read-aloud\.js/);
 assert.match(hub, /data-article-search data-clarity-mask="true"/);
 assert.match(hub, /data-article-search-input type="search"/);
 assert.match(hub, /class="articles-list" data-article-list>/, 'The ordinary list remains available without JavaScript.');
@@ -69,6 +71,13 @@ for (const route of routes) {
 for (const article of articles) {
  const relative = articleRoute(article);
  const html = fs.readFileSync(path.join(previewRoot, relative, 'index.html'), 'utf8');
+ assert.equal((html.match(/data-article-read-aloud\b/g) || []).length, 1, 'One read-aloud control per article.');
+ assert.equal((html.match(/src="[^"]*article-read-aloud\.js\?/g) || []).length, 1, 'Load the reader once per article.');
+ assert.match(html, /data-read-start[^>]*disabled/, 'Read-aloud stays disabled until a Hebrew voice is available.');
+ assert.match(html, /data-read-status role="status" aria-live="polite"/);
+ assert.match(html, /<option value="0\.8">/);
+ assert.match(html, /<option value="1" selected>/);
+ assert.match(html, /<option value="1\.2">/);
  if (article.image) {
   assert.match(html, /<img class="article-photo"[^>]+width="\d+" height="\d+" alt="[^"]+"[^>]+fetchpriority="high"/);
   assert.ok(html.includes(article.image.alt), 'Hero photo needs its authored alternative text.');
@@ -95,6 +104,17 @@ for (const article of articles) {
   const publicFile = path.join(docs, relative, 'index.html');
   assert.ok(fs.existsSync(publicFile));
   const published = fs.readFileSync(publicFile, 'utf8');
+  if (commentsConfig.enabled) {
+   assert.equal((published.match(/data-article-comments\b/g) || []).length, 1, 'One persistent comments area per published article.');
+   assert.ok(published.includes('data-comments-site="' + commentsConfig.siteId + '"'));
+   assert.ok(published.includes('data-comments-url="' + origin + '/' + relative + '"'));
+   assert.equal((published.match(/src="[^"]*article-comments\.js\?/g) || []).length, 1);
+   assert.match(published, /id="graphcomment" data-comments-widget/);
+   assert.ok(published.indexOf('data-article-comments') > published.indexOf('article-share-bottom'), 'Comments follow the article and its sharing controls.');
+   assert.ok(!published.includes('integration.graphcomment.com/'), 'Vendor code loads on demand, outside the initial HTML.');
+  } else {
+   assert.doesNotMatch(published, /data-article-comments|article-comments\.js/);
+  }
   assert.doesNotMatch(published, /noindex|article-preview-note|טיוטה לבדיקה|\*\*/);
   const schema = JSON.parse(published.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1] || 'null');
   assert.equal(schema?.['@type'], 'Article');

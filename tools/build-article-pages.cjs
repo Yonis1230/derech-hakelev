@@ -11,6 +11,7 @@ const articles = require('./articles-content.cjs');
 const articleRoute = require('./article-routes.cjs');
 const {renderInline, plainInline} = require('./article-inline.cjs');
 const {articleDocument, searchIndex} = require('./article-search-model.cjs');
+const commentsConfig = require('./article-comments-config.cjs');
 const root = path.resolve(__dirname, '..');
 const docs = path.join(root, 'docs');
 const preview = process.argv.includes('--preview');
@@ -29,6 +30,7 @@ const media = sourceContext.window.DERECH_MEDIA;
 const selected = articles.filter(article => preview || article.status === 'approved');
 const slugs = new Set();
 let changes = 0;
+if (commentsConfig.enabled && !/^[a-zA-Z0-9][a-zA-Z0-9_-]{1,99}$/.test(commentsConfig.siteId || '')) throw new Error('Comments need the real public GraphComment shortname.');
 
 // Only published article addresses can be linked from authored prose.
 const articleLinks = new Set(articles.filter(article => article.status === 'approved').map(article => '/' + articleRoute(article)));
@@ -122,10 +124,12 @@ function layout({title, seoTitle, description, route, base, content, schema = ''
   '<link rel="canonical" href="' + canonical + '">',
   '<meta property="og:title" content="' + escape(metadataTitle) + '"><meta property="og:description" content="' + escape(description) + '"><meta property="og:url" content="' + canonical + '"><meta property="og:type" content="' + (route !== 'pages/articles/' ? 'article' : 'website') + '"><meta property="og:locale" content="he_IL"><meta property="og:image" content="' + origin + '/' + socialImage + '">',
   image ? '<meta property="og:image:alt" content="' + escape(image.alt) + '">' : '',
-  '<link rel="icon" href="' + base + 'assets/optimized/favicon-32.png"><link rel="stylesheet" href="' + base + 'styles.css?v=20261103-article-links">',
+  '<link rel="icon" href="' + base + 'assets/optimized/favicon-32.png"><link rel="stylesheet" href="' + base + 'styles.css?v=20261104-article-tools">',
   schema,
   '<script src="' + base + 'scripts.js?v=20261031-measurement" defer></script><script src="' + base + 'accessibility.js?v=20261031-accessibility-menu" defer></script><script src="' + base + 'analytics.js?v=20261103-consent-copy" defer></script><script src="' + base + 'measurement.js?v=20261031-ga4" defer></script>',
   route !== 'pages/articles/' ? '<script src="' + base + 'article-share.js?v=20261103-article-sources" defer></script>' : '',
+  route !== 'pages/articles/' ? '<script src="' + base + 'article-read-aloud.js?v=20261104-article-tools" defer></script>' : '',
+  route !== 'pages/articles/' && commentsConfig.enabled && !preview ? '<script src="' + base + 'article-comments.js?v=20261104-article-tools" defer></script>' : '',
   route === 'pages/articles/' ? '<script src="' + base + 'article-search-index.js?v=' + searchIndexVersion + '" defer></script><script src="' + base + 'article-search.js?v=20261103-article-search" defer></script>' : '<script src="' + base + 'article-search-target.js?v=20261103-article-search" defer></script>',
   '</head><body data-base="' + base + '" data-page="article"><a class="skip-link" href="#main">דלגו לתוכן</a>' + shared('header', base, route),
   content, shared('footer', base), '</body></html>', ''
@@ -177,6 +181,27 @@ function photograph(article, base, thumbnail = false) {
  const entry = media[article.image.source];
  const srcset = entry.srcset.split(',').map(candidate => base + candidate.trim()).join(', ');
  return '<img class="' + (thumbnail ? 'article-thumbnail' : 'article-photo') + '" src="' + base + entry.src + '" srcset="' + srcset + '" sizes="' + (thumbnail ? '(max-width: 760px) calc(100vw - 36px), 250px' : '(max-width: 760px) calc(100vw - 36px), 760px') + '" width="' + entry.width + '" height="' + entry.height + '" alt="' + (thumbnail ? '' : escape(article.image.alt)) + '" ' + (thumbnail ? 'loading="lazy"' : 'fetchpriority="high"') + ' decoding="async">';
+}
+
+function readAloudControls() {
+ const speaker = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M11 4 5 9H2v6h3l6 5V4Z"/><path d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></svg>';
+ return '<div class="article-read-aloud" data-article-read-aloud role="group" aria-label="הקראת המאמר">' +
+  '<div class="article-read-actions"><button class="article-read-control" type="button" data-read-start aria-describedby="article-read-status" disabled>' + speaker + 'הקראת המאמר</button>' +
+  '<button class="article-read-control" type="button" data-read-pause hidden>השהיה</button><button class="article-read-control" type="button" data-read-resume hidden>המשך</button><button class="article-read-control" type="button" data-read-stop hidden>עצירה</button>' +
+  '<label class="article-read-speed">מהירות<select data-read-rate aria-label="מהירות הקראה" disabled><option value="0.8">איטית</option><option value="1" selected>רגילה</option><option value="1.2">מהירה</option></select></label></div>' +
+  '<p class="article-read-status" id="article-read-status" data-read-status role="status" aria-live="polite" tabindex="-1">ההקראה זמינה במכשירים עם קול בעברית ובדפדפן שתומך בה.</p></div>';
+}
+
+function articleComments(article, route) {
+ if (article.status !== 'approved' || (!commentsConfig.enabled && !preview)) return '';
+ const configured = commentsConfig.enabled && !preview;
+ const attributes = configured ? ' data-comments-site="' + escape(commentsConfig.siteId) + '"' : ' data-comments-preview="true"';
+ return '<section class="article-comments" data-article-comments data-clarity-mask="true" data-comments-url="' + origin + '/' + route + '" data-comments-slug="' + escape(article.slug) + '"' + attributes + ' aria-labelledby="article-comments-title">' +
+  '<h2 id="article-comments-title">תגובות למאמר</h2><p>מחשבות, שאלות או משהו שתרצו להוסיף?</p>' +
+  (configured ? '<p class="article-comments-privacy">התגובות פומביות. <a href="/pages/privacy/#article-comments-privacy">פרטיות</a></p>' : '') +
+  '<button class="article-comments-load" type="button" data-comments-load' + (configured ? '' : ' disabled') + '>לקריאת התגובות ולהוספת תגובה</button>' +
+  '<p class="article-comments-status" data-comments-status role="status" aria-live="polite">' + (configured ? '' : 'תצוגת בדיקה: מערכת התגובות ממתינה לחיבור לחשבון בעל האתר. לא ניתן לשלוח מכאן תגובות.') + '</p>' +
+  '<div class="article-comments-widget" id="graphcomment" data-comments-widget></div></section>';
 }
 
 function shareControls(article, route, position, base) {
@@ -233,9 +258,9 @@ for (const article of selected) {
   content: '<main id="main" class="reading-page">' + previewNote() +
    '<nav class="article-breadcrumbs" aria-label="מיקום באתר"><a href="' + (route.startsWith('pages/') ? '../' : base + 'pages/articles/') + '">כל המאמרים</a><span aria-hidden="true">/</span><span aria-current="page">' + escape(article.title) + '</span></nav>' +
    '<article><header class="article-heading"><span class="eyebrow">' + escape(article.category) + '</span><h1' + anchor(searchDocument.title) + '>' + escape(article.title) + '</h1>' +
-   '<div class="article-meta">' + date + '<span>כ־' + Math.max(1, Math.ceil(words / 170)) + ' דקות קריאה</span></div>' + shareControls(article, route, 'top', base) + '</header>' +
+   '<div class="article-meta">' + date + '<span>כ־' + Math.max(1, Math.ceil(words / 170)) + ' דקות קריאה</span></div>' + readAloudControls() + shareControls(article, route, 'top', base) + '</header>' +
    (article.image ? '<figure class="article-hero">' + photograph(article, base) + '</figure>' : '') +
-   '<div class="article-body"><p' + anchor(searchDocument.intro, 'article-intro') + '>' + inline(article.intro) + '</p>' + opening + body + '</div>' + references + shareControls(article, route, 'bottom', base) + '</article><aside class="article-next" aria-label="להמשך"><h2>' + escape(next.heading) + '</h2><p>' + escape(next.description) + '</p><a class="button" href="' + base + next.path + '">' + escape(next.label) + ' <span aria-hidden="true">←</span></a></aside></main>'
+   '<div class="article-body"><p' + anchor(searchDocument.intro, 'article-intro') + '>' + inline(article.intro) + '</p>' + opening + body + '</div>' + references + shareControls(article, route, 'bottom', base) + articleComments(article, route) + '</article><aside class="article-next" aria-label="להמשך"><h2>' + escape(next.heading) + '</h2><p>' + escape(next.description) + '</p><a class="button" href="' + base + next.path + '">' + escape(next.label) + ' <span aria-hidden="true">←</span></a></aside></main>'
  }));
 }
 
