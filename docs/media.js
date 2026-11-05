@@ -4,7 +4,7 @@ window.DERECH_MEDIA = {
     "src": "assets/optimized/articles/dog-therapy-at-risk-youth-960.webp",
     "srcset": "assets/optimized/articles/dog-therapy-at-risk-youth-480.webp 480w, assets/optimized/articles/dog-therapy-at-risk-youth-960.webp 960w",
     "width": 960,
-    "height": 720
+    "height": 532
   },
   "assets/images/home/slider/board-game-activity.webp": {
     "src": "assets/optimized/home/slider/board-game-activity-960.webp",
