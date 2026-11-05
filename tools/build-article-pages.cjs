@@ -143,7 +143,7 @@ function layout({title, seoTitle, description, route, base, content, schema = ''
   schema,
   '<script src="' + base + 'scripts.js?v=20261031-measurement" defer></script><script src="' + base + 'accessibility.js?v=20261031-accessibility-menu" defer></script><script src="' + base + 'analytics.js?v=20261103-consent-copy" defer></script><script src="' + base + 'measurement.js?v=20261031-ga4" defer></script>',
   route !== 'pages/articles/' ? '<script src="' + base + 'article-share.js?v=20261103-article-sources" defer></script>' : '',
-  route !== 'pages/articles/' ? '<script src="' + base + 'article-read-aloud.js?v=20261104-article-tools" defer></script>' : '',
+  route !== 'pages/articles/' ? '<script src="' + base + 'article-read-aloud.js?v=20261105-voice-choice" defer></script>' : '',
   route !== 'pages/articles/' && commentsConfig.enabled && !preview ? '<script src="' + base + 'article-comments.js?v=20261104-article-tools" defer></script>' : '',
   route === 'pages/articles/' ? '<script src="' + base + 'article-search-index.js?v=' + searchIndexVersion + '" defer></script><script src="' + base + 'article-search.js?v=20261103-article-search" defer></script>' : '<script src="' + base + 'article-search-target.js?v=20261103-article-search" defer></script>',
   '</head><body data-base="' + base + '" data-page="article"><a class="skip-link" href="#main">דלגו לתוכן</a>' + shared('header', base, route),
@@ -203,7 +203,8 @@ function readAloudControls() {
  return '<div class="article-read-aloud" data-article-read-aloud role="group" aria-label="הקראת המאמר">' +
   '<div class="article-read-actions"><button class="article-read-control" type="button" data-read-start aria-describedby="article-read-status" disabled>' + speaker + 'הקראת המאמר</button>' +
   '<button class="article-read-control" type="button" data-read-pause hidden>השהיה</button><button class="article-read-control" type="button" data-read-resume hidden>המשך</button><button class="article-read-control" type="button" data-read-stop hidden>עצירה</button>' +
-  '<label class="article-read-speed">מהירות<select data-read-rate aria-label="מהירות הקראה" disabled><option value="0.8">איטית</option><option value="1" selected>רגילה</option><option value="1.2">מהירה</option></select></label></div>' +
+  '<label class="article-read-speed">מהירות<select data-read-rate aria-label="מהירות הקראה" disabled><option value="0.8">איטית</option><option value="1" selected>רגילה</option><option value="1.2">מהירה</option></select></label>' +
+  '<label class="article-read-speed">קול<select data-read-voice aria-label="קול הקראה בעברית" disabled></select></label></div>' +
   '<p class="article-read-status" id="article-read-status" data-read-status role="status" aria-live="polite" tabindex="-1">ההקראה זמינה במכשירים עם קול בעברית ובדפדפן שתומך בה.</p></div>';
 }
 

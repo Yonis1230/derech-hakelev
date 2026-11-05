@@ -9,6 +9,7 @@
  const resume = widget.querySelector('[data-read-resume]');
  const stop = widget.querySelector('[data-read-stop]');
  const speed = widget.querySelector('[data-read-rate]');
+ const voiceChoice = widget.querySelector('[data-read-voice]');
  const status = widget.querySelector('[data-read-status]');
  if (!start || !pause || !resume || !stop || !speed || !status) return;
 
@@ -32,9 +33,9 @@
   const text = (node.textContent || '').replace(/\s+/gu, ' ').trim();
   for (const sentence of text.match(/[^.!?…]+[.!?…]*|[.!?…]+/gu) || []) {
    let rest = sentence.trim();
-   while (rest.length > 140) {
-    let boundary = rest.lastIndexOf(' ', 140);
-    if (boundary < 40) boundary = 140;
+   while (rest.length > 280) {
+    let boundary = rest.lastIndexOf(' ', 280);
+    if (boundary < 40) boundary = 280;
     // Do not split an emoji or another supplementary Unicode character.
     if (/[\uD800-\uDBFF]/u.test(rest[boundary - 1])) boundary--;
     chunks.push(rest.slice(0, boundary).trim());
@@ -45,6 +46,7 @@
  }
 
  let voice = null;
+ let hebrewVoices = [];
  let state = 'idle';
  let position = 0;
  let generation = 0;
@@ -62,6 +64,7 @@
   stop.hidden = state === 'idle';
   stop.disabled = state === 'idle';
   speed.disabled = !available;
+  if (voiceChoice) voiceChoice.disabled = !available || hebrewVoices.length < 2;
   widget.setAttribute('data-read-state', available ? state : 'unavailable');
   if (message !== undefined) status.textContent = message;
  }
@@ -113,7 +116,18 @@
   const hebrew = Array.from(voices || []).filter(candidate => /^he(?:-|$)/iu.test(candidate.lang || ''));
   hebrew.sort((left, right) => Number(Boolean(right.localService)) - Number(Boolean(left.localService))
    || Number(/^he-IL$/iu.test(right.lang)) - Number(/^he-IL$/iu.test(left.lang)));
-  voice = hebrew[0] || null;
+  const previous = voice?.voiceURI || voice?.name;
+  hebrewVoices = hebrew;
+  voice = hebrew.find(candidate => (candidate.voiceURI || candidate.name) === previous) || hebrew[0] || null;
+  if (voiceChoice) {
+   voiceChoice.replaceChildren(...hebrew.map((candidate, index) => {
+    const option = document.createElement('option');
+    option.value = String(index);
+    option.textContent = candidate.name + (candidate.localService ? ' — במכשיר' : ' — שירות מקוון');
+    option.selected = candidate === voice;
+    return option;
+   }));
+  }
   if (!voice || !chunks.length) {
    const message = chunks.length ? unavailable : 'לא נמצא טקסט להקראה.';
    if (state !== 'idle') finish(message);
@@ -122,6 +136,21 @@
    render('אפשר להאזין למאמר בעברית.');
   }
  }
+
+ voiceChoice?.addEventListener('change', () => {
+  const selected = hebrewVoices[Number(voiceChoice.value)];
+  if (!selected || selected === voice) return;
+  voice = selected;
+  if (state !== 'idle') {
+   generation++;
+   current = null;
+   try {
+    synth.cancel();
+    if (state === 'playing') { synth.resume(); speakCurrent(); }
+   } catch { failed(); }
+  }
+  render('קול ההקראה עודכן.');
+ });
 
  start.addEventListener('click', () => {
   if (state !== 'idle' || !voice || !chunks.length) return;

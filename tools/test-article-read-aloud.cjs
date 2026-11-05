@@ -10,6 +10,31 @@ const localHebrew = {name: 'עברית מקומית', lang: 'he-IL', localServic
 const remoteHebrew = {name: 'עברית אחרת', lang: 'he-IL', localService: false};
 const english = {name: 'English', lang: 'en-US', localService: true};
 
+test('voice choice changes only the current segment and survives refreshed voice lists', () => {
+ const env = fixture({voices: [remoteHebrew, localHebrew]});
+ assert.equal(env.voice.disabled, false);
+ assert.equal(env.voice.options.length, 2);
+ env.start.click();
+ const old = env.spoken.at(-1);
+ env.voice.change('1');
+ assert.equal(env.spoken.at(-1).voice, remoteHebrew);
+ assert.equal(env.spoken.at(-1).text, old.text);
+ env.changeVoices([localHebrew, remoteHebrew]);
+ env.end();
+ assert.equal(env.spoken.at(-1).voice, remoteHebrew);
+ env.pause.click();
+ const length = env.spoken.length;
+ env.voice.change('0');
+ assert.equal(env.spoken.length, length);
+ env.resume.click();
+ assert.equal(env.spoken.at(-1).voice, localHebrew);
+});
+
+test('a single Hebrew voice cannot offer alternatives', () => {
+ const env = fixture();
+ assert.equal(env.voice.disabled, true);
+});
+
 function fixture({voices = [localHebrew], withAPI = true, withWidget = true,
  heading = 'כותרת המאמר?', paragraphs = ['פסקה ראשונה. משפט שני!', 'כותרת פרק', 'פריט ברשימה.'],
  cancelEmitsError = false, speed = '1'} = {}) {
@@ -26,8 +51,10 @@ function fixture({voices = [localHebrew], withAPI = true, withWidget = true,
   click() { this.handlers.click?.(); }
   change(value) { this.value = value; this.handlers.change?.(); }
   focus() { document.activeElement = this; }
+  replaceChildren(...options) { this.options = options; this.value = options.find(option => option.selected)?.value; }
  }
- const controls = Object.fromEntries(['start', 'pause', 'resume', 'stop', 'rate', 'status'].map(name => [name, new Control()]));
+ const controls = Object.fromEntries(['start', 'pause', 'resume', 'stop', 'rate', 'status', 'voice'].map(name => [name, new Control()]));
+ document.createElement = () => ({});
  controls.rate.value = speed;
  const widget = {
   attributes: {},
@@ -100,7 +127,7 @@ test('speech starts only on request, prefers a local Hebrew voice and reads the 
   assert.equal(utterance.lang, 'he-IL');
   assert.equal(utterance.voice, localHebrew);
   assert.equal(utterance.rate, 1);
-  assert.ok(utterance.text.length <= 140);
+  assert.ok(utterance.text.length <= 280);
  }
  const actual = env.spoken.map(utterance => utterance.text).join('').replace(/\s/gu, '');
  const expected = ['כותרת המאמר?', 'פתיחה. עוד משפט!', 'כותרת משנה', longSentence, 'פריט רשימה.'].join('').replace(/\s/gu, '');
