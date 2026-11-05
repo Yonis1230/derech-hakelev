@@ -4,12 +4,20 @@
 window.DERECH_TESTIMONIALS = [
   {
     id: 'article-nursing-tamar',
+    image: "assets/images/testimonials/article-nursing-tamar.jpg",
+    thumbnail: "assets/optimized/testimonials/article-nursing-tamar-480.webp",
+    width: 948,
+    height: 844,
     quote: 'יוני תודה רבה\nמאמר מאוד רציני\nמאוד התרגשתי מהשיתוף, מהיצירתיות המתוחכמת ומהכתיבה.\nניתן להכליל לאוכלוסיות אחרות, בגילאים שונים\nשוב תודה, תמר',
     context: 'על המאמר: טיפול בעזרת כלבים במחלקות סיעודיות',
     label: 'תמר'
   },
   {
     id: 'article-nursing-iris',
+    image: "assets/images/testimonials/article-nursing-iris.jpg",
+    thumbnail: "assets/optimized/testimonials/article-nursing-iris-480.webp",
+    width: 968,
+    height: 595,
     quote: 'מאמר מקצועי מעולה !\nמתאים לאוכלוסיות אחרות עם מוגבלויות שונות\nתודה 🙏',
     context: 'על המאמר: טיפול בעזרת כלבים במחלקות סיעודיות',
     label: 'איריס'
