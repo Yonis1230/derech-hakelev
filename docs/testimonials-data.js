@@ -3,6 +3,18 @@
 // Labels are neutral: no names or reviewer roles have been inferred.
 window.DERECH_TESTIMONIALS = [
   {
+    id: 'article-nursing-tamar',
+    quote: 'יוני תודה רבה\nמאמר מאוד רציני\nמאוד התרגשתי מהשיתוף, מהיצירתיות המתוחכמת ומהכתיבה.\nניתן להכליל לאוכלוסיות אחרות, בגילאים שונים\nשוב תודה, תמר',
+    context: 'על המאמר: טיפול בעזרת כלבים במחלקות סיעודיות',
+    label: 'תמר'
+  },
+  {
+    id: 'article-nursing-iris',
+    quote: 'מאמר מקצועי מעולה !\nמתאים לאוכלוסיות אחרות עם מוגבלויות שונות\nתודה 🙏',
+    context: 'על המאמר: טיפול בעזרת כלבים במחלקות סיעודיות',
+    label: 'איריס'
+  },
+  {
     id: 'therapy-04',
     quote: 'הרגשנו בכל שלב עד כמה אתה משקיע מחשבה, רגישות ואכפתיות אמיתית. הרבה מעבר לשעות הטיפול',
     image: 'assets/images/testimonials/therapy-04.webp',
