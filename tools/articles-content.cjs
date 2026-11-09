@@ -5090,8 +5090,8 @@ module.exports = [
   ],
   "referencesTitle": "מקורות ומחקרים לקריאה נוספת",
   "image": {
-   "source": "assets/images/home/slider/board-game-activity.webp",
-   "alt": "ילדה יושבת על ספה ומשחקת במשחק שיווי משקל כחול עם דמויות צבעוניות על שולחן."
+   "source": "assets/images/home/slider/pic58.webp",
+   "alt": "ילדים יושבים על מחצלת, מחזיקים קלפים ומשחקים עם קלפים צבעוניים הפרושים ביניהם."
   },
   "next": {
    "heading": "רוצים להכיר את המשחקים?",
