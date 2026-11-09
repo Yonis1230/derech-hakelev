@@ -36,6 +36,7 @@ if (commentsConfig.enabled && !/^[a-zA-Z0-9][a-zA-Z0-9_-]{1,99}$/.test(commentsC
 // Product destinations come from the same catalog and route as the product
 // builder; an arbitrary file under products/ cannot add itself to the allowlist.
 const inlineLinks = new Set(articles.filter(article => article.status === 'approved').map(article => '/' + articleRoute(article)));
+inlineLinks.add('/pages/games/');
 const catalog = sourceContext.window.DERECH_CATALOG;
 if (!Array.isArray(catalog) || !catalog.length) throw new Error('Missing product catalog.');
 const productIds = new Set();

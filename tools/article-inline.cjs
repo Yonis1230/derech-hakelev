@@ -76,7 +76,7 @@ function transform(value, validateRoute, html) {
 }
 
 function validDestination(href) {
- if (!articlePath.test(href) && !productPath.test(href)) throw new Error('Invalid inline article destination.');
+ if (href !== '/pages/games/' && !articlePath.test(href) && !productPath.test(href)) throw new Error('Invalid inline article destination.');
 }
 
 function renderInline(value, allowedRoutes = new Set()) {
