@@ -12,6 +12,7 @@ const articleRoute = require('./article-routes.cjs');
 const {renderInline, plainInline} = require('./article-inline.cjs');
 const {articleDocument, searchIndex} = require('./article-search-model.cjs');
 const commentsConfig = require('./article-comments-config.cjs');
+const community = require('./whatsapp-community.cjs');
 const root = path.resolve(__dirname, '..');
 const docs = path.join(root, 'docs');
 const preview = process.argv.includes('--preview');
@@ -140,9 +141,9 @@ function layout({title, seoTitle, description, route, base, content, schema = ''
   '<link rel="canonical" href="' + canonical + '">',
   '<meta property="og:title" content="' + escape(metadataTitle) + '"><meta property="og:description" content="' + escape(description) + '"><meta property="og:url" content="' + canonical + '"><meta property="og:type" content="' + (route !== 'pages/articles/' ? 'article' : 'website') + '"><meta property="og:locale" content="he_IL"><meta property="og:image" content="' + origin + '/' + socialImage + '">',
   image ? '<meta property="og:image:alt" content="' + escape(image.alt) + '">' : '',
-  '<link rel="icon" href="' + base + 'assets/optimized/favicon-32.png"><link rel="stylesheet" href="' + base + 'styles.css?v=20261104-article-tools">',
+  '<link rel="icon" href="' + base + 'assets/optimized/favicon-32.png"><link rel="stylesheet" href="' + base + 'styles.css?v=20261112-community">',
   schema,
-  '<script src="' + base + 'scripts.js?v=20261031-measurement" defer></script><script src="' + base + 'accessibility.js?v=20261031-accessibility-menu" defer></script><script src="' + base + 'analytics.js?v=20261103-consent-copy" defer></script><script src="' + base + 'measurement.js?v=20261031-ga4" defer></script>',
+  '<script src="' + base + 'scripts.js?v=20261031-measurement" defer></script><script src="' + base + 'accessibility.js?v=20261031-accessibility-menu" defer></script><script src="' + base + 'analytics.js?v=20261103-consent-copy" defer></script><script src="' + base + 'measurement.js?v=20261112-community" defer></script>',
   route !== 'pages/articles/' ? '<script src="' + base + 'article-share.js?v=20261103-article-sources" defer></script>' : '',
   route !== 'pages/articles/' ? '<script src="' + base + 'article-read-aloud.js?v=20261105-voice-choice" defer></script>' : '',
   route !== 'pages/articles/' && commentsConfig.enabled && !preview ? '<script src="' + base + 'article-comments.js?v=20261104-article-tools" defer></script>' : '',
@@ -249,7 +250,7 @@ if (selected.length) {
   title: 'מאמרים ורעיונות',
   description: 'מאמרים על טיפול רגשי בעזרת כלבים, קשר, משחק והתנסות בתוך המפגש.',
   route: 'pages/articles/', base: '../../',
-  content: '<main id="main" class="articles-page">' + previewNote() + '<div class="articles-intro"><span class="eyebrow">לקרוא, לחשוב, לנסות</span><h1>מאמרים ורעיונות</h1><p>על טיפול רגשי בעזרת כלבים, על קשר ועל משחק. מחשבות מתוך המפגשים ורעיונות שאפשר לקחת איתנו להמשך.</p></div>' + searchPanel() + '<div class="articles-list" data-article-list>' + cards + '</div></main>'
+  content: '<main id="main" class="articles-page">' + previewNote() + '<div class="articles-intro"><span class="eyebrow">לקרוא, לחשוב, לנסות</span><h1>מאמרים ורעיונות</h1><p>על טיפול רגשי בעזרת כלבים, על קשר ועל משחק. מחשבות מתוך המפגשים ורעיונות שאפשר לקחת איתנו להמשך.</p></div>' + searchPanel() + '<div class="articles-list" data-article-list>' + cards + '</div>' + community.invitation('articles_index') + '</main>'
  }));
 }
 
@@ -277,7 +278,7 @@ for (const article of selected) {
    '<article><header class="article-heading"><span class="eyebrow">' + escape(article.category) + '</span><h1' + anchor(searchDocument.title) + '>' + escape(article.title) + '</h1>' +
    '<div class="article-meta">' + date + '<span>כ־' + Math.max(1, Math.ceil(words / 170)) + ' דקות קריאה</span></div>' + readAloudControls() + shareControls(article, route, 'top', base) + '</header>' +
    (article.image ? '<figure class="article-hero">' + photograph(article, base) + '</figure>' : '') +
-   '<div class="article-body"><p' + anchor(searchDocument.intro, 'article-intro') + '>' + inline(article.intro) + '</p>' + opening + body + '</div>' + references + shareControls(article, route, 'bottom', base) + articleComments(article, route) + '</article><aside class="article-next" aria-label="להמשך"><h2>' + escape(next.heading) + '</h2><p>' + escape(next.description) + '</p><a class="button" href="' + base + next.path + '">' + escape(next.label) + ' <span aria-hidden="true">←</span></a></aside></main>'
+   '<div class="article-body"><p' + anchor(searchDocument.intro, 'article-intro') + '>' + inline(article.intro) + '</p>' + opening + body + '</div>' + references + community.invitation('article') + shareControls(article, route, 'bottom', base) + articleComments(article, route) + '</article><aside class="article-next" aria-label="להמשך"><h2>' + escape(next.heading) + '</h2><p>' + escape(next.description) + '</p><a class="button" href="' + base + next.path + '">' + escape(next.label) + ' <span aria-hidden="true">←</span></a></aside></main>'
  }));
 }
 

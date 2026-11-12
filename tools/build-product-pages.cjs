@@ -199,14 +199,14 @@ ${generatedMarker}
 <meta property="og:image" content="${image || absolute('assets/optimized/brand/logo-128.webp')}">
 <link rel="icon" href="${base}assets/optimized/favicon-32.png?v=20261018">
 ${chrome.fonts}
-<link rel="stylesheet" href="${base}styles.css?v=20261102-contact-form">
+<link rel="stylesheet" href="${base}styles.css?v=20261112-community">
 <script type="application/ld+json">${JSON.stringify(schema).replace(/</g, '\\u003c')}</script>
 <script src="${base}media.js?v=${version}" defer></script>
 <script src="${base}catalog.js?v=${version}" defer></script>
 <script src="${base}scripts.js?v=${version}" defer></script>
 <script src="${base}accessibility.js?v=${version}" defer></script>
 <script src="${base}analytics.js?v=20261103-consent-copy" defer></script>
-<script src="${base}measurement.js?v=20261031-ga4" defer></script>
+<script src="${base}measurement.js?v=20261112-community" defer></script>
 <script src="${base}contact-form.js?v=20261102-contact-form" defer></script>
 ${reviews.length ? `<script src="${base}game-testimonials-data.js?v=${version}" defer></script>\n<script src="${base}testimonials.js?v=${version}" defer></script>` : ''}
 </head>

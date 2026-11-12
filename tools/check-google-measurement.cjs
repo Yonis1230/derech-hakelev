@@ -63,7 +63,11 @@ function fixture({container, hostname = 'derech-hakelev.com', pathname = '/pages
   connectLate() { window.DERECH_PRIVACY = privacy; emit('derech:privacy-change'); },
   click({id = 'header_whatsapp', placement = 'header', href = 'https://wa.me/972524013354?text=PRIVATE-MESSAGE', productId} = {}) {
    const control = {href, dataset: {measureId: id, measurePlacement: placement, productId}};
-   emit('click', {target: {closest(selector) { assert.equal(selector, 'a[data-measure-id]'); return control; }}});
+   emit('click', {target: {closest(selector) { if (selector === 'a[data-community-location]') return null; assert.equal(selector, 'a[data-measure-id]'); return control; }}});
+  },
+  communityClick(linkLocation = 'article', href = 'https://chat.whatsapp.com/Cf17sNiT5aREVQLddv6Xx2') {
+   const control = {href, dataset: {communityLocation: linkLocation}};
+   emit('click', {target: {closest(selector) { return selector === 'a[data-community-location]' ? control : null; }}});
   },
   googleEvents() { return plain((window.dataLayer || []).filter(entry => entry.event === 'derech_event')); },
   queue() { return plain((window.dataLayer || []).map(entry => typeof entry.length === 'number' ? Array.from(entry) : entry)); }
@@ -357,3 +361,32 @@ check('late privacy API and loading document initialize safely without duplicate
 });
 
 console.log(count + ' Google measurement regression groups passed (synthetic VM; live account configuration remains a separate check).');
+
+for (const [pathname, linkLocation] of [['/', 'home'], ['/pages/articles/', 'articles_index'], ['/pages/articles/therapy-through-games/', 'article'], ['/articles/benefits-of-dogs-for-humans/', 'article'], ['/pages/faq/', 'footer'], ['/pages/games/', 'footer']]) {
+ check('community consent and single click payload: ' + pathname, () => {
+  const page = fixture({pathname, granted:true});
+  page.communityClick(linkLocation);
+  page.run(); // duplicate script inclusion must not register a second listener
+  page.communityClick(linkLocation);
+  const events = page.googleEvents().filter(e => e.derech_event_name === 'whatsapp_community_click');
+  assert.equal(events.length, 2);
+  assert.equal(page.scripts.length, 1);
+  assert.equal(events[0].derech_event_params.link_location, linkLocation);
+  assert.equal(events[0].derech_event_params.page_path, pathname);
+  assert.equal(events[0].derech_event_params.link_type, 'community_invite');
+  assert.ok(!JSON.stringify(events).includes('PRIVATE'));
+  if (!pathname.startsWith('/pages/games/')) {
+   assert.equal(page.googleEvents().length, 2);
+   page.click();
+   assert.equal(page.googleEvents().length, 2);
+  }
+  page.choose(false); page.communityClick(linkLocation);
+  assert.equal(page.googleEvents().filter(e => e.derech_event_name === 'whatsapp_community_click').length, 2);
+ });
+}
+check('community denied, local, invalid location and invalid host never load Google', () => {
+ for (const options of [{pathname:'/'}, {pathname:'/',granted:true,hostname:'localhost'}]) {
+  const page=fixture(options);page.communityClick('home');assert.equal(page.scripts.length,0);assert.equal(page.googleEvents().length,0);
+ }
+ const page=fixture({pathname:'/',granted:true});page.communityClick('unknown');page.communityClick('home','https://example.com/');assert.equal(page.scripts.length,0);
+});

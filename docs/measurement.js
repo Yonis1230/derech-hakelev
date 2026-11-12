@@ -40,12 +40,19 @@
  let loader;
  let googleStarted = false;
  let stopped = false;
+ let communityContext = false;
+ const communityLocations = new Set(['article', 'articles_index', 'home', 'footer']);
 
  function command() { window.dataLayer.push(arguments); }
 
- // This is a route allowlist, not a substring test. Home and treatment pages never load Google.
+ // Commerce loads after consent; other allowed pages load only on a community click.
  function googlePage() {
   const path = location.pathname;
+  // Community clicks may load the existing container after consent. They do not
+  // enable automatic page views or other measurement on these routes.
+  if (communityContext && (/^\/(?:index\.html)?$/.test(path) || /^\/pages\/(?:articles|faq|privacy|accessibility)(?:\/[a-z-]+)*\/(?:index\.html)?$/.test(path) || /^\/articles\/[a-z-]+\/(?:index\.html)?$/.test(path))) {
+   return {path, title: 'Community invitation | Derech Hakelev', communityOnly: true};
+  }
   if (path === '/pages/games/' || path === '/pages/games/index.html') {
    return {path: '/pages/games/', title: 'Games and tools | Derech Hakelev'};
   }
@@ -65,6 +72,10 @@
  function clean(name, input) {
   if (!input || typeof input !== 'object' || Array.isArray(input)) return null;
   const params = {};
+  if (name === 'whatsapp_community_click') {
+   if (!communityLocations.has(input.link_location) || input.link_type !== 'community_invite') return null;
+   return {link_location: input.link_location, page_path: location.pathname, link_type: 'community_invite'};
+  }
   if (!placements.has(input.placement)) return null;
   params.placement = input.placement;
   if (name === 'contact_click') {
@@ -96,6 +107,7 @@
  function googleEvent(name, params) {
   const page = googlePage();
   if (!googleStarted || stopped || !permission || !page) return;
+  if (page.communityOnly && name !== 'whatsapp_community_click') return;
   if (treatmentPlacements.has(params.placement) || treatmentButtons.has(params.button_id)) return;
   // GTM's version-2 data layer recursively merges objects. Clear the old object
   // first so a finder/page-view event cannot inherit an earlier product/channel.
@@ -125,7 +137,7 @@
   });
   window.dataLayer.push({'gtm.start': Date.now(), event: 'gtm.js'});
   googleStarted = true;
-  googleEvent('page_view', {});
+  if (!page.communityOnly) googleEvent('page_view', {});
   loader = document.createElement('script');
   loader.async = true;
   loader.id = 'derech-google-tag-manager';
@@ -184,6 +196,10 @@
   if (window.DERECH_PRIVACY?.getPreferences().analytics !== true) return false;
   const params = clean(name, input);
   if (!params) return false;
+  if (name === 'whatsapp_community_click') {
+   communityContext = true;
+   startGoogle();
+  }
   try { window.DERECH_PRIVACY.trackEvent?.(name, {...params}); } catch { /* Clarity failure must not break the page or other collectors. */ }
   googleEvent(name, params);
   return true;
@@ -191,6 +207,15 @@
  window.DERECH_MEASUREMENT = Object.freeze({track});
 
  document.addEventListener('click', event => {
+  const community = event.target?.closest?.('a[data-community-location]');
+  if (community) {
+   let invite;
+   try { invite = new URL(community.href); } catch { return; }
+   if (invite.protocol === 'https:' && invite.hostname === 'chat.whatsapp.com') {
+    track('whatsapp_community_click', {link_location: community.dataset.communityLocation, link_type: 'community_invite'});
+   }
+   return;
+  }
   const control = event.target?.closest?.('a[data-measure-id]');
   if (!control) return;
   const buttonId = control.dataset.measureId;
