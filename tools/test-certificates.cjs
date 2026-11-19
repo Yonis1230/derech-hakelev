@@ -65,6 +65,6 @@ assert.equal((section.match(/data-certificate-src=/g) || []).length, 3);
 assert.ok(!/<img[^>]*\ssrc=/.test(section));
 assert.ok(!section.includes('הצטיינות'));
 const expected = ['therapeutic-dog-training.jpeg','clinical-criminology-ma.jpeg','criminology-ba.jpeg'];
-assert.deepEqual([...section.matchAll(/data-certificate-src="([^"]+)"/g)].map(match => path.basename(match[1])), expected);
+assert.deepEqual([...section.matchAll(/data-certificate-src="([^"]+)"/g)].map(match => path.basename(match[1].split('?')[0])), expected);
 for (const file of expected) assert.ok(fs.statSync(path.join(root, 'docs/assets/images/certificates', file)).size > 0);
 console.log('PASS deferred images, modal open/close and focus restoration, reopening, duplicate initialization, backdrop, load failure, certificate order and local assets. Native browser keyboard trapping and responsive layout require visual QA.');
